@@ -15,6 +15,34 @@ connectionChecker = tmr.create()
 
 gpio.mode(3, gpio.INPUT, gpio.PULLUP)
 
+messageHandlers = {
+["/ucu/gpio/set"] = function(message) 
+    outputValue = nil
+    if message.value == 1 then
+        outputValue = gpio.HIGH
+    else 
+        outputValue = gpio.LOW
+    end
+    gpio.write(message.pin, outputValue)
+    print("gpio set " .. tostring(message.pin) .. " to value " .. tostring(outputValue))
+end, 
+["/ucu/gpio/configure"] = function(message) 
+    mode = gpio.INPUT
+    pullup = gpio.FLOAT
+
+    if message.mode == "OUTPUT" then
+        mode = gpio.OUTPUT
+    end
+    
+    if message.isPullup then
+        pullup = gpio.PULLUP
+    end
+
+    print("gpio configure pin " .. tostring(message.pin) .. " to mode " .. tostring(mode) .. " and pullup " .. tostring(pullup))
+    gpio.mode(message.pin, mode, pullup)
+end
+}
+
 function initializeMQTT() 
     m = mqtt.Client("main-client", 120)
 
@@ -37,14 +65,17 @@ function initializeMQTT()
     m:on("offline", mqttDisconnected)
 
     m:on("message", function(client, topic, data) 
+        message = sjson.decode(data);
+        
         print("Message received")
         if topic == "/ucu/hello" then
             m:publish("/umu/hello", sjson.encode({instanceId = ucuId}), 0, 0)
         end
-        print(topic)
-        print(data)
 
-       print(sjson.decode(data).payload)
+        if message.instanceId == ucuId then
+            print("Received message for me")
+            messageHandlers[topic](message)
+        end
     end)
 
     function tryConnectToMqtt(client)
