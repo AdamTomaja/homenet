@@ -4,6 +4,8 @@ end
 
 wifiConfig = {ssid = "Ave2G", pwd = "", auto = false, connected_cb = onConnectToAP}
 
+ucuId = "ucu-default-id"
+
 wifi.sta.config(wifiConfig)
 wifi.setmode(wifi.STATION)
 
@@ -11,7 +13,7 @@ wifi.sta.connect()
 
 connectionChecker = tmr.create()
 
-jsonDecoder = sjson.decoder()
+gpio.mode(3, gpio.INPUT, gpio.PULLUP)
 
 function initializeMQTT() 
     m = mqtt.Client("main-client", 120)
@@ -59,11 +61,25 @@ function checkConnection()
         print("IP: ")
         print(wifi.sta.getip())
         connectionChecker:stop()
-        print("hello world!")
+
+        ip, nm = wifi.sta.getip()
+        
+        ucuId = "ucu-" .. ip;
+
+        print("UCU id is " .. ucuId)
        
         initializeMQTT()
     end
 end
+
+
+function checkGpio() 
+    print(tostring(gpio.read(3)))
+end
+
+gpioChecker = tmr.create()
+gpioChecker:register(1000, tmr.ALARM_AUTO, checkGpio)
+-- gpioChecker:start()
 
 
 connectionChecker:register(1000, tmr.ALARM_AUTO, checkConnection)
