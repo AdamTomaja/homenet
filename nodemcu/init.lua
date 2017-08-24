@@ -11,23 +11,45 @@ wifi.sta.connect()
 
 connectionChecker = tmr.create()
 
-function onConnected() 
+jsonDecoder = sjson.decoder()
+
+function initializeMQTT() 
     m = mqtt.Client("main-client", 120)
 
     m:on("connect", function(client) 
         print("MQTT Connected") 
         m:subscribe("/test",0, function(conn) print("subscribe success") end)
+        -- m:publish("/test", "Hello World This is NodeMCU!", 0, 0)
     end)
+
+    function mqttDisconnected(client)
+        print("MQTT disconnected")
+        tryConnectToMqtt()
+    end
     
-    m:on("offline", function(client) print("mqtt offline") end)
+    m:on("offline", mqttDisconnected)
 
     m:on("message", function(client, topic, data) 
         print("Message received")
         print(topic)
         print(data)
+
+       print(sjson.decode(data).payload)
     end)
 
-    m:connect("192.168.0.19", 8883, 0, true)
+    function tryConnectToMqtt(client)
+        print("Trying connect to MQTT...")
+        m:connect("192.168.0.20", 1883, 0, false, mqttError)
+    end
+
+    function mqttError(client, reason)
+        print("MQTT was unable to connect")
+        tmr.create():alarm(3000, tmr.ALARM_SINGLE, tryConnectToMqtt)
+    end
+
+    tryConnectToMqtt()
+
+    
 end
 
 function checkConnection() 
@@ -39,10 +61,13 @@ function checkConnection()
         connectionChecker:stop()
         print("hello world!")
        
-        onConnected()
+        initializeMQTT()
     end
 end
 
 
 connectionChecker:register(1000, tmr.ALARM_AUTO, checkConnection)
 connectionChecker:start()
+
+gpio.mode(4,gpio.OUTPUT)
+gpio.write(4,gpio.LOW)
