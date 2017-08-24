@@ -74,6 +74,10 @@ end,
 end
 }
 
+function sendHelloMessage()
+    m:publish("/umu/hello", sjson.encode({instanceId = ucuId}), 0, 0)
+end 
+
 function initializeMQTT() 
     m = mqtt.Client("main-client", 120)
 
@@ -88,6 +92,8 @@ function initializeMQTT()
             end)
 
         gpioMonitor:start()
+
+        sendHelloMessage()
     end)
 
     function mqttDisconnected(client)
@@ -102,7 +108,7 @@ function initializeMQTT()
         
         print("Message received")
         if topic == "/ucu/hello" then
-            m:publish("/umu/hello", sjson.encode({instanceId = ucuId}), 0, 0)
+            sendHelloMessage()
         end
 
         if message.instanceId == ucuId then
