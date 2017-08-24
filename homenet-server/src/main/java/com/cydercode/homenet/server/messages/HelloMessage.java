@@ -1,10 +1,14 @@
 package com.cydercode.homenet.server.messages;
 
-import org.immutables.value.Value;
+public class HelloMessage {
 
-@Value.Immutable
-public interface HelloMessage {
+    private String instanceId;
 
-    String getInstanceId();
+    public String getInstanceId() {
+        return instanceId;
+    }
 
+    public void setInstanceId(String instanceId) {
+        this.instanceId = instanceId;
+    }
 }

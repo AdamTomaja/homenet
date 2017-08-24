@@ -1,17 +1,45 @@
 package com.cydercode.homenet.server.messages;
 
-import org.immutables.value.Value;
-
-@Value.Immutable
-public interface ConfigureGpioMessage {
+public class ConfigureGpioMessage {
 
     public enum GpioMode {
         INPUT, OUTPUT
     }
 
-    String getInstanceId();
-    int getPin();
-    GpioMode getMode();
-    boolean isPullup();
+    String instanceId;
+    int pin;
+    GpioMode mode;
+    boolean isPullup;
 
+    public String getInstanceId() {
+        return instanceId;
+    }
+
+    public void setInstanceId(String instanceId) {
+        this.instanceId = instanceId;
+    }
+
+    public int getPin() {
+        return pin;
+    }
+
+    public void setPin(int pin) {
+        this.pin = pin;
+    }
+
+    public GpioMode getMode() {
+        return mode;
+    }
+
+    public void setMode(GpioMode mode) {
+        this.mode = mode;
+    }
+
+    public boolean isPullup() {
+        return isPullup;
+    }
+
+    public void setPullup(boolean pullup) {
+        isPullup = pullup;
+    }
 }

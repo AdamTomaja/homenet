@@ -1,12 +1,32 @@
 package com.cydercode.homenet.server.messages;
 
-import org.immutables.value.Value;
+public class SetGpioValueMessage {
 
-@Value.Immutable
-public interface SetGpioValueMessage {
+    String instanceId;
+    int pin;
+    Object value;
 
-    String getInstanceId();
-    int getPin();
-    Object getValue();
+    public String getInstanceId() {
+        return instanceId;
+    }
 
+    public void setInstanceId(String instanceId) {
+        this.instanceId = instanceId;
+    }
+
+    public int getPin() {
+        return pin;
+    }
+
+    public void setPin(int pin) {
+        this.pin = pin;
+    }
+
+    public Object getValue() {
+        return value;
+    }
+
+    public void setValue(Object value) {
+        this.value = value;
+    }
 }

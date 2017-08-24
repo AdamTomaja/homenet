@@ -2,7 +2,23 @@ function onConnectToAP(connection)
     print("Connected to AP")
 end
 
-wifiConfig = {ssid = "Ave2G", pwd = "", auto = false, connected_cb = onConnectToAP}
+monitoredGpios = {4, 3}
+gpioStates = { }
+
+
+if file.open("settings.json", "r") then
+    text = file.read()
+    print(text)
+    settings = sjson.decode(text)
+    file.close()
+else 
+    print("Settings file not found!")
+end
+
+wifiConfig = {ssid = settings.ssid, pwd = settings.pwd, auto = false, connected_cb = onConnectToAP}
+
+notificationLedPin = 4
+flashButtonPin = 3
 
 ucuId = "ucu-default-id"
 
@@ -11,7 +27,22 @@ wifi.setmode(wifi.STATION)
 
 wifi.sta.connect()
 
+function checkGpio()
+    for i,pin in pairs(monitoredGpios) do
+        currentState = gpio.read(pin)
+        if currentState ~= gpioStates[pin] then
+            print("Pin " .. tostring(pin) .. " changed to value " .. tostring(currentState))
+            gpioStates[pin] = currentState
+            m:publish("/umu/gpio/set", sjson.encode({instanceId = ucuId, pin = pin, value = currentState}), 0, 0)
+        end
+     
+    end
+end
+
 connectionChecker = tmr.create()
+gpioMonitor = tmr.create()
+
+gpioMonitor:register(300, tmr.ALARM_AUTO, checkGpio)
 
 gpio.mode(3, gpio.INPUT, gpio.PULLUP)
 
@@ -55,6 +86,8 @@ function initializeMQTT()
             function(conn) 
                 print("All topics subscribed") 
             end)
+
+        gpioMonitor:start()
     end)
 
     function mqttDisconnected(client)
@@ -80,7 +113,7 @@ function initializeMQTT()
 
     function tryConnectToMqtt(client)
         print("Trying connect to MQTT...")
-        m:connect("192.168.0.20", 1883, 0, false, mqttError)
+        m:connect(settings.mqttBroker, settings.mqttPort, 0, false, mqttError)
     end
 
     function mqttError(client, reason)
@@ -108,21 +141,14 @@ function checkConnection()
         print("UCU id is " .. ucuId)
        
         initializeMQTT()
+
+        gpio.write(notificationLedPin, gpio.LOW)
     end
 end
-
-
-function checkGpio() 
-    print(tostring(gpio.read(3)))
-end
-
-gpioChecker = tmr.create()
-gpioChecker:register(1000, tmr.ALARM_AUTO, checkGpio)
--- gpioChecker:start()
-
 
 connectionChecker:register(1000, tmr.ALARM_AUTO, checkConnection)
 connectionChecker:start()
 
-gpio.mode(4,gpio.OUTPUT)
-gpio.write(4,gpio.LOW)
+gpio.mode(flashButtonPin, gpio.INPUT, gpio.PULLUP)
+gpio.mode(notificationLedPin, gpio.OUTPUT)
+gpio.write(notificationLedPin, gpio.HIGH)
