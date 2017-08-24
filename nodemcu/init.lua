@@ -33,7 +33,7 @@ function checkGpio()
         if currentState ~= gpioStates[pin] then
             print("Pin " .. tostring(pin) .. " changed to value " .. tostring(currentState))
             gpioStates[pin] = currentState
-            m:publish("/umu/gpio/set", sjson.encode({instanceId = ucuId, pin = pin, value = currentState}), 0, 0)
+            sendMessage("/umu/gpio/set", {pin = pin, value = currentState})
         end
      
     end
@@ -75,8 +75,13 @@ end
 }
 
 function sendHelloMessage()
-    m:publish("/umu/hello", sjson.encode({instanceId = ucuId}), 0, 0)
+    sendMessage("/umu/hello", {})
 end 
+
+function sendMessage(topic, messageObject)
+    messageObject.instanceId = ucuId
+    m:publish(topic, sjson.encode(messageObject), 0, 0)
+end
 
 function initializeMQTT() 
     m = mqtt.Client("main-client", 120)
