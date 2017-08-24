@@ -5,6 +5,7 @@ import org.immutables.value.Value;
 @Value.Immutable
 public interface SetGpioValueMessage {
 
+    String getInstanceId();
     int getPin();
     Object getValue();
 

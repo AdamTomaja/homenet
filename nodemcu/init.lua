@@ -20,8 +20,13 @@ function initializeMQTT()
 
     m:on("connect", function(client) 
         print("MQTT Connected") 
-        m:subscribe("/test",0, function(conn) print("subscribe success") end)
-        -- m:publish("/test", "Hello World This is NodeMCU!", 0, 0)
+        m:subscribe({
+            ["/ucu/hello"]=0, 
+            ["/ucu/gpio/configure"]=0, 
+            ["/ucu/gpio/set"]=0}, 
+            function(conn) 
+                print("All topics subscribed") 
+            end)
     end)
 
     function mqttDisconnected(client)
@@ -33,6 +38,9 @@ function initializeMQTT()
 
     m:on("message", function(client, topic, data) 
         print("Message received")
+        if topic == "/ucu/hello" then
+            m:publish("/umu/hello", sjson.encode({instanceId = ucuId}), 0, 0)
+        end
         print(topic)
         print(data)
 

@@ -6,6 +6,9 @@ import com.cydercode.homenet.server.messages.ImmutableConfigureGpioMessage;
 import com.cydercode.homenet.server.messages.ImmutableSetGpioValueMessage;
 import com.cydercode.homenet.server.messages.SetGpioValueMessage;
 import com.google.gson.Gson;
+import org.fusesource.mqtt.client.BlockingConnection;
+import org.fusesource.mqtt.client.MQTT;
+import org.fusesource.mqtt.client.QoS;
 
 public class App {
 
@@ -14,11 +17,16 @@ public class App {
 
         ConfigureGpioMessage message = ImmutableConfigureGpioMessage.builder()
                 .pin(3)
+                .instanceId("some-ucu")
                 .mode(ConfigureGpioMessage.GpioMode.INPUT)
                 .isPullup(true)
                 .build();
 
-        SetGpioValueMessage message2 = ImmutableSetGpioValueMessage.builder().pin(3).value(1).build();
+        SetGpioValueMessage message2 = ImmutableSetGpioValueMessage.builder()
+                .instanceId("some-ucu")
+                .pin(3)
+                .value(1)
+                .build();
 
         System.out.println(new Gson().toJson(message));
 

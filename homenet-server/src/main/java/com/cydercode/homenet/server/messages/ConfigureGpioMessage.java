@@ -9,6 +9,7 @@ public interface ConfigureGpioMessage {
         INPUT, OUTPUT
     }
 
+    String getInstanceId();
     int getPin();
     GpioMode getMode();
     boolean isPullup();
