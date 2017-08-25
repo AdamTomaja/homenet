@@ -2,7 +2,7 @@ function onConnectToAP(connection)
     print("Connected to AP")
 end
 
-monitoredGpios = {4, 3}
+monitoredGpios = {4, 3, 1, 2}
 gpioStates = { }
 
 
@@ -18,9 +18,8 @@ end
 wifiConfig = {ssid = settings.ssid, pwd = settings.pwd, auto = false, connected_cb = onConnectToAP}
 
 notificationLedPin = 4
-flashButtonPin = 3
 
-ucuId = "ucu-default-id"
+ucuId = "ucu-default-id"  
 
 wifi.sta.config(wifiConfig)
 wifi.setmode(wifi.STATION)
@@ -44,7 +43,18 @@ gpioMonitor = tmr.create()
 
 gpioMonitor:register(300, tmr.ALARM_AUTO, checkGpio)
 
-gpio.mode(3, gpio.INPUT, gpio.PULLUP)
+function blinkNotificationLed() 
+    local currentState = gpio.read(notificationLedPin)
+    if currentState == 1 then
+        gpio.write(notificationLedPin, 0)
+    else
+        gpio.write(notificationLedPin, 1);
+    end
+end
+
+initializingBlinker = tmr.create()
+initializingBlinker:register(1000, tmr.ALARM_AUTO, blinkNotificationLed)
+initializingBlinker:start()
 
 messageHandlers = {
 ["/ucu/gpio/set"] = function(message) 
@@ -78,13 +88,20 @@ function sendHelloMessage()
     sendMessage("/umu/hello", {})
 end 
 
+function sendAllValues()
+     for i,pin in pairs(monitoredGpios) do
+        currentState = gpio.read(pin)
+        sendMessage("/umu/gpio/set", {pin = pin, value = currentState})
+    end
+end
+
 function sendMessage(topic, messageObject)
     messageObject.instanceId = ucuId
     m:publish(topic, sjson.encode(messageObject), 0, 0)
 end
 
 function initializeMQTT() 
-    m = mqtt.Client("main-client", 120)
+    m = mqtt.Client(ucuId, 120)
 
     m:on("connect", function(client) 
         print("MQTT Connected") 
@@ -95,14 +112,14 @@ function initializeMQTT()
             function(conn) 
                 print("All topics subscribed") 
             end)
-
+        initializingBlinker:stop()
         gpioMonitor:start()
-
         sendHelloMessage()
     end)
 
     function mqttDisconnected(client)
         print("MQTT disconnected")
+        initializingBlinker:start()
         tryConnectToMqtt()
     end
     
@@ -114,6 +131,7 @@ function initializeMQTT()
         print("Message received")
         if topic == "/ucu/hello" then
             sendHelloMessage()
+            sendAllValues()
         end
 
         if message.instanceId == ucuId then
@@ -129,6 +147,7 @@ function initializeMQTT()
 
     function mqttError(client, reason)
         print("MQTT was unable to connect")
+        initializingBlinker:start()
         tmr.create():alarm(3000, tmr.ALARM_SINGLE, tryConnectToMqtt)
     end
 
@@ -160,6 +179,5 @@ end
 connectionChecker:register(1000, tmr.ALARM_AUTO, checkConnection)
 connectionChecker:start()
 
-gpio.mode(flashButtonPin, gpio.INPUT, gpio.PULLUP)
 gpio.mode(notificationLedPin, gpio.OUTPUT)
 gpio.write(notificationLedPin, gpio.HIGH)

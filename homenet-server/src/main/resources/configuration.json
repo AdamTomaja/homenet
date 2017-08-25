@@ -1,0 +1,56 @@
+{
+  "mqtt": {
+    "host": "192.168.0.20",
+    "port": 1883
+  },
+  "instances": [
+    {
+      "id": "ucu-192.168.0.21",
+      "name": "Daily Room",
+      "gpios": [
+        {
+          "name": "Button",
+          "mode": "INPUT",
+          "isPullup": true,
+          "pin": 3
+        },
+        {
+          "name": "Led",
+          "mode": "OUTPUT",
+          "isPullup": false,
+          "pin": 4
+        }
+      ]
+    },
+    {
+      "id": "ucu-192.168.0.17",
+      "name": "Kitchen",
+      "gpios": [
+        {
+          "name": "Button",
+          "mode": "INPUT",
+          "isPullup": true,
+          "pin": 3
+        },
+        {
+          "name": "Relay",
+          "mode": "OUTPUT",
+          "isPullup": false,
+          "pin": 1
+        },
+        {
+          "name": "Relay2",
+          "mode": "OUTPUT",
+          "isPullup": false,
+          "pin": 2
+        },
+        {
+          "name": "Led",
+          "mode": "OUTPUT",
+          "isPullup": false,
+          "pin": 4
+        }
+      ]
+    }
+  ]
+}

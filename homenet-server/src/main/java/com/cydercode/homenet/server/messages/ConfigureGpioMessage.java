@@ -1,10 +1,8 @@
 package com.cydercode.homenet.server.messages;
 
-public class ConfigureGpioMessage {
+import com.cydercode.homenet.server.config.GpioMode;
 
-    public enum GpioMode {
-        INPUT, OUTPUT
-    }
+public class ConfigureGpioMessage {
 
     String instanceId;
     int pin;
