@@ -80,6 +80,31 @@ public class FlowAPI {
         messageService.sendMessage(setGpioValueMessage);
     }
 
+    public void setValueById(String instanceId, String gpioId, Object value) throws Exception {
+        Integer pin = Integer.parseInt(gpioId);
+        GpioConfiguration gpioConfiguration = configurationService.getConfiguration(instanceId).get().getGpioByPin(pin).get();
+
+        SetGpioValueMessage setGpioValueMessage = new SetGpioValueMessage();
+        setGpioValueMessage.setInstanceId(instanceId);
+        setGpioValueMessage.setPin(pin);
+
+        if (gpioConfiguration.getInvert()) {
+            setGpioValueMessage.setValue(invert(value));
+        } else {
+            setGpioValueMessage.setValue(value);
+        }
+
+        messageService.sendMessage(setGpioValueMessage);
+    }
+
+    private Object invert(Object value) {
+        if (value.equals(1)) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
     public void fireListeners(String instanceName, String gpioName, Object value) {
         List<ScriptObjectMirror> list = listeners.get(createCallbackIndex(instanceName, gpioName));
         if (list != null) {

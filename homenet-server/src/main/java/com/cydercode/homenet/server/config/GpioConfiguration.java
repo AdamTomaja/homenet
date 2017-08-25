@@ -5,7 +5,9 @@ public class GpioConfiguration {
     private GpioMode mode;
     private Boolean isPullup;
     private String name;
+    private String description;
     private Integer pin;
+    private Boolean invert;
 
     private Long lastKnownValueTimestamp;
     private Object lastKnownValue;
@@ -34,12 +36,28 @@ public class GpioConfiguration {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Integer getPin() {
         return pin;
     }
 
     public void setPin(Integer pin) {
         this.pin = pin;
+    }
+
+    public Boolean getInvert() {
+        return invert;
+    }
+
+    public void setInvert(Boolean invert) {
+        this.invert = invert;
     }
 
     public Long getLastKnownValueTimestamp() {

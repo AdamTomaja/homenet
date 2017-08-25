@@ -34,6 +34,9 @@ public class FlowService {
     @Autowired
     private FlowAPI flowAPI;
 
+    @Autowired
+    private WebSocketHandler webSocketHandler;
+
     @PostConstruct
     public void init() throws IOException, ScriptException {
         String flow = IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("flow.js"), "UTF-8");
@@ -47,6 +50,7 @@ public class FlowService {
 
     public void postMessage(Object message) {
         if (message instanceof SetGpioValueMessage) {
+            webSocketHandler.sendMessage();
             SetGpioValueMessage setGpioValueMessage = (SetGpioValueMessage) message;
             UcuInstance instance = configurationService.getConfiguration(((SetGpioValueMessage) message).getInstanceId()).get();
             Optional<GpioConfiguration> optionalGpio = instance.getGpioByPin(setGpioValueMessage.getPin());

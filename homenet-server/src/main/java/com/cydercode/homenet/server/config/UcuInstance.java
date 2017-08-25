@@ -15,6 +15,7 @@ public class UcuInstance {
 
     private String id;
     private String name;
+    private String description;
     private List<GpioConfiguration> gpios;
 
     private Map<Integer, Object> lastKnownValues = new HashMap<>();
@@ -35,6 +36,14 @@ public class UcuInstance {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<GpioConfiguration> getGpios() {
