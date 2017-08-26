@@ -17,18 +17,16 @@ public class ConfigurationService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurationService.class);
 
-    private static final String CONFIGURATION_FILE = "configuration.json";
-
     private final Gson gson = new Gson();
 
     private Configuration configuration;
 
-    @Value("#{systemProperties['environment']}")
+    @Value("${environment:default}")
     private String environment;
 
     @PostConstruct
     public void init() {
-        String filename = environment == null ? CONFIGURATION_FILE : environment + "-configuration.json";
+        String filename = "configuration/" + environment + ".json";
         InputStreamReader jsonReader = new InputStreamReader(this.getClass()
                 .getClassLoader()
                 .getResourceAsStream(filename));

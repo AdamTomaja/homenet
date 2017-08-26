@@ -1,5 +1,6 @@
-package com.cydercode.homenet.server;
+package com.cydercode.homenet.server.controller;
 
+import com.cydercode.homenet.server.ConfigurationService;
 import com.cydercode.homenet.server.config.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -27,8 +27,8 @@
           "name": "Red LED",
           "mode": "OUTPUT",
           "isPullup": false,
-          "pin": 1,
-          "initialValue": 1
+          "initialValue": 1,
+          "pin": 1
         },
         {
           "name": "Yellow LED",
@@ -63,13 +63,15 @@
           "mode": "OUTPUT",
           "isPullup": false,
           "invert": true,
-          "pin": 2
+          "pin": 2,
+          "initialValue": 1
         },
         {
           "name": "Led",
           "mode": "OUTPUT",
           "isPullup": false,
           "invert": true,
+          "initialValue": 1,
           "pin": 4
         }
       ]

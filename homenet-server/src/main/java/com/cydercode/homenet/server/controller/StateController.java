@@ -1,5 +1,6 @@
-package com.cydercode.homenet.server;
+package com.cydercode.homenet.server.controller;
 
+import com.cydercode.homenet.server.ConfigurationService;
 import com.cydercode.homenet.server.flow.FlowAPI;
 import com.cydercode.homenet.server.rest.ControlUnit;
 import com.cydercode.homenet.server.rest.SetValueRequest;
