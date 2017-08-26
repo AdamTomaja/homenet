@@ -1,3 +1,15 @@
+# Network Configuration
+MQTT Broker has to be configured with static IP.
+To do this, please reconfigure Your /etc/dhcpcd.conf file as follows:
+
+```
+interface wlan0
+static ip_address 192.168.0.10/24
+static routers=192.168.0.1
+static domain_name_servers=127.0.0.1 8.8.8.8 8.8.4.4
+```
+
+# MQTT Topics
 This is description of MQTT topics used by HomeNet UCU and UMU. 
 
 | Topic name          | Description                                                                    | Message class        |
@@ -6,4 +18,11 @@ This is description of MQTT topics used by HomeNet UCU and UMU.
 | /ucu/gpio/set       | set value for gpio on ucu                                                      | SetGpioValueMessage  |
 | /umu/gpio/set       | gpio value changed on ucu                                                      | SetGpioValueMessage  |
 | /ucu/hello          | request to all ucus to send message to umu with instance names                 | HelloMessage         |
-| /umu/hello          | all ucus can introduce themselfs to umu in this topic after /ucu/hello message | HelloMessage         |
+| /umu/hello          | all ucus can introduce themselfs to umu                                        | HelloMessage         |
+
+# LCU - Light Control Unit - Specification
+* One 230V Relay output
+* Integrated 5V Power Supply
+* External Reset Button - in case of BUGs in software
+* External MicroUSB port - for programming
+* 
