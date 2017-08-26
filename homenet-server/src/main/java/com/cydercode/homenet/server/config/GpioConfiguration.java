@@ -1,5 +1,7 @@
 package com.cydercode.homenet.server.config;
 
+import com.cydercode.homenet.cdm.GpioMode;
+
 public class GpioConfiguration {
 
     private GpioMode mode;

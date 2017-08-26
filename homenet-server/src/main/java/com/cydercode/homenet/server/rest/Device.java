@@ -1,7 +1,7 @@
 package com.cydercode.homenet.server.rest;
 
 import com.cydercode.homenet.server.config.GpioConfiguration;
-import com.cydercode.homenet.server.config.GpioMode;
+import com.cydercode.homenet.cdm.GpioMode;
 
 import java.util.Objects;
 

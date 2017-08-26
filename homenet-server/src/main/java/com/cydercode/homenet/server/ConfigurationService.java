@@ -1,6 +1,7 @@
 package com.cydercode.homenet.server;
 
 import com.cydercode.homenet.server.config.Configuration;
+import com.cydercode.homenet.server.config.GpioConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
@@ -36,6 +37,10 @@ public class ConfigurationService {
         LOGGER.info("Configuration loaded");
     }
 
+    public void createInstance(UcuInstance ucuInstance) {
+        configuration.getInstances().add(ucuInstance);
+    }
+
     public Optional<UcuInstance> getConfigurationByName(String instanceName) {
         return configuration.getInstances()
                 .stream()
@@ -52,5 +57,9 @@ public class ConfigurationService {
 
     public Configuration getConfiguration() {
         return configuration;
+    }
+
+    public void createGpio(UcuInstance ucuInstance, GpioConfiguration gpioConfiguration) {
+        ucuInstance.getGpios().add(gpioConfiguration);
     }
 }

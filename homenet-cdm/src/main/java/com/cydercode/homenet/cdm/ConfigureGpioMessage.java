@@ -1,6 +1,6 @@
-package com.cydercode.homenet.server.messages;
+package com.cydercode.homenet.cdm;
 
-import com.cydercode.homenet.server.config.GpioMode;
+import com.cydercode.homenet.cdm.GpioMode;
 
 public class ConfigureGpioMessage {
 
@@ -39,5 +39,15 @@ public class ConfigureGpioMessage {
 
     public void setPullup(boolean pullup) {
         isPullup = pullup;
+    }
+
+    @Override
+    public String toString() {
+        return "ConfigureGpioMessage{" +
+                "instanceId='" + instanceId + '\'' +
+                ", pin=" + pin +
+                ", mode=" + mode +
+                ", isPullup=" + isPullup +
+                '}';
     }
 }

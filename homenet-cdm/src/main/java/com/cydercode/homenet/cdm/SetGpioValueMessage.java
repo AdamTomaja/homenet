@@ -1,4 +1,4 @@
-package com.cydercode.homenet.server.messages;
+package com.cydercode.homenet.cdm;
 
 public class SetGpioValueMessage {
 
@@ -28,5 +28,16 @@ public class SetGpioValueMessage {
 
     public void setValue(Object value) {
         this.value = value;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "SetGpioValueMessage{" +
+                "instanceId='" + instanceId + '\'' +
+                ", pin=" + pin +
+                ", value=" + value +
+                '}';
     }
 }

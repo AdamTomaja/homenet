@@ -1,4 +1,4 @@
-package com.cydercode.homenet.server.messages;
+package com.cydercode.homenet.cdm;
 
 public class HelloMessage {
 
@@ -10,5 +10,12 @@ public class HelloMessage {
 
     public void setInstanceId(String instanceId) {
         this.instanceId = instanceId;
+    }
+
+    @Override
+    public String toString() {
+        return "HelloMessage{" +
+                "instanceId='" + instanceId + '\'' +
+                '}';
     }
 }

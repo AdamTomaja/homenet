@@ -1,9 +1,9 @@
 package com.cydercode.homenet.server;
 
+import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.config.GpioConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
 import com.cydercode.homenet.server.flow.FlowAPI;
-import com.cydercode.homenet.server.messages.SetGpioValueMessage;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -52,11 +52,16 @@ public class FlowService {
         if (message instanceof SetGpioValueMessage) {
             webSocketHandler.sendMessage();
             SetGpioValueMessage setGpioValueMessage = (SetGpioValueMessage) message;
-            UcuInstance instance = configurationService.getConfiguration(((SetGpioValueMessage) message).getInstanceId()).get();
-            Optional<GpioConfiguration> optionalGpio = instance.getGpioByPin(setGpioValueMessage.getPin());
-            if (optionalGpio.isPresent()) {
-                GpioConfiguration gpioConfiguration = optionalGpio.get();
-                flowAPI.fireListeners(instance.getName(), gpioConfiguration.getName(), setGpioValueMessage.getValue());
+            Optional<UcuInstance> optionalUcuInstance = configurationService.getConfiguration(((SetGpioValueMessage) message).getInstanceId());
+            if (optionalUcuInstance.isPresent()) {
+                UcuInstance instance = optionalUcuInstance.get();
+                Optional<GpioConfiguration> optionalGpio = instance.getGpioByPin(setGpioValueMessage.getPin());
+                if (optionalGpio.isPresent()) {
+                    GpioConfiguration gpioConfiguration = optionalGpio.get();
+                    flowAPI.fireListeners(instance.getName(), gpioConfiguration.getName(), setGpioValueMessage.getValue());
+                }
+            } else {
+                LOGGER.warn("{} ucu configuration not found, ignoring", setGpioValueMessage.getInstanceId());
             }
         } else {
             LOGGER.error("Unkown message type {}", message);

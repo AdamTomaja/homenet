@@ -1,6 +1,5 @@
-package com.cydercode.homenet.server;
+package com.cydercode.homenet.virtualucu;
 
-import com.cydercode.homenet.server.config.MqttBrokerConfiguration;
 import com.cydercode.homenet.cdm.ConfigureGpioMessage;
 import com.cydercode.homenet.cdm.HelloMessage;
 import com.cydercode.homenet.cdm.SetGpioValueMessage;
@@ -9,6 +8,7 @@ import org.fusesource.mqtt.client.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -18,25 +18,28 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
+import static com.cydercode.homenet.cdm.HomenetTopics.*;
+
 @Service
 public class MessageService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageService.class);
 
-    public static final String UMU_HELLO = "/umu/hello";
-    public static final String UMU_GPIO_SET = "/umu/gpio/set";
-    public static final String UCU_GPIO_SET = "/ucu/gpio/set";
-    public static final String UCU_GPIO_CONFIGURE = "/ucu/gpio/configure";
+    private static final String[] SUBSCRIBED_TOPICS = {UCU_HELLO, UCU_GPIO_CONFIGURE, UCU_GPIO_SET};
 
-    private static final String[] SUBSCRIBED_TOPICS = {UMU_HELLO, UMU_GPIO_SET};
+    @Value("${mqtt.host}")
+    private String mqttHost;
 
-    ExecutorService executor = Executors.newSingleThreadExecutor();
-
-    @Autowired
-    private ConfigurationService configurationService;
+    @Value("${mqtt.port}")
+    private Integer mqttPort;
 
     @Autowired
     private MessageHandler messageHandler;
+
+    @Autowired
+    private Instance instance;
+
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
 
     private BlockingConnection connection;
 
@@ -44,7 +47,9 @@ public class MessageService {
         Message message = null;
         AtomicBoolean running = new AtomicBoolean(true);
         try {
-            connection.publish("/ucu/hello", getJson().toJson(new HelloMessage()).getBytes(), QoS.AT_LEAST_ONCE, false);
+            HelloMessage helloMessage = new HelloMessage();
+            helloMessage.setInstanceId(instance.getID());
+            connection.publish(UMU_HELLO, getJson().toJson(helloMessage).getBytes(), QoS.AT_LEAST_ONCE, false);
         } catch (Exception e) {
             LOGGER.error("Unable to send hello message", e);
         }
@@ -57,10 +62,13 @@ public class MessageService {
                 LOGGER.info("Message received : {} {}", message.getTopic(), payload);
 
                 switch (message.getTopic()) {
-                    case "/umu/gpio/set":
+                    case UCU_GPIO_SET:
                         messageHandler.handleSetGpioValueMessage(this, parseMessage(payload, SetGpioValueMessage.class));
                         break;
-                    case "/umu/hello":
+                    case UCU_GPIO_CONFIGURE:
+                        messageHandler.handleGpioConfigureMessage(this, parseMessage(payload, ConfigureGpioMessage.class));
+                        break;
+                    case UCU_HELLO:
                         messageHandler.handleHelloMessage(this, parseMessage(payload, HelloMessage.class));
                         break;
                     default:
@@ -76,10 +84,10 @@ public class MessageService {
     };
 
     public void sendMessage(Object message) throws Exception {
-        if (message instanceof ConfigureGpioMessage) {
-            sendMessage(UCU_GPIO_CONFIGURE, message);
+        if (message instanceof HelloMessage) {
+            sendMessage(UMU_HELLO, message);
         } else if (message instanceof SetGpioValueMessage) {
-            sendMessage(UCU_GPIO_SET, message);
+            sendMessage(UMU_GPIO_SET, message);
         }
     }
 
@@ -91,13 +99,13 @@ public class MessageService {
     @PostConstruct
     public void monitorTopics() throws Exception {
         MQTT mqtt = new MQTT();
-        MqttBrokerConfiguration mqttConfiguration = configurationService.getConfiguration().getMqtt();
-        mqtt.setHost(mqttConfiguration.getHost(), mqttConfiguration.getPort());
+        mqtt.setHost(mqttHost, mqttPort);
         connection = mqtt.blockingConnection();
         connection.connect();
         connection.subscribe(createTopicsList());
         executor.submit(messageLoopTask);
-        return;
+
+        LOGGER.info("Initialized {}:{}", mqttHost, mqttPort);
     }
 
     private <T> T parseMessage(String payload, Class<T> type) {
