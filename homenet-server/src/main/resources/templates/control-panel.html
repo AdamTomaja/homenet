@@ -69,7 +69,7 @@
         <div ng-repeat="unit in units" class="col-md-6">
             <div class="jumbotron">
                 <h1 class="display-3">{{ unit.name }}</h1>
-                <p class="lead">{{ unit.description }} - Universal Control Unit.</p>
+                <p class="lead">{{ unit.description }} - {{ unit.id }}.</p>
                 <hr class="my-4"/>
                 <div ng-repeat="device in unit.devices" class="card">
                     <div class="card-body">
