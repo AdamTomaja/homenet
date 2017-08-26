@@ -25,4 +25,37 @@ This is description of MQTT topics used by HomeNet UCU and UMU.
 * Integrated 5V Power Supply
 * External Reset Button - in case of BUGs in software
 * External MicroUSB port - for programming
-* 
+
+# UMU Configuration
+```json
+{
+  "mqtt": {
+    "host": "rpi-umu",
+    "port": 1883
+  },
+  "instances": [
+    {
+      "id": "ucu-389469",
+      "name": "Daily Room",
+      "description": "Room I live in",
+      "gpios": [
+        {
+          "name": "Button",
+          "mode": "INPUT",
+          "isPullup": true,
+          "pin": 3,
+          "invert": true
+        },
+        {
+          "name": "Led",
+          "mode": "OUTPUT",
+          "isPullup": false,
+          "pin": 4,
+          "initialValue": 1,
+          "invert": true
+        }
+      ]
+    }
+  ]
+}
+```
