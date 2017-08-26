@@ -1,7 +1,7 @@
 var app = angular.module('controlPanelApp', ['ngWebSocket']);
 
 app.controller('ucusController', function($scope, $http, $websocket){
-    var ws = $websocket('ws://vm:8080/ws');
+    var ws = $websocket(window.location.href.replace('http', 'ws') + '/ws');
 
     function loadUnits() {
         $http.get("/state/units").then(function(response){

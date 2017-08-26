@@ -1,0 +1,64 @@
+{
+  "mqtt": {
+    "host": "127.0.0.1",
+    "port": 1883
+  },
+  "instances": [
+    {
+      "id": "ucu-192.168.0.21",
+      "name": "Daily Room",
+      "description": "Room I live in",
+      "gpios": [
+        {
+          "name": "Button",
+          "mode": "INPUT",
+          "isPullup": true,
+          "pin": 3,
+          "invert": true
+        },
+        {
+          "name": "Led",
+          "mode": "OUTPUT",
+          "isPullup": false,
+          "pin": 4,
+          "invert": true
+        }
+      ]
+    },
+    {
+      "id": "ucu-192.168.0.17",
+      "name": "Kitchen",
+      "description": "Cooking place",
+      "gpios": [
+        {
+          "name": "Button",
+          "mode": "INPUT",
+          "isPullup": true,
+          "invert": true,
+          "pin": 3
+        },
+        {
+          "name": "Relay",
+          "mode": "OUTPUT",
+          "isPullup": false,
+          "invert": true,
+          "pin": 1
+        },
+        {
+          "name": "Relay2",
+          "mode": "OUTPUT",
+          "isPullup": false,
+          "invert": true,
+          "pin": 2
+        },
+        {
+          "name": "Led",
+          "mode": "OUTPUT",
+          "isPullup": false,
+          "invert": true,
+          "pin": 4
+        }
+      ]
+    }
+  ]
+}

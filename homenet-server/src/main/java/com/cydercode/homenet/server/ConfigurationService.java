@@ -5,6 +5,7 @@ import com.cydercode.homenet.server.config.UcuInstance;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -22,11 +23,15 @@ public class ConfigurationService {
 
     private Configuration configuration;
 
+    @Value("#{systemProperties['environment']}")
+    private String environment;
+
     @PostConstruct
     public void init() {
+        String filename = environment == null ? CONFIGURATION_FILE : environment + "-configuration.json";
         InputStreamReader jsonReader = new InputStreamReader(this.getClass()
                 .getClassLoader()
-                .getResourceAsStream(CONFIGURATION_FILE));
+                .getResourceAsStream(filename));
 
         configuration = gson.fromJson(jsonReader, Configuration.class);
 
