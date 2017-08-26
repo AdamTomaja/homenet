@@ -17,4 +17,9 @@ public class UiController {
     public String controlPanel(Model model) {
         return "control-panel";
     }
+
+    @RequestMapping("/settings")
+    public String settings(Model model) {
+        return "settings";
+    }
 }

@@ -22,7 +22,7 @@ public class StateController {
     @Autowired
     private FlowAPI flowAPI;
 
-    @GetMapping("/state/units")
+    @GetMapping("/api/state/units")
     public List<ControlUnit> inits() {
         return configurationService.getConfiguration()
                 .getInstances()
@@ -31,7 +31,7 @@ public class StateController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/state/set")
+    @PostMapping("/api/state/set")
     public void setValue(@RequestBody SetValueRequest request) throws Exception {
         flowAPI.setValueById(request.getUnitId(), request.getDeviceId(), translateValue(request.getValue()));
     }
