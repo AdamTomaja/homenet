@@ -34,7 +34,7 @@ public class ConfigurationService {
 
         configuration = gson.fromJson(jsonReader, Configuration.class);
 
-        LOGGER.info("Configuration loaded");
+        LOGGER.info("Configuration loaded from: {}", filename);
     }
 
     public void createInstance(UcuInstance ucuInstance) {
