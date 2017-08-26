@@ -74,7 +74,7 @@ public class Device {
         device.setDescription(gpio.getDescription());
         device.setName(gpio.getName());
         device.setValue(Objects.equals(0d, gpio.getLastKnownValue()) ? "OFF" : "ON");
-        if (gpio.getInvert()) {
+        if (gpio.getInvert() != null && gpio.getInvert()) {
             if (device.getValue().equals("ON")) {
                 device.setValue("OFF");
             } else {

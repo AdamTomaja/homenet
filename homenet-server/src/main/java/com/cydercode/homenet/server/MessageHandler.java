@@ -48,8 +48,16 @@ public class MessageHandler {
 
                 try {
                     messageService.sendMessage(configureGpioMessage);
+                    if (gpio.getInitialValue() != null) {
+                        SetGpioValueMessage setGpioValueMessage = new SetGpioValueMessage();
+                        setGpioValueMessage.setValue(gpio.getInitialValue());
+                        setGpioValueMessage.setInstanceId(instanceId);
+                        setGpioValueMessage.setPin(gpio.getPin());
+                        messageService.sendMessage(setGpioValueMessage);
+                    }
+
                 } catch (Exception e) {
-                    LOGGER.warn("Unable to send gpio configuration to {}", instanceId, e);
+                    LOGGER.warn("Unable to send initial configuration to {}", instanceId, e);
                 }
             });
         }

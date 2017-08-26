@@ -22,6 +22,20 @@
           "isPullup": false,
           "pin": 4,
           "invert": true
+        },
+        {
+          "name": "Red LED",
+          "mode": "OUTPUT",
+          "isPullup": false,
+          "pin": 1,
+          "initialValue": 1
+        },
+        {
+          "name": "Yellow LED",
+          "mode": "OUTPUT",
+          "isPullup": false,
+          "pin": 2,
+          "initialValue": 0
         }
       ]
     },

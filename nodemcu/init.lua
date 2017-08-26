@@ -60,6 +60,7 @@ initializingBlinker:start()
 messageHandlers = {
 ["/ucu/gpio/set"] = function(message) 
     outputValue = nil
+    print(tostring(message.value))
     if message.value == 1 then
         outputValue = gpio.HIGH
     else 

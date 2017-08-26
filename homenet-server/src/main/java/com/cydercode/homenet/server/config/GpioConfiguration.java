@@ -8,6 +8,7 @@ public class GpioConfiguration {
     private String description;
     private Integer pin;
     private Boolean invert;
+    private Integer initialValue;
 
     private Long lastKnownValueTimestamp;
     private Object lastKnownValue;
@@ -58,6 +59,14 @@ public class GpioConfiguration {
 
     public void setInvert(Boolean invert) {
         this.invert = invert;
+    }
+
+    public Integer getInitialValue() {
+        return initialValue;
+    }
+
+    public void setInitialValue(Integer initialValue) {
+        this.initialValue = initialValue;
     }
 
     public Long getLastKnownValueTimestamp() {
