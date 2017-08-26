@@ -1,3 +1,8 @@
+# Running UMU
+Execute following command in **homenet-server** directory
+```bash
+maven spring-boot:run
+```
 # Network Configuration
 MQTT Broker has to be configured with static IP.
 To do this, please reconfigure Your /etc/dhcpcd.conf file as follows:
