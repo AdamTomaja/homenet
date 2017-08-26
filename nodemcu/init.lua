@@ -19,7 +19,8 @@ wifiConfig = {ssid = settings.ssid, pwd = settings.pwd, auto = false, connected_
 
 notificationLedPin = 4
 
-ucuId = "ucu-default-id"  
+ucuId = "ucu-" .. tostring(node.chipid())
+print("UCU id is " .. ucuId)
 
 wifi.sta.config(wifiConfig)
 wifi.setmode(wifi.STATION)
@@ -163,15 +164,7 @@ function checkConnection()
         print("IP: ")
         print(wifi.sta.getip())
         connectionChecker:stop()
-
-        ip, nm = wifi.sta.getip()
-        
-        ucuId = "ucu-" .. ip;
-
-        print("UCU id is " .. ucuId)
-       
         initializeMQTT()
-
         gpio.write(notificationLedPin, gpio.LOW)
     end
 end

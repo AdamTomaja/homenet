@@ -5,7 +5,7 @@
   },
   "instances": [
     {
-      "id": "ucu-192.168.0.21",
+      "id": "ucu-389469",
       "name": "Daily Room",
       "description": "Room I live in",
       "gpios": [
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "id": "ucu-192.168.0.17",
+      "id": "ucu-74466",
       "name": "Kitchen",
       "description": "Cooking place",
       "gpios": [
