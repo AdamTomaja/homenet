@@ -24,6 +24,7 @@ This is description of MQTT topics used by HomeNet UCU and UMU.
 | /umu/gpio/set       | gpio value changed on ucu                                                      | SetGpioValueMessage  |
 | /ucu/hello          | request to all ucus to send message to umu with instance names                 | HelloMessage         |
 | /umu/hello          | all ucus can introduce themselfs to umu                                        | HelloMessage         |
+| /umu/error          | ucu sends to this topic information about errors                               | ErrorMessage         |
 
 # LCU - Light Control Unit - Specification
 * One 230V Relay output

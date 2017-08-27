@@ -1,7 +1,6 @@
 package com.cydercode.homenet.server.websocket;
 
-import com.cydercode.homenet.cdm.SetGpioValueMessage;
-import com.cydercode.homenet.server.rest.SetValueRequest;
+import com.cydercode.homenet.server.rest.WSMessage;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +28,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
     public void sendMessage(Object message) {
         sessions.forEach(session -> {
             try {
-                if (message instanceof SetGpioValueMessage) {
-                    session.sendMessage(new TextMessage(new Gson().toJson(conversionService.convert(message, SetValueRequest.class))));
-                }
+                session.sendMessage(new TextMessage(new Gson().toJson(conversionService.convert(message, WSMessage.class))));
             } catch (Exception e) {
                 LOGGER.error("Unable to send to client: {}", session.getRemoteAddress());
             }

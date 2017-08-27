@@ -12,15 +12,33 @@ app.controller('ucusController', function($scope, $http, $websocket){
 
     ws.onMessage(function(message) {
         var data = JSON.parse(message.data);
-        $scope.units.forEach(function(unit){
-            unit.devices.forEach(function(device) {
-                if(unit.id == data.unitId && device.id == data.deviceId) {
-                    device.value = data.value;
-                    device.blocked = false;
-                    $scope.$apply();
-                }
-            });
-        });
+        switch(data.type) {
+            case "SetValueRequest":
+            data = data.message;
+            $scope.units.forEach(function(unit){
+                        unit.devices.forEach(function(device) {
+                            if(unit.id == data.unitId && device.id == data.deviceId) {
+                                device.value = data.value;
+                                device.blocked = false;
+                                $scope.$apply();
+                            }
+                        });
+                    });
+            break;
+            case "ErrorNotification":
+                $scope.units.forEach(function(unit){
+                     if(unit.id == data.message.unitId) {
+                        if(unit.errors == undefined) {
+                            unit.errors = [];
+                        }
+
+                        unit.errors.push(data.message.error);
+                        $scope.$apply();
+                     }
+                });
+            break;
+        }
+
     });
 
     $scope.setValue = function(unit, device, value) {

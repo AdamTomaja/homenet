@@ -14,7 +14,8 @@ public class MessageUtils {
     public static Set<Class<?>> getMessageClasses() {
         return Arrays.asList(ConfigureGpioMessage.class,
                 HelloMessage.class,
-                SetGpioValueMessage.class)
+                SetGpioValueMessage.class,
+                ErrorMessage.class)
                 .stream()
                 .collect(toSet());
     }

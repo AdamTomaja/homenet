@@ -7,6 +7,7 @@ import com.cydercode.homenet.server.FlowService;
 import com.cydercode.homenet.server.StateCache;
 import com.cydercode.homenet.server.config.GpioConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
+import com.cydercode.homenet.server.websocket.WebSocketHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class SetGpioValueMessageHandler implements TypedMessageHandler<SetGpioVa
 
     @Autowired
     private FlowService flowService;
+
+    @Autowired
+    private WebSocketHandler webSocketHandler;
 
     @Override
     public void handleMessage(SetGpioValueMessage message) {
@@ -55,6 +59,7 @@ public class SetGpioValueMessageHandler implements TypedMessageHandler<SetGpioVa
 
             stateCache.setState(message.getInstanceId(), message.getPin(), message.getValue());
             flowService.postMessage(message);
+            webSocketHandler.sendMessage(message);
         } else {
             LOGGER.warn("Instance {} not found, ignoring the message.", message.getInstanceId());
         }

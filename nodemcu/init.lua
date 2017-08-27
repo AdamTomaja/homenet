@@ -128,17 +128,28 @@ function initializeMQTT()
     m:on("offline", mqttDisconnected)
 
     m:on("message", function(client, topic, data) 
-        message = sjson.decode(data);
+        local status,err = pcall(function() 
+            message = sjson.decode(data);
         
-        print("Message received")
-        if topic == "/ucu/hello" then
-            sendHelloMessage()
-            sendAllValues()
-        end
+            print("Message received")
+            if topic == "/ucu/hello" then
+                sendHelloMessage()
+                sendAllValues()
+            end
+    
+            if message.instanceId == ucuId then
+                print("Received message for me")
+                messageHandlers[topic](message)
+            end 
+        end) 
 
-        if message.instanceId == ucuId then
-            print("Received message for me")
-            messageHandlers[topic](message)
+        if status then
+            print("ok")
+        else 
+            print("Error during message handling")
+            local errStr = tostring(err)
+            print(errStr)
+            sendMessage("/umu/error", {error = errStr})
         end
     end)
 
