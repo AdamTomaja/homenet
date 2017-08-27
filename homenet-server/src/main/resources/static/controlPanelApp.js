@@ -11,18 +11,23 @@ app.controller('ucusController', function($scope, $http, $websocket){
     }
 
     ws.onMessage(function(message) {
-        loadUnits();
+        var data = JSON.parse(message.data);
+        $scope.units.forEach(function(unit){
+            unit.devices.forEach(function(device) {
+                if(unit.id == data.unitId && device.id == data.deviceId) {
+                    device.value = data.value;
+                    $scope.$apply();
+                }
+            });
+        });
     });
 
     $scope.setValue = function(unit, device, value) {
         $http.post("/api/state/set", {unitId: unit.id, deviceId: device.id, value: value}).then(function(response){
-            console.log("ok");
-            console.log(response);
+            console.log("State set successfully")
         });
     }
 
     loadUnits();
 
 });
-
-console.log("siema");

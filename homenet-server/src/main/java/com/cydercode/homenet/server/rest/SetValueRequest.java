@@ -35,8 +35,8 @@ public class SetValueRequest {
 
     public static SetValueRequest fromSetGpioValueMessage(GpioConfiguration gpio, SetGpioValueMessage setGpioValueMessage) {
         SetValueRequest setValueRequest = new SetValueRequest();
-        setValueRequest.setUnitId(String.valueOf(setGpioValueMessage.getPin()));
-        setValueRequest.setDeviceId(setGpioValueMessage.getInstanceId());
+        setValueRequest.setUnitId(String.valueOf(setGpioValueMessage.getInstanceId()));
+        setValueRequest.setDeviceId(String.valueOf(setGpioValueMessage.getPin()));
         setValueRequest.setValue(ValueConverter.convertToUIValue(gpio, setGpioValueMessage.getValue()));
         return setValueRequest;
     }
