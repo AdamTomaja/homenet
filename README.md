@@ -30,6 +30,8 @@ This is description of MQTT topics used by HomeNet UCU and UMU.
 * Integrated 5V Power Supply
 * External Reset Button - in case of BUGs in software
 * External MicroUSB port - for programming
+* Fixed to wall like normal light switch - using metal frame from common light switch
+* External BLS 2x2 Ports for additional sensors and devices `(GND, 5V, 3.3V, GPIO)`
 
 # UMU Configuration
 ```json
