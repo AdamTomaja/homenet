@@ -18,21 +18,10 @@ public class MessageService implements ApplicationListener<MessageEvent> {
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageService.class);
 
     @Autowired
-    private ConfigurationService configurationService;
-
-    @Autowired
-    private MessageHandler messageHandler;
-
-    @Autowired
     private MessageBus messageBus;
 
     @Autowired
     private Set<TypedMessageHandler> messageHandlers;
-
-    @PostConstruct
-    public void sendHelloAtStartup() throws Exception {
-        messageBus.sendMessage(new HelloMessage());
-    }
 
     @Override
     public void onApplicationEvent(MessageEvent messageEvent) {
