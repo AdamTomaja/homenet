@@ -1,31 +1,23 @@
-function onConnectToAP(connection)
-    print("Connected to AP")
-end
+dofile("configuration-server.lua")
+dofile("settings.lua")
 
 monitoredGpios = {4, 3, 1, 2}
 gpioStates = { }
 
-
-if file.open("settings.json", "r") then
-    text = file.read()
-    print(text)
-    settings = sjson.decode(text)
-    file.close()
-else 
-    print("Settings file not found!")
-end
-
-wifiConfig = {ssid = settings.ssid, pwd = settings.pwd, auto = false, connected_cb = onConnectToAP}
-
-notificationLedPin = 4
-
 ucuId = "ucu-" .. tostring(node.chipid())
 print("UCU id is " .. ucuId)
+notificationLedPin = 4
 
-wifi.sta.config(wifiConfig)
+settings = readSettings()
+
+stationConfig = {ssid = settings.ssid, pwd = settings.pwd, auto = false, connected_cb = onConnectToAP}
+
+wifi.sta.config(stationConfig)
 wifi.setmode(wifi.STATION)
-
 wifi.sta.connect()
+
+
+startConfigurationServer()
 
 function checkGpio()
     for i,pin in pairs(monitoredGpios) do
