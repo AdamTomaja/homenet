@@ -2,6 +2,7 @@ dofile("configuration-server.lua")
 dofile("settings.lua")
 
 monitoredGpios = {4, 3, 1, 2}
+monitoredAnalogs = {}
 gpioStates = { }
 
 ucuId = "ucu-" .. tostring(node.chipid())
@@ -28,7 +29,15 @@ function checkGpio()
             gpioStates[pin] = currentState
             sendMessage("/umu/gpio/set", {pin = pin, value = currentState})
         end
-     
+    end
+
+    for i, pin in pairs(monitoredAnalogs) do
+        currentState = adc.read(0)
+        if currentState ~= gpioStates[pin] then
+            print("Pin " .. tostring(pin) .. " changed to value " .. tostring(currentState))
+            gpioStates[pin] = currentState
+            sendMessage("/umu/gpio/set", {pin = pin, value = currentState})
+        end
     end
 end
 
@@ -65,6 +74,12 @@ end,
 ["/ucu/gpio/configure"] = function(message) 
     mode = gpio.INPUT
     pullup = gpio.FLOAT
+
+    if message.mode == "ANALOG_INPUT" then
+        monitoredAnalogs[message.pin] = message.pin;
+        print("Pin " .. tostring(message.pin) .. " configured to ANALOG INPUT")
+        return;
+    end
 
     if message.mode == "OUTPUT" then
         mode = gpio.OUTPUT

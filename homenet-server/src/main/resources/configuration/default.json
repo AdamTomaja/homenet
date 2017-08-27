@@ -17,6 +17,12 @@
           "invert": true
         },
         {
+          "name": "Temperature Sensor",
+          "mode": "ANALOG_INPUT",
+          "pin": 0,
+          "displayAs": "temperature"
+        },
+        {
           "name": "Led",
           "mode": "OUTPUT",
           "isPullup": false,
@@ -50,6 +56,11 @@
           "isPullup": true,
           "invert": true,
           "pin": 3
+        },
+        {
+          "name": "ADC",
+          "mode": "ANALOG_INPUT",
+          "pin": 0
         },
         {
           "name": "Relay",

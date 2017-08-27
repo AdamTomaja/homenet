@@ -5,25 +5,10 @@ import com.cydercode.homenet.server.config.GpioConfiguration;
 
 public class Device {
 
-    public enum Type {
-        INPUT, OUTPUT;
-
-        public static Type fromGpioMode(GpioMode gpioMode) {
-            switch (gpioMode) {
-                case INPUT:
-                    return INPUT;
-                case OUTPUT:
-                    return OUTPUT;
-            }
-
-            throw new IllegalArgumentException("Unknown Gpio mode");
-        }
-    }
-
     private Object id;
     private String name;
     private String description;
-    private Type type;
+    private GpioMode type;
     private Object value;
 
     public Object getId() {
@@ -50,11 +35,11 @@ public class Device {
         this.description = description;
     }
 
-    public Type getType() {
+    public GpioMode getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(GpioMode type) {
         this.type = type;
     }
 

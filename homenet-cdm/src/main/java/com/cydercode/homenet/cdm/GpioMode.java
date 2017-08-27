@@ -1,5 +1,5 @@
 package com.cydercode.homenet.cdm;
 
 public enum GpioMode {
-    INPUT, OUTPUT
+    INPUT, OUTPUT, ANALOG_INPUT
 }

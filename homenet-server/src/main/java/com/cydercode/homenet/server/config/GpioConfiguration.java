@@ -6,12 +6,13 @@ import com.google.common.base.Objects;
 public class GpioConfiguration {
 
     private GpioMode mode;
-    private Boolean isPullup;
+    private boolean isPullup;
     private String name;
     private String description;
     private Integer pin;
     private boolean invert;
     private Integer initialValue;
+    private String displayAs;
 
     private Long lastKnownValueTimestamp;
     private Object lastKnownValue;
@@ -24,11 +25,11 @@ public class GpioConfiguration {
         this.mode = mode;
     }
 
-    public Boolean getPullup() {
+    public boolean getPullup() {
         return isPullup;
     }
 
-    public void setPullup(Boolean pullup) {
+    public void setPullup(boolean pullup) {
         isPullup = pullup;
     }
 
@@ -56,11 +57,11 @@ public class GpioConfiguration {
         this.pin = pin;
     }
 
-    public Boolean getInvert() {
+    public boolean getInvert() {
         return invert;
     }
 
-    public void setInvert(Boolean invert) {
+    public void setInvert(boolean invert) {
         this.invert = invert;
     }
 
@@ -70,6 +71,14 @@ public class GpioConfiguration {
 
     public void setInitialValue(Integer initialValue) {
         this.initialValue = initialValue;
+    }
+
+    public String getDisplayAs() {
+        return displayAs;
+    }
+
+    public void setDisplayAs(String displayAs) {
+        this.displayAs = displayAs;
     }
 
     public Long getLastKnownValueTimestamp() {

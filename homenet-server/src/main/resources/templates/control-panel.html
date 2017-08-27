@@ -71,6 +71,10 @@
                                     class="btn btn-danger" ng-click="setValue(unit, device, 'ON')">Turned OFF
                             </button>
                         </div>
+
+                        <div ng-if="device.type == 'ANALOG_INPUT'">
+                            <div>{{ device.value }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
