@@ -20,6 +20,8 @@ public class ValueConverter {
         if (gpio.getMode() == GpioMode.ANALOG_INPUT) {
             if ("temperature".equals(gpio.getDisplayAs())) {
                 return convertRawADCToTemperature((Double) systemValue) + " ℃";
+            } else if ("voltage".equals(gpio.getDisplayAs())) {
+                return convertRawADCToVoltage((Double) systemValue) + " V";
             } else {
                 return systemValue;
             }
@@ -36,6 +38,10 @@ public class ValueConverter {
         }
 
         return value;
+    }
+
+    private static double convertRawADCToVoltage(double rawADC) {
+        return rawADC / 1024 * 3.3;
     }
 
     private static double convertRawADCToTemperature(double rawAdc) {

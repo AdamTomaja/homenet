@@ -60,6 +60,7 @@
         {
           "name": "ADC",
           "mode": "ANALOG_INPUT",
+          "displayAs": "voltage",
           "pin": 0
         },
         {
