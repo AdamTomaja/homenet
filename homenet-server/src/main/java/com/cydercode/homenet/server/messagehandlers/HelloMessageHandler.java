@@ -64,8 +64,8 @@ public class HelloMessageHandler implements TypedMessageHandler<HelloMessage> {
             instance.setId(instanceId);
             instance.setLastHelloTimestamp(new Date().getTime());
             instance.setGpios(new ArrayList<>());
-            instance.setDescription("ucu detected dynamically");
-            instance.setName("new ucu");
+            instance.setDescription("Unconfigured unit " + instanceId);
+            instance.setName("Unit " + instanceId);
             configurationService.createInstance(instance);
             LOGGER.warn("New instance detected: {}", instance.getId());
         }

@@ -1,5 +1,6 @@
 package com.cydercode.homenet.server.config;
 
+import com.google.common.base.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +18,6 @@ public class UcuInstance {
     private String name;
     private String description;
     private List<GpioConfiguration> gpios;
-
-    private Map<Integer, Object> lastKnownValues = new HashMap<>();
 
     private long lastHelloTimestamp;
 
@@ -54,10 +53,6 @@ public class UcuInstance {
         this.gpios = gpios;
     }
 
-    public Map<Integer, Object> getLastKnownValues() {
-        return lastKnownValues;
-    }
-
     public void setLastHelloTimestamp(long lastHelloTimestamp) {
         this.lastHelloTimestamp = lastHelloTimestamp;
     }
@@ -88,6 +83,23 @@ public class UcuInstance {
         } else {
             LOGGER.info("Pin {} not found in instance {} configuration", pin, id);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UcuInstance that = (UcuInstance) o;
+        return lastHelloTimestamp == that.lastHelloTimestamp &&
+                Objects.equal(id, that.id) &&
+                Objects.equal(name, that.name) &&
+                Objects.equal(description, that.description) &&
+                Objects.equal(gpios, that.gpios);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id, name, description, gpios, lastHelloTimestamp);
     }
 }
 

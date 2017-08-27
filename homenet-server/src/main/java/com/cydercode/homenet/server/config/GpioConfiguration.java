@@ -1,6 +1,7 @@
 package com.cydercode.homenet.server.config;
 
 import com.cydercode.homenet.cdm.GpioMode;
+import com.google.common.base.Objects;
 
 public class GpioConfiguration {
 
@@ -85,6 +86,27 @@ public class GpioConfiguration {
 
     public void setLastKnownValue(Object lastKnownValue) {
         this.lastKnownValue = lastKnownValue;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GpioConfiguration that = (GpioConfiguration) o;
+        return mode == that.mode &&
+                Objects.equal(isPullup, that.isPullup) &&
+                Objects.equal(name, that.name) &&
+                Objects.equal(description, that.description) &&
+                Objects.equal(pin, that.pin) &&
+                Objects.equal(invert, that.invert) &&
+                Objects.equal(initialValue, that.initialValue) &&
+                Objects.equal(lastKnownValueTimestamp, that.lastKnownValueTimestamp) &&
+                Objects.equal(lastKnownValue, that.lastKnownValue);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(mode, isPullup, name, description, pin, invert, initialValue, lastKnownValueTimestamp, lastKnownValue);
     }
 
     @Override
