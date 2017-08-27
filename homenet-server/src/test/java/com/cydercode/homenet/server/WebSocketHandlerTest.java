@@ -4,6 +4,7 @@ import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.rest.SetValueRequest;
 import com.cydercode.homenet.server.websocket.WebSocketHandler;
 import com.google.gson.Gson;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -17,6 +18,7 @@ import java.util.stream.IntStream;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
+@Ignore
 public class WebSocketHandlerTest {
 
     @Test
