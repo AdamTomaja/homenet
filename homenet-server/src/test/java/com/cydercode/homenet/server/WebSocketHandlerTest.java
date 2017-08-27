@@ -2,6 +2,7 @@ package com.cydercode.homenet.server;
 
 import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.rest.SetValueRequest;
+import com.cydercode.homenet.server.websocket.WebSocketHandler;
 import com.google.gson.Gson;
 import org.junit.Test;
 import org.springframework.web.socket.CloseStatus;

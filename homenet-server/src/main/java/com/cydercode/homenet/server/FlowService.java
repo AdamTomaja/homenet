@@ -4,6 +4,7 @@ import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.config.GpioConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
 import com.cydercode.homenet.server.flow.FlowAPI;
+import com.cydercode.homenet.server.websocket.WebSocketHandler;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;

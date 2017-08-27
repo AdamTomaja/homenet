@@ -1,4 +1,4 @@
-package com.cydercode.homenet.server;
+package com.cydercode.homenet.server.websocket;
 
 import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.rest.SetValueRequest;
