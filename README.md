@@ -1,3 +1,15 @@
+# Home-Net
+What is Home-Net? Home-Net is a project which will make Your Home Smart :) 
+With Home-Net You can script Your devices in JavaScript and Control them from WEB.
+
+# Screenshots
+## Home-Net: Main Page
+![Main Page](screenshots/main-page.PNG "Home-Net Landing Page")
+
+## Home-Net: Control Panel
+![Main Page](screenshots/control-panel.PNG "Home-Net Control Panel")
+
+
 # Running UMU
 Execute following command in **homenet-server** directory
 ```bash
