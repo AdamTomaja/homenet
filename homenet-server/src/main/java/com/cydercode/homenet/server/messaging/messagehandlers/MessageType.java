@@ -1,4 +1,4 @@
-package com.cydercode.homenet.server.messagehandlers;
+package com.cydercode.homenet.server.messaging.messagehandlers;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

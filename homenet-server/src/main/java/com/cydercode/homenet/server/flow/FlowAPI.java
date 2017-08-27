@@ -1,8 +1,7 @@
 package com.cydercode.homenet.server.flow;
 
 import com.cydercode.homenet.server.ConfigurationService;
-import com.cydercode.homenet.server.MessageBus;
-import com.cydercode.homenet.server.MessageService;
+import com.cydercode.homenet.server.messaging.MessageBus;
 import com.cydercode.homenet.server.config.GpioConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
 import com.cydercode.homenet.cdm.SetGpioValueMessage;

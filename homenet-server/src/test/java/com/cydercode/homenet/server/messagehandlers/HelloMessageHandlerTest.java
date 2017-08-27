@@ -5,16 +5,16 @@ import com.cydercode.homenet.cdm.GpioMode;
 import com.cydercode.homenet.cdm.HelloMessage;
 import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.ConfigurationService;
-import com.cydercode.homenet.server.MessageBus;
+import com.cydercode.homenet.server.messaging.MessageBus;
 import com.cydercode.homenet.server.StateCache;
 import com.cydercode.homenet.server.config.GpioConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
+import com.cydercode.homenet.server.messaging.messagehandlers.HelloMessageHandler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Collections;

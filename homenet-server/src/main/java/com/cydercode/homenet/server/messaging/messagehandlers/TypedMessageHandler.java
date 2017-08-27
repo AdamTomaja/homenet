@@ -1,4 +1,4 @@
-package com.cydercode.homenet.server;
+package com.cydercode.homenet.server.messaging.messagehandlers;
 
 public interface TypedMessageHandler<T> {
 

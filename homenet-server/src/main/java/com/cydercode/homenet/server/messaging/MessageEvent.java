@@ -1,4 +1,4 @@
-package com.cydercode.homenet.server;
+package com.cydercode.homenet.server.messaging;
 
 import org.springframework.context.ApplicationEvent;
 

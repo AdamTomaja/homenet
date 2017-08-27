@@ -1,6 +1,7 @@
 package com.cydercode.homenet.server;
 
 import com.cydercode.homenet.cdm.HelloMessage;
+import com.cydercode.homenet.server.messaging.MessageBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

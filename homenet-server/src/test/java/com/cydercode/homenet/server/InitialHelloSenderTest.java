@@ -1,6 +1,7 @@
 package com.cydercode.homenet.server;
 
 import com.cydercode.homenet.cdm.HelloMessage;
+import com.cydercode.homenet.server.messaging.MessageBus;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

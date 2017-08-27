@@ -1,8 +1,9 @@
-package com.cydercode.homenet.server;
+package com.cydercode.homenet.server.messaging;
 
 import com.cydercode.homenet.cdm.MessageUtils;
 import com.cydercode.homenet.cdm.UCUTopic;
 import com.cydercode.homenet.cdm.UMUTopic;
+import com.cydercode.homenet.server.ConfigurationService;
 import com.cydercode.homenet.server.config.MqttBrokerConfiguration;
 import com.google.gson.Gson;
 import org.fusesource.mqtt.client.*;

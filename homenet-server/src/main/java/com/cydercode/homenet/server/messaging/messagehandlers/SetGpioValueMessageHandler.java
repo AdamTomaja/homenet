@@ -1,11 +1,10 @@
-package com.cydercode.homenet.server.messagehandlers;
+package com.cydercode.homenet.server.messaging.messagehandlers;
 
 import com.cydercode.homenet.cdm.GpioMode;
 import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.ConfigurationService;
 import com.cydercode.homenet.server.FlowService;
 import com.cydercode.homenet.server.StateCache;
-import com.cydercode.homenet.server.TypedMessageHandler;
 import com.cydercode.homenet.server.config.GpioConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
 import org.slf4j.Logger;

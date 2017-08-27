@@ -1,14 +1,13 @@
-package com.cydercode.homenet.server;
+package com.cydercode.homenet.server.messaging;
 
-import com.cydercode.homenet.cdm.HelloMessage;
-import com.cydercode.homenet.server.messagehandlers.MessageType;
+import com.cydercode.homenet.server.messaging.messagehandlers.MessageType;
+import com.cydercode.homenet.server.messaging.messagehandlers.TypedMessageHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.Optional;
 import java.util.Set;
 
