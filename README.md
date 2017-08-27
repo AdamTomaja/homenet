@@ -79,3 +79,21 @@ This is description of MQTT topics used by HomeNet UCU and UMU.
   ]
 }
 ```
+
+# UCU Configuration
+Every UCU has embedded configuration server service. 
+
+It exposes WIFI Access Point with Http server. AP will be automatically disabled after 60 seconds after boot time.
+Name of AP is the same as chipid (instanceId). 
+
+To configure UCU You should connect with UCU with WiFi and send following http request:
+## UCU Configuration Http Request
+* host: `192.168.4.1`
+* port: `80`
+* method: `POST`
+* path: `/`
+* headers:
+    * **ssid** - wifi SSID
+    * **password** - wifi PASSWORD
+    * **mqtt-host** - MQTT Broker Host
+    * **mqtt-port** - MQTT Broker Port
