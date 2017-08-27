@@ -1,7 +1,8 @@
 package com.cydercode.homenet.cdm;
 
-import com.cydercode.homenet.cdm.GpioMode;
+import static com.cydercode.homenet.cdm.HomenetTopics.UCU_GPIO_CONFIGURE;
 
+@UCUTopic(UCU_GPIO_CONFIGURE)
 public class ConfigureGpioMessage {
 
     String instanceId;

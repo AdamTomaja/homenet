@@ -1,5 +1,10 @@
 package com.cydercode.homenet.cdm;
 
+import static com.cydercode.homenet.cdm.HomenetTopics.UCU_HELLO;
+import static com.cydercode.homenet.cdm.HomenetTopics.UMU_HELLO;
+
+@UCUTopic(UCU_HELLO)
+@UMUTopic(UMU_HELLO)
 public class HelloMessage {
 
     private String instanceId;

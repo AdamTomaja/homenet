@@ -1,6 +1,7 @@
 package com.cydercode.homenet.server.flow;
 
 import com.cydercode.homenet.server.ConfigurationService;
+import com.cydercode.homenet.server.MessageBus;
 import com.cydercode.homenet.server.MessageService;
 import com.cydercode.homenet.server.config.GpioConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
@@ -22,7 +23,7 @@ public class FlowAPI {
     private ConfigurationService configurationService;
 
     @Autowired
-    private MessageService messageService;
+    private MessageBus messageBus;
 
     public void loginfo(Object object) {
         LOGGER.info("{}", object);
@@ -77,7 +78,7 @@ public class FlowAPI {
         setGpioValueMessage.setPin(gpioConfiguration.get().getPin());
         setGpioValueMessage.setValue(value);
 
-        messageService.sendMessage(setGpioValueMessage);
+        messageBus.sendMessage(setGpioValueMessage);
     }
 
     public void setValueById(String instanceId, String gpioId, Object value) throws Exception {
@@ -94,7 +95,7 @@ public class FlowAPI {
             setGpioValueMessage.setValue(value);
         }
 
-        messageService.sendMessage(setGpioValueMessage);
+        messageBus.sendMessage(setGpioValueMessage);
     }
 
     private Object invert(Object value) {
