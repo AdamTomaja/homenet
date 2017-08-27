@@ -1,4 +1,4 @@
-package com.cydercode.homenet.server.controller;
+package com.cydercode.homenet.server.config;
 
 import com.cydercode.homenet.server.ConfigurationService;
 import com.cydercode.homenet.server.config.Configuration;
