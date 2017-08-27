@@ -25,17 +25,12 @@ function get_http_req (instr)
    return t
 end
 
-configurationServer = net.createServer(net.TCP, 30)
-
 -- String trim left and right
 function trim (s)
   return (s:gsub ("^%s*(.-)%s*$", "%1"))
 end
 
 function receiveRequest(socket, data)
-    print("Data received") 
-    lines = {}
-
     httpReq = get_http_req(data)
 
     if httpReq["METHOD"] == "POST" then
@@ -43,22 +38,30 @@ function receiveRequest(socket, data)
         socket:send("OK", function(socket) 
             socket:close()
         end)
+        print("New configuration saved")
     else 
         socket:send("Hello World", function(socket) 
             socket:close()
         end)
     end
-   
 end
 
 function onConfigurationConnection(connection)
     connection:on("receive", receiveRequest);
-    
 end
 
 function startConfigurationServer()
     local apConfig = {ssid = ucuId, auth = wifi.OPEN}
     wifi.ap.config(apConfig)
     wifi.setmode(wifi.STATIONAP)
+    
+    configurationServer = net.createServer(net.TCP, 30)
     configurationServer:listen(80, onConfigurationConnection)
+    print("Configuration Server Started")
+end
+
+function shutdownConfigurationServer()
+    wifi.setmode(wifi.STATION)
+    configurationServer:close()
+    print("Configuration Server Stopped")
 end

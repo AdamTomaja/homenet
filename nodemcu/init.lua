@@ -18,6 +18,7 @@ wifi.sta.connect()
 
 
 startConfigurationServer()
+tmr.create():alarm(60 * 1000, tmr.ALARM_SINGLE, shutdownConfigurationServer)
 
 function checkGpio()
     for i,pin in pairs(monitoredGpios) do
