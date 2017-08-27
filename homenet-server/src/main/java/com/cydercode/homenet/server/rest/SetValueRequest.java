@@ -1,5 +1,8 @@
 package com.cydercode.homenet.server.rest;
 
+import com.cydercode.homenet.cdm.SetGpioValueMessage;
+import com.cydercode.homenet.server.config.GpioConfiguration;
+
 public class SetValueRequest {
 
     private String unitId;
@@ -28,5 +31,13 @@ public class SetValueRequest {
 
     public void setValue(Object value) {
         this.value = value;
+    }
+
+    public static SetValueRequest fromSetGpioValueMessage(GpioConfiguration gpio, SetGpioValueMessage setGpioValueMessage) {
+        SetValueRequest setValueRequest = new SetValueRequest();
+        setValueRequest.setUnitId(String.valueOf(setGpioValueMessage.getPin()));
+        setValueRequest.setDeviceId(setGpioValueMessage.getInstanceId());
+        setValueRequest.setValue(ValueConverter.convertToUIValue(gpio, setGpioValueMessage.getValue()));
+        return setValueRequest;
     }
 }

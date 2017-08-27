@@ -50,7 +50,7 @@ public class FlowService {
 
     public void postMessage(Object message) {
         if (message instanceof SetGpioValueMessage) {
-            webSocketHandler.sendMessage();
+            webSocketHandler.sendMessage(message);
             SetGpioValueMessage setGpioValueMessage = (SetGpioValueMessage) message;
             Optional<UcuInstance> optionalUcuInstance = configurationService.getConfiguration(((SetGpioValueMessage) message).getInstanceId());
             if (optionalUcuInstance.isPresent()) {

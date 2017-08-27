@@ -1,29 +1,41 @@
 package com.cydercode.homenet.server;
 
+import com.cydercode.homenet.cdm.SetGpioValueMessage;
+import com.cydercode.homenet.server.config.GpioConfiguration;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import static com.cydercode.homenet.server.rest.SetValueRequest.fromSetGpioValueMessage;
 
 @Component
 public class WebSocketHandler extends TextWebSocketHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketHandler.class);
 
+    @Autowired
+    private ConfigurationService configurationService;
+
     private List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
-    public void sendMessage() {
+    public void sendMessage(Object message) {
         sessions.forEach(session -> {
             try {
-                session.sendMessage(new TextMessage(""));
-            } catch (IOException e) {
+                if (message instanceof SetGpioValueMessage) {
+                    SetGpioValueMessage setGpioValueMessage = (SetGpioValueMessage) message;
+                    GpioConfiguration gpio = configurationService.getConfiguration(setGpioValueMessage.getInstanceId()).get().getGpioByPin(setGpioValueMessage.getPin()).get();
+                    session.sendMessage(new TextMessage(new Gson().toJson(fromSetGpioValueMessage(gpio, setGpioValueMessage))));
+                }
+            } catch (Exception e) {
                 LOGGER.error("Unable to send to client: {}", session.getRemoteAddress());
             }
         });

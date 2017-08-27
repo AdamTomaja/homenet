@@ -4,6 +4,7 @@ import com.cydercode.homenet.server.ConfigurationService;
 import com.cydercode.homenet.server.flow.FlowAPI;
 import com.cydercode.homenet.server.rest.ControlUnit;
 import com.cydercode.homenet.server.rest.SetValueRequest;
+import com.cydercode.homenet.server.rest.ValueConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -34,10 +34,6 @@ public class StateController {
 
     @PostMapping("/api/state/set")
     public void setValue(@RequestBody SetValueRequest request) throws Exception {
-        flowAPI.setValueById(request.getUnitId(), request.getDeviceId(), translateValue(request.getValue()));
-    }
-
-    private Object translateValue(Object value) {
-        return Objects.equals("ON", value) ? 1 : 0;
+        flowAPI.setValueById(request.getUnitId(), request.getDeviceId(), ValueConverter.convertToSystemValue(request.getValue()));
     }
 }

@@ -1,5 +1,8 @@
 package com.cydercode.homenet.server;
 
+import com.cydercode.homenet.cdm.SetGpioValueMessage;
+import com.cydercode.homenet.server.rest.SetValueRequest;
+import com.google.gson.Gson;
 import org.junit.Test;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -18,6 +21,15 @@ public class WebSocketHandlerTest {
     @Test
     public void shouldSendMessageToAllClients() {
         // given
+        String instanceId = "inst-id";
+        int value = 1;
+        int pin = 2;
+
+        SetGpioValueMessage setGpioValueMessage = new SetGpioValueMessage();
+        setGpioValueMessage.setInstanceId(instanceId);
+        setGpioValueMessage.setValue(value);
+        setGpioValueMessage.setPin(pin);
+
         List<WebSocketSession> sessions = IntStream.range(0, 2)
                 .mapToObj(i -> mock(WebSocketSession.class))
                 .collect(Collectors.toList());
@@ -30,17 +42,28 @@ public class WebSocketHandlerTest {
             }
         });
 
+        SetValueRequest setValueRequest = new SetValueRequest();
+        setValueRequest.setDeviceId(instanceId);
+        setValueRequest.setUnitId(String.valueOf(pin));
+        setValueRequest.setValue(value);
+
+        TextMessage textMessage = new TextMessage(toJson(setValueRequest));
+
         // when
-        handler.sendMessage();
+        handler.sendMessage(setGpioValueMessage);
 
         // then
         sessions.forEach(session -> {
             try {
-                verify(session).sendMessage(any(TextMessage.class));
+                verify(session).sendMessage(textMessage);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    private String toJson(Object object) {
+        return new Gson().toJson(object);
     }
 
     @Test
@@ -54,7 +77,7 @@ public class WebSocketHandlerTest {
 
         // when
         handler.afterConnectionClosed(sessionClosed, CloseStatus.NORMAL);
-        handler.sendMessage();
+        handler.sendMessage(new Object());
 
         // then
         verify(sessionClosed, never()).sendMessage(any());

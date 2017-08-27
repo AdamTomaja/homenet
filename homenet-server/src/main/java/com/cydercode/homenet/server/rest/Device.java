@@ -1,9 +1,7 @@
 package com.cydercode.homenet.server.rest;
 
-import com.cydercode.homenet.server.config.GpioConfiguration;
 import com.cydercode.homenet.cdm.GpioMode;
-
-import java.util.Objects;
+import com.cydercode.homenet.server.config.GpioConfiguration;
 
 public class Device {
 
@@ -73,15 +71,7 @@ public class Device {
         device.setId(gpio.getPin());
         device.setDescription(gpio.getDescription());
         device.setName(gpio.getName());
-        device.setValue(Objects.equals(0d, gpio.getLastKnownValue()) ? "OFF" : "ON");
-        if (gpio.getInvert() != null && gpio.getInvert()) {
-            if (device.getValue().equals("ON")) {
-                device.setValue("OFF");
-            } else {
-                device.setValue("ON");
-            }
-        }
-
+        device.setValue(ValueConverter.convertToUIValue(gpio, gpio.getLastKnownValue()));
         device.setType(Type.fromGpioMode(gpio.getMode()));
         return device;
     }
