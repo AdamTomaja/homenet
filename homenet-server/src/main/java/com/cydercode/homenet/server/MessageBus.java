@@ -45,12 +45,12 @@ public class MessageBus {
         AtomicBoolean running = new AtomicBoolean(true);
 
         while (running.get()) {
-            LOGGER.info("Waiting for message...");
+            LOGGER.debug("Waiting for message...");
             try {
                 message = connection.receive();
                 String payload = new String(message.getPayload());
                 String topic = message.getTopic();
-                LOGGER.info("Message received : {} {}", topic, payload);
+                LOGGER.debug("Message received : {} {}", topic, payload);
                 MessageEvent messageEvent = new MessageEvent(this);
                 Optional<Class<?>> messageClass = MessageUtils.getMessageClasses().stream()
                         .filter(clazz -> {
