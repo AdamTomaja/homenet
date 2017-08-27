@@ -44,16 +44,4 @@ public class ControlUnit {
     public void setDevices(List<Device> devices) {
         this.devices = devices;
     }
-
-    public static ControlUnit fromUcuInstance(UcuInstance ucuInstance) {
-        ControlUnit unit = new ControlUnit();
-        unit.setId(ucuInstance.getId());
-        unit.setName(ucuInstance.getName());
-        unit.setDescription(ucuInstance.getDescription());
-        unit.setDevices(ucuInstance.getGpios()
-                .stream()
-                .map(Device::fromGpio)
-                .collect(toList()));
-        return unit;
-    }
 }

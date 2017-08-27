@@ -32,12 +32,4 @@ public class SetValueRequest {
     public void setValue(Object value) {
         this.value = value;
     }
-
-    public static SetValueRequest fromSetGpioValueMessage(GpioConfiguration gpio, SetGpioValueMessage setGpioValueMessage) {
-        SetValueRequest setValueRequest = new SetValueRequest();
-        setValueRequest.setUnitId(String.valueOf(setGpioValueMessage.getInstanceId()));
-        setValueRequest.setDeviceId(String.valueOf(setGpioValueMessage.getPin()));
-        setValueRequest.setValue(ValueConverter.convertToUIValue(gpio, setGpioValueMessage.getValue()));
-        return setValueRequest;
-    }
 }

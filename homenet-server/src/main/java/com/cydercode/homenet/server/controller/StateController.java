@@ -6,6 +6,7 @@ import com.cydercode.homenet.server.rest.ControlUnit;
 import com.cydercode.homenet.server.rest.SetValueRequest;
 import com.cydercode.homenet.server.rest.ValueConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,12 +24,15 @@ public class StateController {
     @Autowired
     private FlowAPI flowAPI;
 
+    @Autowired
+    private ConversionService conversionService;
+
     @GetMapping("/api/state/units")
     public List<ControlUnit> inits() {
         return configurationService.getConfiguration()
                 .getInstances()
                 .stream()
-                .map(ControlUnit::fromUcuInstance)
+                .map(ucuInstance -> conversionService.convert(ucuInstance, ControlUnit.class))
                 .collect(Collectors.toList());
     }
 

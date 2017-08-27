@@ -65,14 +65,4 @@ public class Device {
     public void setValue(Object value) {
         this.value = value;
     }
-
-    public static Device fromGpio(GpioConfiguration gpio) {
-        Device device = new Device();
-        device.setId(gpio.getPin());
-        device.setDescription(gpio.getDescription());
-        device.setName(gpio.getName());
-        device.setValue(ValueConverter.convertToUIValue(gpio, gpio.getLastKnownValue()));
-        device.setType(Type.fromGpioMode(gpio.getMode()));
-        return device;
-    }
 }
