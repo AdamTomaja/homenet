@@ -13,7 +13,7 @@ public class ValueConverter {
     public static Object convertToUIValue(GpioConfiguration gpio, Object systemValue) {
         Object value = Objects.equals(0d, gpio.getLastKnownValue()) ? OFF : ON;
 
-        if (gpio.getInvert() != null && gpio.getInvert()) {
+        if (gpio.getInvert()) {
             if (value.equals(ON)) {
                 value = OFF;
             } else {

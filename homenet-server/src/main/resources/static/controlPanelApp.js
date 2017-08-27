@@ -16,6 +16,7 @@ app.controller('ucusController', function($scope, $http, $websocket){
             unit.devices.forEach(function(device) {
                 if(unit.id == data.unitId && device.id == data.deviceId) {
                     device.value = data.value;
+                    device.blocked = false;
                     $scope.$apply();
                 }
             });
@@ -25,6 +26,7 @@ app.controller('ucusController', function($scope, $http, $websocket){
     $scope.setValue = function(unit, device, value) {
         $http.post("/api/state/set", {unitId: unit.id, deviceId: device.id, value: value}).then(function(response){
             console.log("State set successfully")
+            device.blocked = true;
         });
     }
 

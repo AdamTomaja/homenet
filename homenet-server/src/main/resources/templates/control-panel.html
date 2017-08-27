@@ -55,13 +55,13 @@
                         <h6 class="card-subtitle mb-2 text-muted">{{ device.description }}</h6>
 
                         <div ng-if="device.value == 'ON'">
-                            <button type="button" class="btn btn-success" data-toggle="tooltip"
+                            <button type="button" ng-disabled="device.blocked" class="btn btn-success" data-toggle="tooltip"
                                     title="Turn the device OFF" ng-click="setValue(unit, device, 'OFF')">Turned ON
                             </button>
                         </div>
 
                         <div ng-if="device.value == 'OFF'">
-                            <button type="button" data-toggle="tooltip" title="Turn the device ON"
+                            <button type="button" ng-disabled="device.blocked" data-toggle="tooltip" title="Turn the device ON"
                                     class="btn btn-danger" ng-click="setValue(unit, device, 'ON')">Turned OFF
                             </button>
                         </div>

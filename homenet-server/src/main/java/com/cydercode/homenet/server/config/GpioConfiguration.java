@@ -10,7 +10,7 @@ public class GpioConfiguration {
     private String name;
     private String description;
     private Integer pin;
-    private Boolean invert;
+    private boolean invert;
     private Integer initialValue;
 
     private Long lastKnownValueTimestamp;

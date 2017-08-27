@@ -89,7 +89,7 @@ public class FlowAPI {
         setGpioValueMessage.setInstanceId(instanceId);
         setGpioValueMessage.setPin(pin);
 
-        if (gpioConfiguration.getInvert() != null && gpioConfiguration.getInvert()) {
+        if (gpioConfiguration.getInvert()) {
             setGpioValueMessage.setValue(invert(value));
         } else {
             setGpioValueMessage.setValue(value);
