@@ -45,7 +45,7 @@ public class ValueConverter {
     }
 
     private static double convertRawADCToVoltage(double rawADC) {
-        return rawADC / 1024 * 3.3;
+        return roundToDecimalPlaces(rawADC / 1024 * 3.3, 3);
     }
 
     private static double convertRawADCToTemperature(double rawAdc) {
@@ -61,7 +61,12 @@ public class ValueConverter {
         steinhart += 1.0 / (NOMINAL_TEMPERATURE + 273.15); // + (1/To)
         steinhart = 1.0 / steinhart; // Invert
         steinhart -= 273.15; // convert to C
-        return steinhart;
+        return roundToDecimalPlaces(steinhart, 3);
+    }
+
+    private static double roundToDecimalPlaces(double value, int decimalPlaces) {
+        double factor = Math.pow(10, decimalPlaces);
+        return Math.round(value * factor) / factor;
     }
 
     public static Object convertToSystemValue(Object uiValue) {

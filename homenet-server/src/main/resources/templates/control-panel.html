@@ -41,9 +41,11 @@
     </div>
 </div>
 
+
+
 <div class="container" ng-controller="ucusController">
-    <!-- Example row of columns -->
-    <div class="row">
+    <div ng-if="websocketConnectionClosed" class="alert alert-danger" role="alert">WebSocket connection lost</div>
+    <div ng-if="websocketConnectionClosed != true" class="row">
         <div ng-repeat="unit in units" class="col-md-4">
             <div class="jumbotron">
                 <h1 class="display-3">{{ unit.name }}</h1>

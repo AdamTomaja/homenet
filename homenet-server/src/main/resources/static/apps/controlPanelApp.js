@@ -41,6 +41,10 @@ app.controller('ucusController', function($scope, $http, $websocket){
 
     });
 
+    ws.onClose(function() {
+        $scope.websocketConnectionClosed = true;
+    });
+
     $scope.setValue = function(unit, device, value) {
         $http.post("/api/state/set", {unitId: unit.id, deviceId: device.id, value: value}).then(function(response){
             console.log("State set successfully")
