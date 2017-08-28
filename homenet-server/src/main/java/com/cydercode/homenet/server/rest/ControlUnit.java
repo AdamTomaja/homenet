@@ -1,10 +1,6 @@
 package com.cydercode.homenet.server.rest;
 
-import com.cydercode.homenet.server.config.UcuInstance;
-
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 public class ControlUnit {
 
@@ -12,7 +8,7 @@ public class ControlUnit {
     private String name;
     private String description;
     private List<Device> devices;
-    private DeviceState.Health health;
+    private UnitState.Health health;
 
     public String getId() {
         return id;
@@ -46,11 +42,11 @@ public class ControlUnit {
         this.devices = devices;
     }
 
-    public DeviceState.Health getHealth() {
+    public UnitState.Health getHealth() {
         return health;
     }
 
-    public void setHealth(DeviceState.Health health) {
+    public void setHealth(UnitState.Health health) {
         this.health = health;
     }
 }

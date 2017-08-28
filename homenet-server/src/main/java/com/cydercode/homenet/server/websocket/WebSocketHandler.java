@@ -30,7 +30,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
             try {
                 session.sendMessage(new TextMessage(new Gson().toJson(conversionService.convert(message, WSMessage.class))));
             } catch (Exception e) {
-                LOGGER.error("Unable to send to client: {}", session.getRemoteAddress());
+                LOGGER.error("Unable to send to client: {}", session.getRemoteAddress(), e);
             }
         });
     }

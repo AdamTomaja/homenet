@@ -87,16 +87,14 @@ public class UcuInstance {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UcuInstance that = (UcuInstance) o;
-        return lastHeartBeatTime == that.lastHeartBeatTime &&
-                Objects.equal(id, that.id) &&
+        return Objects.equal(id, that.id) &&
                 Objects.equal(name, that.name) &&
-                Objects.equal(description, that.description) &&
-                Objects.equal(gpios, that.gpios);
+                Objects.equal(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, name, description, gpios, lastHeartBeatTime);
+        return Objects.hashCode(id, name, description);
     }
 }
 

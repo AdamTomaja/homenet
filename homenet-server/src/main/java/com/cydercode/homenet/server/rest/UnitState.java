@@ -1,6 +1,6 @@
 package com.cydercode.homenet.server.rest;
 
-public class DeviceState {
+public class UnitState {
 
     public enum Health {
         HEALTHY, DISCONNECTED, UNKNOWN

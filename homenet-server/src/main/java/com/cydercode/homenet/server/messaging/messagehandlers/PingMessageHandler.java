@@ -19,13 +19,9 @@ public class PingMessageHandler implements TypedMessageHandler<PingMessage> {
     @Autowired
     private StateCache stateCache;
 
-    @Autowired
-    private WebSocketHandler webSocketHandler;
-
     @Override
     public void handleMessage(PingMessage message) {
         LOGGER.info("Ping received from {}", message.getInstanceId());
         stateCache.setLastHeartBeat(message.getInstanceId(), new Date().getTime());
-        webSocketHandler.sendMessage(message);
     }
 }
