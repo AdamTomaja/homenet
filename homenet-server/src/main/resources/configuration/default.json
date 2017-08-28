@@ -87,6 +87,34 @@
           "pin": 4
         }
       ]
+    },
+    {
+      "id": "ucu-742627",
+      "name": "Bathroom",
+      "description": "Bathroom upstairs",
+      "gpios": [
+        {
+          "name": "Button",
+          "mode": "INPUT",
+          "isPullup": true,
+          "invert": true,
+          "pin": 3
+        },
+        {
+          "name": "ADC",
+          "mode": "ANALOG_INPUT",
+          "displayAs": "voltage",
+          "pin": 0
+        },
+        {
+          "name": "Led",
+          "mode": "OUTPUT",
+          "isPullup": false,
+          "invert": true,
+          "initialValue": 1,
+          "pin": 4
+        }
+      ]
     }
   ]
 }

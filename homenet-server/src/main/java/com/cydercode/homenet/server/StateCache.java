@@ -19,7 +19,6 @@ public class StateCache {
     private ConfigurationService configurationService;
 
     public void setState(String instanceId, int pin, Object value) {
-        LOGGER.info("State changed in instance {} for pin {} to value {}", instanceId, pin, value);
         executeOnInstanceIfExist(instanceId, ucuInstance -> ucuInstance.executeOnGpioIfExists(pin, gpio -> {
             gpio.setLastKnownValue(value);
             gpio.setLastKnownValueTimestamp(new Date().getTime());

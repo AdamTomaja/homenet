@@ -17,6 +17,10 @@ public class ValueConverter {
     static final int BCOEFFICIENT = 3950;
 
     public static Object convertToUIValue(GpioConfiguration gpio, Object systemValue) {
+        if (systemValue == null) {
+            return systemValue;
+        }
+
         if (gpio.getMode() == GpioMode.ANALOG_INPUT) {
             if ("temperature".equals(gpio.getDisplayAs())) {
                 return convertRawADCToTemperature((Double) systemValue) + " ℃";
