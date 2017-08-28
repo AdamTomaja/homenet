@@ -12,6 +12,7 @@ public class ControlUnit {
     private String name;
     private String description;
     private List<Device> devices;
+    private DeviceState.Health health;
 
     public String getId() {
         return id;
@@ -43,5 +44,13 @@ public class ControlUnit {
 
     public void setDevices(List<Device> devices) {
         this.devices = devices;
+    }
+
+    public DeviceState.Health getHealth() {
+        return health;
+    }
+
+    public void setHealth(DeviceState.Health health) {
+        this.health = health;
     }
 }

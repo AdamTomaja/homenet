@@ -25,8 +25,8 @@ public class StateCache {
         }));
     }
 
-    public void setLastHelloTimestamp(String instanceId, long time) {
-        executeOnInstanceIfExist(instanceId, ucuInstance -> ucuInstance.setLastHelloTimestamp(time));
+    public void setLastHeartBeat(String instanceId, long time) {
+        executeOnInstanceIfExist(instanceId, ucuInstance -> ucuInstance.setLastHeartBeatTime(time));
     }
 
     private void executeOnInstanceIfExist(String instanceId, Consumer<UcuInstance> instanceConsumer) {

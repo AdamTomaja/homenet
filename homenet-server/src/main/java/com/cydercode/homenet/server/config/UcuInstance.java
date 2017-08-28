@@ -4,9 +4,7 @@ import com.google.common.base.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -18,8 +16,7 @@ public class UcuInstance {
     private String name;
     private String description;
     private List<GpioConfiguration> gpios;
-
-    private long lastHelloTimestamp;
+    private Long lastHeartBeatTime;
 
     public String getId() {
         return id;
@@ -53,12 +50,12 @@ public class UcuInstance {
         this.gpios = gpios;
     }
 
-    public void setLastHelloTimestamp(long lastHelloTimestamp) {
-        this.lastHelloTimestamp = lastHelloTimestamp;
+    public void setLastHeartBeatTime(long lastHeartBeatTime) {
+        this.lastHeartBeatTime = lastHeartBeatTime;
     }
 
-    public long getLastHelloTimestamp() {
-        return lastHelloTimestamp;
+    public Long getLastHeartBeatTime() {
+        return lastHeartBeatTime;
     }
 
     public Optional<GpioConfiguration> getGpioByPin(Integer pin) {
@@ -90,7 +87,7 @@ public class UcuInstance {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UcuInstance that = (UcuInstance) o;
-        return lastHelloTimestamp == that.lastHelloTimestamp &&
+        return lastHeartBeatTime == that.lastHeartBeatTime &&
                 Objects.equal(id, that.id) &&
                 Objects.equal(name, that.name) &&
                 Objects.equal(description, that.description) &&
@@ -99,7 +96,7 @@ public class UcuInstance {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, name, description, gpios, lastHelloTimestamp);
+        return Objects.hashCode(id, name, description, gpios, lastHeartBeatTime);
     }
 }
 

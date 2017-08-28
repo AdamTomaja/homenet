@@ -57,6 +57,7 @@ function initializeMQTT()
         print("MQTT Connected") 
         m:subscribe({
             ["/ucu/hello"]=0, 
+            ["/ucu/ping"]=0,
             ["/ucu/gpio/configure"]=0, 
             ["/ucu/gpio/set"]=0}, 
             function(conn) 
@@ -78,10 +79,9 @@ function initializeMQTT()
     m:on("message", function(client, topic, data) 
         local status,err = pcall(function() 
             message = sjson.decode(data)
-           
-            if topic == "/ucu/hello" then
-                sendHelloMessage()
-                sendAllValues()
+
+            if broadcastHandlers[topic] ~= nil then
+                broadcastHandlers[topic](message)
                 return
             end
     

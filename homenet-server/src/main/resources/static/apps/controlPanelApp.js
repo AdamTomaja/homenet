@@ -37,6 +37,14 @@ app.controller('ucusController', function($scope, $http, $websocket){
                      }
                 });
             break;
+            case "ControlUnitPingMessage":
+                 $scope.units.forEach(function(unit){
+                     if(unit.id == data.message.unitId) {
+                        unit.health = "HEALTHY";
+                        $scope.$apply();
+                     }
+                });
+            break;
         }
 
     });

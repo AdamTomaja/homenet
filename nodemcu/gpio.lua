@@ -1,3 +1,13 @@
+broadcastHandlers = {
+["/ucu/ping"] = function(message)
+    sendMessage("/umu/ping", {})
+end,
+["/ucu/hello"] = function(message)
+    sendHelloMessage()
+    sendAllValues()
+end
+}
+
 messageHandlers = {
 ["/ucu/gpio/set"] = function(message) 
     local outputValue = nil

@@ -52,12 +52,16 @@
                 <p class="lead">{{ unit.description }} - {{ unit.id }}.</p>
                 <hr class="my-4"/>
 
+                <div ng-if="unit.health == 'UNKNOWN'" class="alert alert-warning" role="alert">Status of this unit is unknown</div>
+                <div ng-if="unit.health == 'DISCONNECTED'" class="alert alert-danger" role="alert">Unit disconnected</div>
+
+
                 <div ng-repeat="error in unit.errors" class="alert alert-danger alert-dismissable">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <strong>Error!</strong> {{ error }}
                 </div>
 
-                <div ng-repeat="device in unit.devices" class="card">
+                <div ng-if="unit.health == 'HEALTHY'" ng-repeat="device in unit.devices" class="card">
                     <div class="card-body">
                         <h4 class="card-title">{{ device.name }}</h4>
                         <h6 class="card-subtitle mb-2 text-muted">{{ device.description }}</h6>

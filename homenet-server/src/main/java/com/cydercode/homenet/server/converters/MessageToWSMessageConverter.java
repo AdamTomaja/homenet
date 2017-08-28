@@ -1,6 +1,7 @@
 package com.cydercode.homenet.server.converters;
 
 import com.cydercode.homenet.cdm.ErrorMessage;
+import com.cydercode.homenet.cdm.PingMessage;
 import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.rest.WSMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class MessageToWSMessageConverter implements Converter<Object, WSMessage>
     @Autowired
     private ErrorMessageToErrorNotificationConverter errorMessageToErrorNotificationConverter;
 
+    @Autowired
+    private PingMessageToControlUnitPingMessageConverter pingMessageToControlUnitPingMessageConverter;
+
     @Override
     public WSMessage convert(Object message) {
         WSMessage wsMessage = new WSMessage();
@@ -24,6 +28,8 @@ public class MessageToWSMessageConverter implements Converter<Object, WSMessage>
             wsMessage.setMessage(setGpioValueMessageToSetValueRequestConverter.convert((SetGpioValueMessage) message));
         } else if (message instanceof ErrorMessage) {
             wsMessage.setMessage(errorMessageToErrorNotificationConverter.convert((ErrorMessage) message));
+        } else if (message instanceof PingMessage) {
+            wsMessage.setMessage(pingMessageToControlUnitPingMessageConverter.convert((PingMessage) message));
         } else {
             throw new IllegalArgumentException();
         }

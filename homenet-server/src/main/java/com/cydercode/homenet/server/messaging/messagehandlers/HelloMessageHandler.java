@@ -34,7 +34,7 @@ public class HelloMessageHandler implements TypedMessageHandler<HelloMessage> {
     public void handleMessage(HelloMessage message) {
         String instanceId = message.getInstanceId();
 
-        stateCache.setLastHelloTimestamp(instanceId, new Date().getTime());
+        stateCache.setLastHeartBeat(instanceId, new Date().getTime());
 
         Optional<UcuInstance> instanceConfiguration = configurationService.getConfiguration(instanceId);
         if (instanceConfiguration.isPresent()) {
@@ -63,7 +63,7 @@ public class HelloMessageHandler implements TypedMessageHandler<HelloMessage> {
         } else {
             UcuInstance instance = new UcuInstance();
             instance.setId(instanceId);
-            instance.setLastHelloTimestamp(new Date().getTime());
+            instance.setLastHeartBeatTime(new Date().getTime());
             instance.setGpios(new ArrayList<>());
             instance.setDescription("Unconfigured unit " + instanceId);
             instance.setName("Unit " + instanceId);

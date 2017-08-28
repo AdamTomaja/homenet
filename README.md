@@ -37,7 +37,8 @@ This is description of MQTT topics used by HomeNet UCU and UMU.
 | /ucu/hello          | request to all ucus to send message to umu with instance names                 | HelloMessage         |
 | /umu/hello          | all ucus can introduce themselfs to umu                                        | HelloMessage         |
 | /umu/error          | ucu sends to this topic information about errors                               | ErrorMessage         |
-
+| /umu/ping           | ucus sends ping message as answer for ping message from umu                    | PingMessage          |
+| /ucu/ping           | umu send ping request to all ucus                                              | PingMessage          |
 # LCU - Light Control Unit - Specification
 * One 230V Relay output
 * Integrated 5V Power Supply

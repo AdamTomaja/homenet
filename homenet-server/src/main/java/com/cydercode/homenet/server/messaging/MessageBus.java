@@ -21,16 +21,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
-import static com.cydercode.homenet.cdm.HomenetTopics.UMU_ERROR;
-import static com.cydercode.homenet.cdm.HomenetTopics.UMU_GPIO_SET;
-import static com.cydercode.homenet.cdm.HomenetTopics.UMU_HELLO;
+import static com.cydercode.homenet.cdm.HomenetTopics.*;
 
 @Component
 public class MessageBus {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageBus.class);
 
-    private String[] SUBSCRIBED_TOPICS = {UMU_HELLO, UMU_GPIO_SET, UMU_ERROR};
+    private String[] SUBSCRIBED_TOPICS = {UMU_HELLO, UMU_GPIO_SET, UMU_ERROR, UMU_PING};
 
     @Autowired
     private ConfigurationService configurationService;
