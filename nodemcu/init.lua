@@ -110,9 +110,7 @@ function initializeMQTT()
         tmr.create():alarm(3000, tmr.ALARM_SINGLE, tryConnectToMqtt)
     end
 
-    tryConnectToMqtt()
-
-    
+    tryConnectToMqtt()    
 end
 
 function checkConnection() 

@@ -81,6 +81,12 @@
                         <div ng-if="device.type == 'ANALOG_INPUT'">
                             <div>{{ device.value }}</div>
                         </div>
+
+                        <div ng-if="device.type == 'ANALOG_OUTPUT'">
+                            <input type="number" name="input" ng-model="device.value" min="0" max="1023" />
+                            <button type="button" ng-disabled="device.blocked" class="btn btn-success" data-toggle="tooltip"
+                                    title="Set analog vlaue" ng-click="setValue(unit, device, device.value)">Set Value</button>
+                        </div>
                     </div>
                 </div>
             </div>

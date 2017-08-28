@@ -21,6 +21,10 @@ public class ValueConverter {
             return systemValue;
         }
 
+        if (gpio.getMode() == GpioMode.ANALOG_OUTPUT) {
+            return systemValue;
+        }
+
         if (gpio.getMode() == GpioMode.ANALOG_INPUT) {
             if ("temperature".equals(gpio.getDisplayAs())) {
                 return convertRawADCToTemperature((Double) systemValue) + " ℃";
@@ -69,7 +73,11 @@ public class ValueConverter {
         return Math.round(value * factor) / factor;
     }
 
-    public static Object convertToSystemValue(Object uiValue) {
+    public static Object convertToSystemValue(GpioConfiguration gpioConfiguration, Object uiValue) {
+        if (gpioConfiguration.getMode() == GpioMode.ANALOG_OUTPUT) {
+            return uiValue;
+        }
+
         return Objects.equals(ON, uiValue) ? 1 : 0;
     }
 }

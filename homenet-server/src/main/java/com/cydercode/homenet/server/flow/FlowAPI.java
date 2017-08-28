@@ -1,14 +1,16 @@
 package com.cydercode.homenet.server.flow;
 
+import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.ConfigurationService;
-import com.cydercode.homenet.server.messaging.MessageBus;
 import com.cydercode.homenet.server.config.GpioConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
-import com.cydercode.homenet.cdm.SetGpioValueMessage;
+import com.cydercode.homenet.server.messaging.MessageBus;
+import com.cydercode.homenet.server.rest.SetValueRequest;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -78,31 +80,6 @@ public class FlowAPI {
         setGpioValueMessage.setValue(value);
 
         messageBus.sendMessage(setGpioValueMessage);
-    }
-
-    public void setValueById(String instanceId, String gpioId, Object value) throws Exception {
-        Integer pin = Integer.parseInt(gpioId);
-        GpioConfiguration gpioConfiguration = configurationService.getConfiguration(instanceId).get().getGpioByPin(pin).get();
-
-        SetGpioValueMessage setGpioValueMessage = new SetGpioValueMessage();
-        setGpioValueMessage.setInstanceId(instanceId);
-        setGpioValueMessage.setPin(pin);
-
-        if (gpioConfiguration.getInvert()) {
-            setGpioValueMessage.setValue(invert(value));
-        } else {
-            setGpioValueMessage.setValue(value);
-        }
-
-        messageBus.sendMessage(setGpioValueMessage);
-    }
-
-    private Object invert(Object value) {
-        if (value.equals(1)) {
-            return 0;
-        } else {
-            return 1;
-        }
     }
 
     public void fireListeners(String instanceName, String gpioName, Object value) {

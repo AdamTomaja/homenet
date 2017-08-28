@@ -1,10 +1,11 @@
 package com.cydercode.homenet.server.config;
 
+import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.ConfigurationService;
 import com.cydercode.homenet.server.flow.FlowAPI;
+import com.cydercode.homenet.server.messaging.MessageBus;
 import com.cydercode.homenet.server.rest.ControlUnit;
 import com.cydercode.homenet.server.rest.SetValueRequest;
-import com.cydercode.homenet.server.rest.ValueConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +23,10 @@ public class StateController {
     private ConfigurationService configurationService;
 
     @Autowired
-    private FlowAPI flowAPI;
+    private ConversionService conversionService;
 
     @Autowired
-    private ConversionService conversionService;
+    private MessageBus messageBus;
 
     @GetMapping("/api/state/units")
     public List<ControlUnit> inits() {
@@ -38,6 +39,6 @@ public class StateController {
 
     @PostMapping("/api/state/set")
     public void setValue(@RequestBody SetValueRequest request) throws Exception {
-        flowAPI.setValueById(request.getUnitId(), request.getDeviceId(), ValueConverter.convertToSystemValue(request.getValue()));
+        messageBus.sendMessage(conversionService.convert(request, SetGpioValueMessage.class));
     }
 }
