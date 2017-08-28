@@ -1,8 +1,8 @@
 dofile("configuration-server.lua")
 dofile("settings.lua")
+dofile("gpio.lua")
 
-monitoredGpios = {4, 3, 1, 2}
-monitoredAnalogs = {}
+monitoredGpios = {}
 gpioStates = { }
 
 ucuId = "ucu-" .. tostring(node.chipid())
@@ -21,25 +21,7 @@ wifi.sta.connect()
 startConfigurationServer()
 tmr.create():alarm(60 * 1000, tmr.ALARM_SINGLE, shutdownConfigurationServer)
 
-function checkGpio()
-    for i,pin in pairs(monitoredGpios) do
-        currentState = gpio.read(pin)
-        if currentState ~= gpioStates[pin] then
-            print("Pin " .. tostring(pin) .. " changed to value " .. tostring(currentState))
-            gpioStates[pin] = currentState
-            sendMessage("/umu/gpio/set", {pin = pin, value = currentState})
-        end
-    end
 
-    for i, pin in pairs(monitoredAnalogs) do
-        currentState = adc.read(0)
-        if currentState ~= gpioStates[pin] then
-            print("Pin " .. tostring(pin) .. " changed to value " .. tostring(currentState))
-            gpioStates[pin] = currentState
-            sendMessage("/umu/gpio/set", {pin = pin, value = currentState})
-        end
-    end
-end
 
 connectionChecker = tmr.create()
 gpioMonitor = tmr.create()
@@ -59,51 +41,9 @@ initializingBlinker = tmr.create()
 initializingBlinker:register(1000, tmr.ALARM_AUTO, blinkNotificationLed)
 initializingBlinker:start()
 
-messageHandlers = {
-["/ucu/gpio/set"] = function(message) 
-    outputValue = nil
-    print(tostring(message.value))
-    if message.value == 1 then
-        outputValue = gpio.HIGH
-    else 
-        outputValue = gpio.LOW
-    end
-    gpio.write(message.pin, outputValue)
-    print("gpio set " .. tostring(message.pin) .. " to value " .. tostring(outputValue))
-end, 
-["/ucu/gpio/configure"] = function(message) 
-    mode = gpio.INPUT
-    pullup = gpio.FLOAT
-
-    if message.mode == "ANALOG_INPUT" then
-        monitoredAnalogs[message.pin] = message.pin;
-        print("Pin " .. tostring(message.pin) .. " configured to ANALOG INPUT")
-        return;
-    end
-
-    if message.mode == "OUTPUT" then
-        mode = gpio.OUTPUT
-    end
-    
-    if message.isPullup then
-        pullup = gpio.PULLUP
-    end
-
-    print("gpio configure pin " .. tostring(message.pin) .. " to mode " .. tostring(mode) .. " and pullup " .. tostring(pullup))
-    gpio.mode(message.pin, mode, pullup)
-end
-}
-
 function sendHelloMessage()
     sendMessage("/umu/hello", {})
 end 
-
-function sendAllValues()
-     for i,pin in pairs(monitoredGpios) do
-        currentState = gpio.read(pin)
-        sendMessage("/umu/gpio/set", {pin = pin, value = currentState})
-    end
-end
 
 function sendMessage(topic, messageObject)
     messageObject.instanceId = ucuId
@@ -137,23 +77,21 @@ function initializeMQTT()
 
     m:on("message", function(client, topic, data) 
         local status,err = pcall(function() 
-            message = sjson.decode(data);
-        
-            print("Message received")
+            message = sjson.decode(data)
+           
             if topic == "/ucu/hello" then
                 sendHelloMessage()
                 sendAllValues()
+                return
             end
     
             if message.instanceId == ucuId then
-                print("Received message for me")
-                messageHandlers[topic](message)
+               print("")
+               messageHandlers[topic](message)
             end 
         end) 
 
-        if status then
-            print("ok")
-        else 
+        if not status then
             print("Error during message handling")
             local errStr = tostring(err)
             print(errStr)

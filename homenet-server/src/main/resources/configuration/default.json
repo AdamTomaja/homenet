@@ -62,6 +62,11 @@
           "mode": "ANALOG_INPUT",
           "displayAs": "voltage",
           "pin": 0
+        },{
+          "name": "Led PWM",
+          "mode": "ANALOG_OUTPUT",
+          "initialValue": 500,
+          "pin": 5
         },
         {
           "name": "Relay",
