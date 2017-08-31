@@ -4091,16 +4091,21 @@ Source: http://www.mouser.com/ds/2/392/products_18-2245.pdf</description>
 <sheets>
 <sheet>
 <plain>
-<wire x1="-66.04" y1="81.28" x2="-66.04" y2="53.34" width="0.1524" layer="97" style="shortdash"/>
-<wire x1="-66.04" y1="53.34" x2="-20.32" y2="53.34" width="0.1524" layer="97" style="shortdash"/>
-<wire x1="-20.32" y1="53.34" x2="-20.32" y2="81.28" width="0.1524" layer="97" style="shortdash"/>
-<wire x1="-20.32" y1="81.28" x2="-66.04" y2="81.28" width="0.1524" layer="97" style="shortdash"/>
-<text x="-63.5" y="76.2" size="2.54" layer="97">PSU Connector</text>
+<wire x1="-63.5" y1="93.98" x2="-63.5" y2="66.04" width="0.1524" layer="97" style="shortdash"/>
+<wire x1="-63.5" y1="66.04" x2="-17.78" y2="66.04" width="0.1524" layer="97" style="shortdash"/>
+<wire x1="-17.78" y1="66.04" x2="-17.78" y2="93.98" width="0.1524" layer="97" style="shortdash"/>
+<wire x1="-17.78" y1="93.98" x2="-63.5" y2="93.98" width="0.1524" layer="97" style="shortdash"/>
+<text x="-60.96" y="88.9" size="2.54" layer="97">PSU Connector</text>
 <wire x1="81.28" y1="93.98" x2="81.28" y2="0" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="81.28" y1="0" x2="190.5" y2="0" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="190.5" y1="0" x2="190.5" y2="93.98" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="190.5" y1="93.98" x2="81.28" y2="93.98" width="0.1524" layer="97" style="shortdash"/>
 <text x="129.54" y="88.9" size="2.54" layer="97">Input/Output</text>
+<wire x1="-15.24" y1="93.98" x2="-15.24" y2="0" width="0.1524" layer="97" style="shortdash"/>
+<wire x1="-15.24" y1="0" x2="71.12" y2="0" width="0.1524" layer="97" style="shortdash"/>
+<wire x1="71.12" y1="0" x2="71.12" y2="93.98" width="0.1524" layer="97" style="shortdash"/>
+<wire x1="71.12" y1="93.98" x2="-15.24" y2="93.98" width="0.1524" layer="97" style="shortdash"/>
+<text x="17.78" y="83.82" size="2.54" layer="97">WIFI MCU</text>
 </plain>
 <instances>
 <instance part="MCU" gate="G$1" x="27.94" y="48.26"/>
@@ -4112,8 +4117,8 @@ Source: http://www.mouser.com/ds/2/392/products_18-2245.pdf</description>
 <instance part="+3V2" gate="G$1" x="53.34" y="76.2" smashed="yes">
 <attribute name="VALUE" x="55.88" y="73.66" size="1.778" layer="96"/>
 </instance>
-<instance part="PSU" gate="G$1" x="-45.72" y="68.58" rot="R180"/>
-<instance part="GND3" gate="1" x="-35.56" y="60.96"/>
+<instance part="PSU" gate="G$1" x="-43.18" y="81.28" rot="R180"/>
+<instance part="GND3" gate="1" x="-33.02" y="73.66"/>
 <instance part="MVM_SNS" gate="A" x="157.48" y="43.18"/>
 <instance part="TMP_SNS" gate="A" x="157.48" y="63.5"/>
 <instance part="RELAY" gate="A" x="121.92" y="15.24"/>
@@ -4123,7 +4128,7 @@ Source: http://www.mouser.com/ds/2/392/products_18-2245.pdf</description>
 <instance part="SUPPLY3" gate="+5V" x="0" y="35.56" smashed="yes">
 <attribute name="VALUE" x="-6.985" y="36.195" size="1.778" layer="96"/>
 </instance>
-<instance part="SUPPLY1" gate="+5V" x="-35.56" y="73.66"/>
+<instance part="SUPPLY1" gate="+5V" x="-33.02" y="86.36"/>
 <instance part="SUPPLY2" gate="+5V" x="111.76" y="22.86" smashed="yes">
 <attribute name="VALUE" x="104.775" y="23.495" size="1.778" layer="96"/>
 </instance>
@@ -4181,9 +4186,9 @@ Source: http://www.mouser.com/ds/2/392/products_18-2245.pdf</description>
 </segment>
 <segment>
 <pinref part="PSU" gate="G$1" pin="1"/>
-<wire x1="-43.18" y1="66.04" x2="-35.56" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="-40.64" y1="78.74" x2="-33.02" y2="78.74" width="0.1524" layer="91"/>
 <pinref part="GND3" gate="1" pin="GND"/>
-<wire x1="-35.56" y1="66.04" x2="-35.56" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="-33.02" y1="78.74" x2="-33.02" y2="76.2" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="RELAY" gate="A" pin="3"/>
@@ -4267,8 +4272,8 @@ Source: http://www.mouser.com/ds/2/392/products_18-2245.pdf</description>
 <net name="+5V" class="0">
 <segment>
 <pinref part="PSU" gate="G$1" pin="2"/>
-<wire x1="-43.18" y1="68.58" x2="-35.56" y2="68.58" width="0.1524" layer="91"/>
-<wire x1="-35.56" y1="68.58" x2="-35.56" y2="71.12" width="0.1524" layer="91"/>
+<wire x1="-40.64" y1="81.28" x2="-33.02" y2="81.28" width="0.1524" layer="91"/>
+<wire x1="-33.02" y1="81.28" x2="-33.02" y2="83.82" width="0.1524" layer="91"/>
 <pinref part="SUPPLY1" gate="+5V" pin="+5V"/>
 </segment>
 <segment>

@@ -46,6 +46,18 @@ This is description of MQTT topics used by HomeNet UCU and UMU.
 * External MicroUSB port - for programming
 * Fixed to wall like normal light switch - using metal frame from common light switch
 * External BLS 2x2 Ports for additional sensors and devices `(GND, 5V, 3.3V, GPIO)`
+* Fallback to direct power to light
+
+## Sensors and outputs:
+| Name                  | Type      | Pin   |
+|-----------------------|-----------|-------|
+| Movement Sensor       | External  | x     |
+| Temperature Sensor    | External  | AD0   |
+| Door Opened Sensor    | External  | x     |
+| Relay                 | Internal  | x     |
+| Internal Button A     | Internal  | x     |
+| Internal Button B     | Internal  | x     |
+| Notification Led      | Internal  | x     |
 
 # UMU Configuration
 ```json
