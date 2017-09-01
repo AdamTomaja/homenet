@@ -95,11 +95,18 @@
     },
     {
       "id": "ucu-742627",
-      "name": "Bathroom",
-      "description": "Bathroom upstairs",
+      "name": "Adam Room",
+      "description": "My living room",
       "gpios": [
         {
-          "name": "Button",
+          "name": "Button A",
+          "mode": "INPUT",
+          "isPullup": true,
+          "invert": true,
+          "pin": 2
+        },
+        {
+          "name": "Button B",
           "mode": "INPUT",
           "isPullup": true,
           "invert": true,
@@ -115,9 +122,16 @@
           "name": "Led",
           "mode": "OUTPUT",
           "isPullup": false,
+          "initialValue": 0,
+          "pin": 4
+        },
+        {
+          "name": "Light Relay",
+          "mode": "OUTPUT",
+          "isPullup": false,
           "invert": true,
           "initialValue": 1,
-          "pin": 4
+          "pin": 5
         }
       ]
     }
