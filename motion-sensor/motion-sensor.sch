@@ -3868,7 +3868,7 @@ Source: http://www.mouser.com/ds/2/392/products_18-2245.pdf</description>
 </class>
 </classes>
 <parts>
-<part name="MVM_SNS" library="pinhead" deviceset="PINHD-2X2" device=""/>
+<part name="UCU" library="pinhead" deviceset="PINHD-2X2" device=""/>
 <part name="+3V4" library="supply1" deviceset="+3V3" device=""/>
 <part name="GND7" library="supply1" deviceset="GND" device=""/>
 <part name="SUPPLY5" library="supply2" deviceset="+5V" device=""/>
@@ -3877,7 +3877,7 @@ Source: http://www.mouser.com/ds/2/392/products_18-2245.pdf</description>
 <part name="T1" library="transistor" deviceset="BC547" device=""/>
 <part name="SUPPLY1" library="supply2" deviceset="+5V" device=""/>
 <part name="GND2" library="supply1" deviceset="GND" device=""/>
-<part name="R1" library="resistor" deviceset="R-EU_" device="0204/7"/>
+<part name="R1" library="resistor" deviceset="R-EU_" device="0204/7" value="1.2k"/>
 </parts>
 <sheets>
 <sheet>
@@ -3893,7 +3893,7 @@ Source: http://www.mouser.com/ds/2/392/products_18-2245.pdf</description>
 <text x="63.5" y="66.04" size="1.778" layer="97">UCU Connector</text>
 </plain>
 <instances>
-<instance part="MVM_SNS" gate="A" x="76.2" y="45.72"/>
+<instance part="UCU" gate="A" x="76.2" y="45.72"/>
 <instance part="+3V4" gate="G$1" x="88.9" y="55.88" smashed="yes">
 <attribute name="VALUE" x="91.44" y="53.34" size="1.778" layer="96"/>
 </instance>
@@ -3915,7 +3915,7 @@ Source: http://www.mouser.com/ds/2/392/products_18-2245.pdf</description>
 <nets>
 <net name="GND" class="0">
 <segment>
-<pinref part="MVM_SNS" gate="A" pin="4"/>
+<pinref part="UCU" gate="A" pin="4"/>
 <wire x1="78.74" y1="45.72" x2="88.9" y2="45.72" width="0.1524" layer="91"/>
 <pinref part="GND7" gate="1" pin="GND"/>
 <wire x1="88.9" y1="45.72" x2="88.9" y2="43.18" width="0.1524" layer="91"/>
@@ -3934,7 +3934,7 @@ Source: http://www.mouser.com/ds/2/392/products_18-2245.pdf</description>
 </net>
 <net name="+3V3" class="0">
 <segment>
-<pinref part="MVM_SNS" gate="A" pin="2"/>
+<pinref part="UCU" gate="A" pin="2"/>
 <wire x1="78.74" y1="48.26" x2="88.9" y2="48.26" width="0.1524" layer="91"/>
 <pinref part="+3V4" gate="G$1" pin="+3V3"/>
 <wire x1="88.9" y1="48.26" x2="88.9" y2="53.34" width="0.1524" layer="91"/>
@@ -3942,7 +3942,7 @@ Source: http://www.mouser.com/ds/2/392/products_18-2245.pdf</description>
 </net>
 <net name="+5V" class="0">
 <segment>
-<pinref part="MVM_SNS" gate="A" pin="1"/>
+<pinref part="UCU" gate="A" pin="1"/>
 <wire x1="71.12" y1="48.26" x2="63.5" y2="48.26" width="0.1524" layer="91"/>
 <pinref part="SUPPLY5" gate="+5V" pin="+5V"/>
 <wire x1="63.5" y1="48.26" x2="63.5" y2="50.8" width="0.1524" layer="91"/>
@@ -3956,7 +3956,7 @@ Source: http://www.mouser.com/ds/2/392/products_18-2245.pdf</description>
 </net>
 <net name="OUTPUT" class="0">
 <segment>
-<pinref part="MVM_SNS" gate="A" pin="3"/>
+<pinref part="UCU" gate="A" pin="3"/>
 <wire x1="71.12" y1="45.72" x2="60.96" y2="45.72" width="0.1524" layer="91"/>
 <label x="60.96" y="45.72" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
