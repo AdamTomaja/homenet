@@ -3,3 +3,4 @@
 *.iml
 target
 pid.file
+*exe.stackdump
