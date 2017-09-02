@@ -39,6 +39,16 @@ This is description of MQTT topics used by HomeNet UCU and UMU.
 | /umu/error          | ucu sends to this topic information about errors                               | ErrorMessage         |
 | /umu/ping           | ucus sends ping message as answer for ping message from umu                    | PingMessage          |
 | /ucu/ping           | umu send ping request to all ucus                                              | PingMessage          |
+
+# UCU Connector
+| Signal    | Wire Color    | Connector Pin     |
+|-----------|---------------|-------------------|
+| 5V        | Red           | 1                 |
+| 3.3V      | White         | 2                 |
+| IO        | Blue          | 3                 |
+| GND       | Black         | 4                 |
+  
+
 # LCU - Light Control Unit - Specification
 * One 230V Relay output
 * Integrated 5V Power Supply
