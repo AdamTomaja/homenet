@@ -13,6 +13,7 @@ public class GpioConfiguration {
     private boolean invert;
     private Integer initialValue;
     private String displayAs;
+    private boolean favorite;
 
     private Long lastKnownValueTimestamp;
     private Object lastKnownValue;
@@ -79,6 +80,14 @@ public class GpioConfiguration {
 
     public void setDisplayAs(String displayAs) {
         this.displayAs = displayAs;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
     public Long getLastKnownValueTimestamp() {

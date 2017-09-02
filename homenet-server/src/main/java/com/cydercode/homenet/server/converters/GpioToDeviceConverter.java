@@ -17,6 +17,7 @@ public class GpioToDeviceConverter implements Converter<GpioConfiguration, Devic
         device.setName(gpioConfiguration.getName());
         device.setValue(ValueConverter.convertToUIValue(gpioConfiguration, gpioConfiguration.getLastKnownValue()));
         device.setType(gpioConfiguration.getMode());
+        device.setFavorite(gpioConfiguration.isFavorite());
         return device;
     }
 }

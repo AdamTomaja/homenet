@@ -10,6 +10,7 @@ public class Device {
     private String description;
     private GpioMode type;
     private Object value;
+    private boolean favorite;
 
     public Object getId() {
         return id;
@@ -49,5 +50,13 @@ public class Device {
 
     public void setValue(Object value) {
         this.value = value;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 }

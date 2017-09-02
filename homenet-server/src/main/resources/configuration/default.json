@@ -103,14 +103,16 @@
           "mode": "INPUT",
           "isPullup": true,
           "invert": true,
-          "pin": 2
+          "pin": 2,
+          "description": "Switch light OFF button"
         },
         {
           "name": "Button B",
           "mode": "INPUT",
           "isPullup": true,
           "invert": true,
-          "pin": 3
+          "pin": 3,
+          "description": "Switch light ON button"
         },
         {
           "name": "ADC",
@@ -127,11 +129,13 @@
         },
         {
           "name": "Light Relay",
+          "description": "Main light relay switch",
           "mode": "OUTPUT",
           "isPullup": false,
           "invert": true,
           "initialValue": 1,
-          "pin": 5
+          "pin": 5,
+          "favorite": true
         }
       ]
     }

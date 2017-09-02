@@ -2,6 +2,7 @@ package com.cydercode.homenet.server.config;
 
 import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.ConfigurationService;
+import com.cydercode.homenet.server.converters.UcuInstanceToControlUnitConverter;
 import com.cydercode.homenet.server.flow.FlowAPI;
 import com.cydercode.homenet.server.messaging.MessageBus;
 import com.cydercode.homenet.server.rest.ControlUnit;
@@ -28,12 +29,15 @@ public class StateController {
     @Autowired
     private MessageBus messageBus;
 
+    @Autowired
+    private UcuInstanceToControlUnitConverter ucuInstanceToControlUnitConverter;
+
     @GetMapping("/api/state/units")
     public List<ControlUnit> inits() {
         return configurationService.getConfiguration()
                 .getInstances()
                 .stream()
-                .map(ucuInstance -> conversionService.convert(ucuInstance, ControlUnit.class))
+                .map(ucuInstance -> ucuInstanceToControlUnitConverter.convert(ucuInstance))
                 .collect(Collectors.toList());
     }
 
