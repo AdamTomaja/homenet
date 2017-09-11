@@ -163,6 +163,17 @@
       "name": "Adams Room Motion Sensor",
       "description": "Switch lights based on motion sensor in Adams room",
       "parameters": {}
+    },
+    {
+      "source": "classpath",
+      "type": "alarmclock",
+      "name": "Alarm clock in Adams Room",
+      "description": "Turn lights on when given hour occurs",
+      "parameters": {
+        "instanceName": "Adam Room",
+        "gpioName": "Light Relay",
+        "alarmTime": "06:00"
+      }
     }
   ]
 }

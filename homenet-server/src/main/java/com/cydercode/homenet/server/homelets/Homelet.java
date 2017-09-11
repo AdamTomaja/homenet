@@ -53,6 +53,10 @@ public class Homelet {
         LOGGER.info("Listener added for: {}", callbackIndex);
     }
 
+    public Object getParameter(String name) {
+        return parameters.get(name);
+    }
+
     public Optional<UcuInstance> getInstance(String instanceName) {
         return api.getInstance(instanceName);
     }
