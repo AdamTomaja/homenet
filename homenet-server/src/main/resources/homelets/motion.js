@@ -21,7 +21,7 @@ setup = function() {
     this.addListener(adamsRoom, motionSensor, function(value) {
         if(value) {
             var hour = getHours();
-            if(hour >= 18 && hour <= 22) {
+            if(hour >= 18 && hour <= 21) {
                 this.setValue(adamsRoom, lightRelay, 0);
             }
         }
