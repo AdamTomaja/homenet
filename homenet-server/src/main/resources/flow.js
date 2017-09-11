@@ -8,7 +8,7 @@ var buttonB = "Button B";
 var lightRelay = "Light Relay";
 var led = "Led";
 var motionSensor = "Motion Sensor";
-var LIGHTS_OFF_TIMEOUT = 15 ;//* 60; // 15 minutes
+var LIGHTS_OFF_TIMEOUT = 15 * 60;
 
 /* Global Variables */
 var lastMovementTime = 0;
