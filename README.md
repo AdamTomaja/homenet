@@ -19,11 +19,20 @@ maven spring-boot:run
 MQTT Broker has to be configured with static IP.
 To do this, please reconfigure Your /etc/dhcpcd.conf file as follows:
 
-```
+```bash
 interface wlan0
 static ip_address 192.168.0.10/24
 static routers=192.168.0.1
 static domain_name_servers=127.0.0.1 8.8.8.8 8.8.4.4
+```
+
+# TimeZone Configuration
+Please remember to set Your timezone on Linux where UMU is installed. 
+This is important because You can use time in Javascript flows. 
+For example hour is used to determine if turn lights on when motion is detected.
+
+```bash
+sudo dpkg-reconfigure tzdata
 ```
 
 # MQTT Topics
