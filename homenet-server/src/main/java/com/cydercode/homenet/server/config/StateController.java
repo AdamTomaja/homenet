@@ -3,7 +3,6 @@ package com.cydercode.homenet.server.config;
 import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.ConfigurationService;
 import com.cydercode.homenet.server.converters.UcuInstanceToControlUnitConverter;
-import com.cydercode.homenet.server.flow.FlowAPI;
 import com.cydercode.homenet.server.messaging.MessageBus;
 import com.cydercode.homenet.server.rest.ControlUnit;
 import com.cydercode.homenet.server.rest.SetValueRequest;

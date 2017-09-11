@@ -3,7 +3,7 @@ package com.cydercode.homenet.server.messaging.messagehandlers;
 import com.cydercode.homenet.cdm.GpioMode;
 import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.ConfigurationService;
-import com.cydercode.homenet.server.FlowService;
+import com.cydercode.homenet.server.homelets.HomeletService;
 import com.cydercode.homenet.server.StateCache;
 import com.cydercode.homenet.server.config.GpioConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
@@ -29,7 +29,7 @@ public class SetGpioValueMessageHandler implements TypedMessageHandler<SetGpioVa
     private StateCache stateCache;
 
     @Autowired
-    private FlowService flowService;
+    private HomeletService homeletService;
 
     @Autowired
     private WebSocketHandler webSocketHandler;
@@ -58,7 +58,7 @@ public class SetGpioValueMessageHandler implements TypedMessageHandler<SetGpioVa
             }
 
             stateCache.setState(message.getInstanceId(), message.getPin(), message.getValue());
-            flowService.postMessage(message);
+            homeletService.postMessage(message);
             webSocketHandler.sendMessage(message);
         } else {
             LOGGER.warn("Instance {} not found, ignoring the message.", message.getInstanceId());

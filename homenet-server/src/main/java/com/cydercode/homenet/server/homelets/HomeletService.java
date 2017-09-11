@@ -1,11 +1,10 @@
-package com.cydercode.homenet.server;
+package com.cydercode.homenet.server.homelets;
 
 import com.cydercode.homenet.cdm.SetGpioValueMessage;
+import com.cydercode.homenet.server.ConfigurationService;
 import com.cydercode.homenet.server.config.GpioConfiguration;
+import com.cydercode.homenet.server.config.HomeletConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
-import com.cydercode.homenet.server.flow.FlowAPI;
-import com.cydercode.homenet.server.websocket.WebSocketHandler;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,36 +13,47 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import static java.lang.String.format;
+
 @Component
-public class FlowService {
+public class HomeletService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FlowService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HomeletService.class);
 
-    private static final String FLOW_FILENAME = "flow.js";
-
-    ScriptEngine scriptEngine;
+    private static final String FLOW_FILENAME = "homelets/light-switch.js";
 
     @Autowired
     private ConfigurationService configurationService;
 
     @Autowired
-    private FlowAPI flowAPI;
+    private HomeletAPI homeletAPI;
+
+    private List<Homelet> homelets = new ArrayList<>();
 
     @PostConstruct
     public void init() throws IOException, ScriptException {
-        String flow = IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("flow.js"), "UTF-8");
-        LOGGER.info("Flow Loaded");
+        configurationService.getConfiguration().getHomelets().forEach(homeletConfiguration -> {
+            try {
+                String source = loadHomeletSource(homeletConfiguration);
+                Homelet homelet = new Homelet(homeletConfiguration.getName(), source, homeletAPI, homeletConfiguration.getParameters());
+                homelet.setup();
+                homelets.add(homelet);
+                LOGGER.info("Homelet {} with name {} loaded", homeletConfiguration.getType(), homelet.getName());
+            } catch (IOException | ScriptException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
 
-        scriptEngine = new ScriptEngineManager().getEngineByExtension("js");
-        scriptEngine.eval(flow);
-        ScriptObjectMirror scriptObjectMirror = (ScriptObjectMirror) scriptEngine.get("setup");
-        scriptObjectMirror.call(flowAPI);
+    private String loadHomeletSource(HomeletConfiguration homeletConfiguration) throws IOException {
+        return IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream(
+                format("homelets/%s.js", homeletConfiguration.getType())), "UTF-8");
     }
 
     public void postMessage(Object message) {
@@ -55,7 +65,7 @@ public class FlowService {
                 Optional<GpioConfiguration> optionalGpio = instance.getGpioByPin(setGpioValueMessage.getPin());
                 if (optionalGpio.isPresent()) {
                     GpioConfiguration gpioConfiguration = optionalGpio.get();
-                    flowAPI.fireListeners(instance.getName(), gpioConfiguration.getName(), setGpioValueMessage.getValue());
+                    homelets.forEach(homelet -> homelet.fireListeners(instance.getName(), gpioConfiguration.getName(), setGpioValueMessage.getValue()));
                 }
             } else {
                 LOGGER.warn("{} ucu configuration not found, ignoring", setGpioValueMessage.getInstanceId());
@@ -67,6 +77,6 @@ public class FlowService {
 
     @Scheduled(fixedRate = 1000)
     public void loop() {
-        ((ScriptObjectMirror) scriptEngine.get("loop")).call(flowAPI);
+        homelets.forEach(Homelet::callLoop);
     }
 }

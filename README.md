@@ -123,6 +123,60 @@ This is description of MQTT topics used by HomeNet UCU and UMU.
 }
 ```
 
+## HomeLets
+Homelets are small Javascript application which are used to add some logic to Your home behavior. 
+The api is very is simple and similar to Arduino. You have setup method and loop. 
+It`s possible to add listeners for given control unit and gpio. Also it``s possible last known value of gpio or set new value of output. 
+
+This is example homelet, responsible for turning  on the light when motion is detected or turning off when no  motion detected for 15 minutes.
+
+```javascript
+/** Consts **/
+var adamsRoom = "Adam Room";
+var lightRelay = "Light Relay";
+var motionSensor = "Motion Sensor";
+
+var LIGHTS_OFF_TIMEOUT = 15 * 60;
+
+/* Global Variables */
+var lastMovementTime = 0;
+
+/* Methods */
+function getTimestamp() {
+    return new Date().getTime();
+}
+
+function getHours() {
+    return new Date().getHours();
+}
+
+setup = function() {
+    this.addListener(adamsRoom, motionSensor, function(value) {
+        if(value) {
+            var hour = getHours();
+            if(hour >= 18 && hour <= 22) {
+                this.setValue(adamsRoom, lightRelay, 0);
+            }
+        }
+    });
+}
+
+loop = function() {
+
+    var motionSensorValue = this.getValue(adamsRoom, motionSensor);
+    var currentTimestamp = getTimestamp();
+
+    if(motionSensorValue) {
+        lastMovementTime = currentTimestamp;
+    }
+
+    var secondsElapsed = (currentTimestamp - lastMovementTime) / 1000;
+    if(secondsElapsed > LIGHTS_OFF_TIMEOUT) {
+        this.setValue(adamsRoom, lightRelay, 1);
+    }
+}
+```
+
 # UCU Configuration
 Every UCU has embedded configuration server service. 
 

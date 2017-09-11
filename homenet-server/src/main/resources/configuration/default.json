@@ -62,7 +62,8 @@
           "mode": "ANALOG_INPUT",
           "displayAs": "voltage",
           "pin": 0
-        },{
+        },
+        {
           "name": "Led PWM",
           "mode": "ANALOG_OUTPUT",
           "initialValue": 500,
@@ -146,6 +147,22 @@
           "favorite": true
         }
       ]
+    }
+  ],
+  "homelets": [
+    {
+      "source": "classpath",
+      "type": "light-switch",
+      "name": "Adams Room Light Switch",
+      "description": "Switch lights on and off using buttons",
+      "parameters": {}
+    },
+    {
+      "source": "classpath",
+      "type": "motion",
+      "name": "Adams Room Motion Sensor",
+      "description": "Switch lights based on motion sensor in Adams room",
+      "parameters": {}
     }
   ]
 }

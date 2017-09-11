@@ -8,6 +8,8 @@ public class Configuration {
 
     private List<UcuInstance> instances;
 
+    private List<HomeletConfiguration> homelets;
+
     public MqttBrokerConfiguration getMqtt() {
         return mqtt;
     }
@@ -22,5 +24,13 @@ public class Configuration {
 
     public void setInstances(List<UcuInstance> instances) {
         this.instances = instances;
+    }
+
+    public List<HomeletConfiguration> getHomelets() {
+        return homelets;
+    }
+
+    public void setHomelets(List<HomeletConfiguration> homelets) {
+        this.homelets = homelets;
     }
 }

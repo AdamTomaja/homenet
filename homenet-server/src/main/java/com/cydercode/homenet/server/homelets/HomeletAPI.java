@@ -1,24 +1,20 @@
-package com.cydercode.homenet.server.flow;
+package com.cydercode.homenet.server.homelets;
 
 import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.ConfigurationService;
 import com.cydercode.homenet.server.config.GpioConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
 import com.cydercode.homenet.server.messaging.MessageBus;
-import com.cydercode.homenet.server.rest.SetValueRequest;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 @Component
-public class FlowAPI {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(FlowAPI.class);
+public class HomeletAPI {
 
     @Autowired
     private ConfigurationService configurationService;
@@ -26,24 +22,6 @@ public class FlowAPI {
     @Autowired
     private MessageBus messageBus;
 
-    public void loginfo(Object object) {
-        LOGGER.info("{}", object);
-    }
-
-    private Map<String, List<ScriptObjectMirror>> listeners = new HashMap<>();
-
-    public void addListener(String instanceName, String gpioName, ScriptObjectMirror callback) {
-        String callbackIndex = createCallbackIndex(instanceName, gpioName);
-        List<ScriptObjectMirror> list = listeners.get(callbackIndex);
-        if (list == null) {
-            list = new ArrayList<>();
-            listeners.put(callbackIndex, list);
-        }
-
-        list.add(callback);
-
-        LOGGER.info("Listener added for: {}", callbackIndex);
-    }
 
     public Optional<UcuInstance> getInstance(String instanceName) {
         return configurationService.getConfigurationByName(instanceName);
@@ -80,16 +58,5 @@ public class FlowAPI {
         setGpioValueMessage.setValue(value);
 
         messageBus.sendMessage(setGpioValueMessage);
-    }
-
-    public void fireListeners(String instanceName, String gpioName, Object value) {
-        List<ScriptObjectMirror> list = listeners.get(createCallbackIndex(instanceName, gpioName));
-        if (list != null) {
-            list.forEach(listener -> listener.call(this, value));
-        }
-    }
-
-    private String createCallbackIndex(String instanceName, String gpioName) {
-        return String.format("%s-%s", instanceName, gpioName);
     }
 }
