@@ -10,12 +10,8 @@ With Home-Net You can script Your devices in JavaScript and Control them from WE
 ![Main Page](screenshots/control-panel.PNG "Home-Net Control Panel")
 
 
-# Running UMU
-Execute following command in **homenet-server** directory
-```bash
-maven spring-boot:run
-```
-# Network Configuration
+# Configuring system and running UMU
+## Network Configuration
 MQTT Broker has to be configured with static IP.
 To do this, please reconfigure Your /etc/dhcpcd.conf file as follows:
 
@@ -26,13 +22,28 @@ static routers=192.168.0.1
 static domain_name_servers=127.0.0.1 8.8.8.8 8.8.4.4
 ```
 
-# TimeZone Configuration
+## TimeZone Configuration
 Please remember to set Your timezone on Linux where UMU is installed. 
 This is important because You can use time in Javascript flows. 
 For example hour is used to determine if turn lights on when motion is detected.
 
 ```bash
 sudo dpkg-reconfigure tzdata
+```
+
+## Start MQTT broker
+Please a compatible MQTT broker for the homenet infrastructure. 
+I suggest to use Mosquitto. 
+You can run install it and run using following command: 
+
+```bash
+service mosquitto start
+```
+
+## Run UMU server
+Execute following command in **homenet-server** directory
+```bash
+maven spring-boot:run
 ```
 
 # MQTT Topics
