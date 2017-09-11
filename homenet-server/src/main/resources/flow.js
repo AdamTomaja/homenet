@@ -12,7 +12,6 @@ var LIGHTS_OFF_TIMEOUT = 15 * 60;
 
 /* Global Variables */
 var lastMovementTime = 0;
-var warningLogged = false;
 
 /* Methods */
 function getTimestamp() {
@@ -45,7 +44,6 @@ setup = function() {
 
     this.addListener(adamsRoom, motionSensor, function(value) {
         if(value) {
-            this.loginfo("New motion detected!");
             var hour = getHours();
             if(hour >= 18 && hour <= 22) {
                 this.setValue(adamsRoom, lightRelay, 0);
@@ -61,16 +59,10 @@ loop = function() {
 
     if(motionSensorValue) {
         lastMovementTime = currentTimestamp;
-        warningLogged = false;
     }
 
     var secondsElapsed = (currentTimestamp - lastMovementTime) / 1000;
     if(secondsElapsed > LIGHTS_OFF_TIMEOUT) {
-        if(!warningLogged) {
-            this.loginfo("Switching light off");
-            warningLogged = true;
-        }
-
         this.setValue(adamsRoom, lightRelay, 1);
     }
 }
