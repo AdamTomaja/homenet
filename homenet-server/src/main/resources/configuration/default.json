@@ -99,6 +99,14 @@
       "description": "My living room",
       "gpios": [
         {
+          "name": "Motion Sensor",
+          "mode": "INPUT",
+          "isPullup": false,
+          "invert": false,
+          "pin": 1,
+          "description": "Main Motion Sensor"
+        },
+        {
           "name": "Button A",
           "mode": "INPUT",
           "isPullup": true,
