@@ -155,14 +155,23 @@
       "type": "light-switch",
       "name": "Adams Room Light Switch",
       "description": "Switch lights on and off using buttons",
-      "parameters": {}
+      "parameters": {
+        "instanceName": "Adam Room",
+        "gpioName": "Light Relay"
+      }
     },
     {
       "source": "classpath",
       "type": "motion",
       "name": "Adams Room Motion Sensor",
       "description": "Switch lights based on motion sensor in Adams room",
-      "parameters": {}
+      "parameters": {
+        "instanceName": "Adam Room",
+        "gpioName": "Light Relay",
+        "startHour": "18",
+        "endHour": "22",
+        "lightsOffTimeout": "900"
+      }
     },
     {
       "source": "classpath",
@@ -172,7 +181,8 @@
       "parameters": {
         "instanceName": "Adam Room",
         "gpioName": "Light Relay",
-        "alarmTime": "06:00"
+        "alarmTime": "06:00",
+        "blinkPeriod": "20"
       }
     }
   ]

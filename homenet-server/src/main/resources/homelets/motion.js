@@ -1,9 +1,6 @@
 /** Consts **/
-var adamsRoom = "Adam Room";
-var lightRelay = "Light Relay";
 var motionSensor = "Motion Sensor";
-
-var LIGHTS_OFF_TIMEOUT = 15 * 60;
+var adamsRoom = "Adam Room";
 
 /* Global Variables */
 var lastMovementTime = 0;
@@ -21,8 +18,8 @@ setup = function() {
     this.addListener(adamsRoom, motionSensor, function(value) {
         if(value) {
             var hour = getHours();
-            if(hour >= 18 && hour <= 21) {
-                this.setValue(adamsRoom, lightRelay, 0);
+            if(hour >= this.parameters.startHour && hour < this.parameters.endHour) {
+                this.setValue(this.parameters.instanceName, this.parameters.gpioName, 0);
             }
         }
     });
@@ -42,7 +39,7 @@ loop = function() {
     }
 
     var secondsElapsed = (currentTimestamp - lastMovementTime) / 1000;
-    if(secondsElapsed > LIGHTS_OFF_TIMEOUT) {
-        this.setValue(adamsRoom, lightRelay, 1);
+    if(secondsElapsed > this.parameters.lightsOffTimeout) {
+        this.setValue(this.parameters.instanceName, this.parameters.gpioName, 1);
     }
 }

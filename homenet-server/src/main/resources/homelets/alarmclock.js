@@ -24,18 +24,18 @@ function invert(value) {
 }
 
 setup = function() {
-    var hour = this.getParameter("alarmTime");
+    var hour = this.parameters.alarmTime;
     this.loginfo("Alarm will occur at " + hour);
 }
 
 loop = function() {
-    if(getCurrentTime() == this.getParameter("alarmTime")) {
-        var instance = this.getParameter("instanceName");
-        var gpio = this.getParameter("gpioName");
+    if(getCurrentTime() == this.parameters.alarmTime) {
+        var instance = this.parameters.instanceName;
+        var gpio = this.parameters.gpioName;
 
         this.loginfo("Alarm occured!");
 
-        if(getSeconds() < 20) {
+        if(getSeconds() < this.parameters.blinkPeriod) {
             this.setValue(instance, gpio, invert(this.getValue(instance, gpio))); // Blink
         } else {
             this.setValue(instance, gpio, 0); // Turn on

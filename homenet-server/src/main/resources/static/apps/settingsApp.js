@@ -20,12 +20,15 @@ app.controller('settingsController', function($scope, $http, $websocket){
          editor.set(response.data);
     });
 
+
     $http.get("/api/homelets").then(function(response){
         $scope.homelets = response.data;
     });
 
     $scope.saveHomelet = function(homelet) {
-        console.log(homelet.parameters);
+       $http.post("/api/homelet", homelet).then(function(response){
+            console.log("State set successfully")
+       });
     }
 
     $scope.removeHomelet = function(homelet) {
@@ -33,13 +36,11 @@ app.controller('settingsController', function($scope, $http, $websocket){
     }
 
     $scope.callOperation = function(homelet, operation) {
-      $http.post("/api/homelet/operation", {homeletName: homelet.name, operation: operation, parameters: {a: "b"}}).then(function(response){
-                console.log("State set successfully")
-
-            });
+        $http.post("/api/homelet/operation", {homeletName: homelet.name, operation: operation, parameters: {a: "b"}}).then(function(response){
+            console.log("State set successfully")
+        });
     }
 
     // get json
     var json = editor.get();
-
 });
