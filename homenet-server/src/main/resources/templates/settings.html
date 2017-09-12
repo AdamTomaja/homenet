@@ -47,7 +47,7 @@
 <div class="container" ng-controller="settingsController">
     <!-- Example row of columns -->
     <div class="row">
-        <div  class="col-md-12">
+        <div class="col-md-12">
             <div class="jumbotron">
                 <h1 class="display-3">Settings</h1>
                 <p class="lead">Welcome in Home-Net Settings Editor</p>
@@ -58,6 +58,28 @@
     </div>
 
     <hr/>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h1 class="display-3">HomeLets</h1>
+                <p class="lead">Homelets configuration</p>
+                <hr class="my-4"/>
+                <div class="card" ng-repeat="homelet in homelets">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ homelet.name }} - {{ homelet.type }}</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ device.description }}</h6>
+                        <p ng-repeat="(key, value) in homelet.parameters">
+                            {{ key }} == {{ value }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+
 
     <footer th:replace="fragments/footer :: footer"/>
 </div> <!-- /container -->

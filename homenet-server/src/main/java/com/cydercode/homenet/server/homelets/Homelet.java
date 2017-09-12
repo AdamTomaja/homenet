@@ -1,5 +1,6 @@
 package com.cydercode.homenet.server.homelets;
 
+import com.cydercode.homenet.server.config.HomeletConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.slf4j.Logger;
@@ -14,18 +15,20 @@ public class Homelet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Homelet.class);
 
+    private final HomeletConfiguration configuration;
     private String name;
     private final Map<String, Object> parameters = new HashMap<>();
     private final ScriptEngine scriptEngine;
     private final String source;
     private final HomeletAPI api;
 
-    public Homelet(String name, String source, HomeletAPI api, Map<String, Object> parameters) {
+    public Homelet(HomeletConfiguration homeletConfiguration, String name, String source, HomeletAPI api, Map<String, Object> parameters) {
         this.name = name;
         this.parameters.putAll(parameters);
         scriptEngine = new ScriptEngineManager().getEngineByExtension("js");
         this.source = source;
         this.api = api;
+        this.configuration = homeletConfiguration;
     }
 
     public void setup() throws ScriptException {
@@ -86,5 +89,17 @@ public class Homelet {
 
     public void callLoop() {
         ((ScriptObjectMirror) scriptEngine.get("loop")).call(this);
+    }
+
+    public HomeletConfiguration getConfiguration() {
+        return configuration;
+    }
+
+    public Map<String, Object> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Map<String, Object> parameters) {
+        this.parameters.putAll(parameters);
     }
 }

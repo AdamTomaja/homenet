@@ -20,7 +20,9 @@ app.controller('settingsController', function($scope, $http, $websocket){
          editor.set(response.data);
     });
 
-
+    $http.get("/api/homelets").then(function(response){
+        $scope.homelets = response.data;
+    });
 
     // get json
     var json = editor.get();

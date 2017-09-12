@@ -17,6 +17,7 @@ import javax.script.ScriptException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static java.lang.String.format;
@@ -41,7 +42,11 @@ public class HomeletService {
         configurationService.getConfiguration().getHomelets().forEach(homeletConfiguration -> {
             try {
                 String source = loadHomeletSource(homeletConfiguration);
-                Homelet homelet = new Homelet(homeletConfiguration.getName(), source, homeletAPI, homeletConfiguration.getParameters());
+                Homelet homelet = new Homelet(homeletConfiguration,
+                        homeletConfiguration.getName(),
+                        source,
+                        homeletAPI,
+                        homeletConfiguration.getParameters());
                 homelet.setup();
                 homelets.add(homelet);
                 LOGGER.info("Homelet {} with name {} loaded", homeletConfiguration.getType(), homelet.getName());
@@ -75,8 +80,21 @@ public class HomeletService {
         }
     }
 
+    public List<Homelet> getHomelets() {
+        return new ArrayList<>(homelets);
+    }
+
     @Scheduled(fixedRate = 1000)
     public void loop() {
         homelets.forEach(Homelet::callLoop);
+    }
+
+    public void configureHomelet(String homeletName, Map<String, Object> parameters) {
+        Optional<Homelet> homelet = homelets.stream().filter(h -> h.getName().equals(homeletName)).findFirst();
+        if(!homelet.isPresent()) {
+            throw new RuntimeException("Homelet " + homeletName + " not found");
+        }
+
+        homelet.get().setParameters(parameters);
     }
 }
