@@ -90,11 +90,19 @@ public class HomeletService {
     }
 
     public void configureHomelet(String homeletName, Map<String, Object> parameters) {
+        getHomelet(homeletName).setParameters(parameters);
+    }
+
+    public void callOperation(String homeletName, String operation, Map<String, Object> parameters) {
+        getHomelet(homeletName).callOperation(operation, parameters);
+    }
+
+    private Homelet getHomelet(String homeletName) {
         Optional<Homelet> homelet = homelets.stream().filter(h -> h.getName().equals(homeletName)).findFirst();
-        if(!homelet.isPresent()) {
+        if (!homelet.isPresent()) {
             throw new RuntimeException("Homelet " + homeletName + " not found");
         }
 
-        homelet.get().setParameters(parameters);
+        return homelet.get();
     }
 }

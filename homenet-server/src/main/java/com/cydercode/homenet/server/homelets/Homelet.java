@@ -18,6 +18,8 @@ public class Homelet {
     private final HomeletConfiguration configuration;
     private String name;
     private final Map<String, Object> parameters = new HashMap<>();
+    private final Map<String, ScriptObjectMirror> operations = new HashMap<>();
+
     private final ScriptEngine scriptEngine;
     private final String source;
     private final HomeletAPI api;
@@ -54,6 +56,14 @@ public class Homelet {
         list.add(callback);
 
         LOGGER.info("Listener added for: {}", callbackIndex);
+    }
+
+    public void addOperation(String operation, ScriptObjectMirror function) {
+        operations.put(operation, function);
+    }
+
+    public void callOperation(String operation, Map<String, Object> parameters) {
+        operations.get(operation).call(this, parameters);
     }
 
     public Object getParameter(String name) {
@@ -101,5 +111,9 @@ public class Homelet {
 
     public void setParameters(Map<String, Object> parameters) {
         this.parameters.putAll(parameters);
+    }
+
+    public Set<String> getOperationNames() {
+        return operations.keySet();
     }
 }

@@ -60,18 +60,26 @@
     <hr/>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-4" ng-repeat="homelet in homelets">
             <div class="jumbotron">
-                <h1 class="display-3">HomeLets</h1>
-                <p class="lead">Homelets configuration</p>
+                <h1 class="display-3">{{ homelet.name }} Homelet</h1>
+                <p class="lead">{{ homelet.type }}</p>
                 <hr class="my-4"/>
-                <div class="card" ng-repeat="homelet in homelets">
+                <div class="card" >
                     <div class="card-body">
-                        <h4 class="card-title">{{ homelet.name }} - {{ homelet.type }}</h4>
+                        <h4 class="card-title"> Configuration </h4>
                         <h6 class="card-subtitle mb-2 text-muted">{{ device.description }}</h6>
-                        <p ng-repeat="(key, value) in homelet.parameters">
-                            {{ key }} == {{ value }}
-                        </p>
+                        <form>
+                            <div class="form-group" ng-repeat="(key, value) in homelet.parameters">
+                                <label>{{key}}</label>
+                                <input type="text" class="form-control" ng-model="homelet.parameters[key]"/>
+                            </div>
+
+                            <button type="submit" class="btn btn-default" ng-click="saveHomelet(homelet)">Save</button>
+                            <button type="submit" class="btn btn-danger" ng-click="removeHomelet(homelet)">Remove</button>
+
+                            <button ng-repeat="operation in homelet.operations" type="submit" class="btn btn-info" ng-click="callOperation(homelet, operation)">{{operation}}</button>
+                        </form>
                     </div>
                 </div>
             </div>

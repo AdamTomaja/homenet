@@ -32,4 +32,9 @@ public class HomeletController {
     public void configureHomelet(@RequestBody RestHomelet homelet) {
         homeletService.configureHomelet(homelet.getName(), homelet.getParameters());
     }
+
+    @PostMapping("/api/homelet/operation")
+    public void callOperation(@RequestBody HomeletOperationCall operationCall) {
+        homeletService.callOperation(operationCall.getHomeletName(), operationCall.getOperation(), operationCall.getParameters());
+    }
 }

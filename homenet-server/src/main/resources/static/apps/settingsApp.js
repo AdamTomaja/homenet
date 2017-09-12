@@ -24,6 +24,21 @@ app.controller('settingsController', function($scope, $http, $websocket){
         $scope.homelets = response.data;
     });
 
+    $scope.saveHomelet = function(homelet) {
+        console.log(homelet.parameters);
+    }
+
+    $scope.removeHomelet = function(homelet) {
+        console.log(homelet);
+    }
+
+    $scope.callOperation = function(homelet, operation) {
+      $http.post("/api/homelet/operation", {homeletName: homelet.name, operation: operation, parameters: {a: "b"}}).then(function(response){
+                console.log("State set successfully")
+
+            });
+    }
+
     // get json
     var json = editor.get();
 

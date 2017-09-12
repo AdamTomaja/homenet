@@ -26,6 +26,10 @@ setup = function() {
             }
         }
     });
+
+    this.addOperation("doSomething", function(parameters){
+        this.loginfo("Doing something" + parameters);
+    });
 }
 
 loop = function() {

@@ -16,6 +16,7 @@ public class HomeletToRestHomeletConverter implements Converter<Homelet, RestHom
         restHomelet.setName(homelet.getName());
         restHomelet.setType(homelet.getConfiguration().getType());
         restHomelet.setParameters(new HashMap(homelet.getParameters()));
+        restHomelet.setOperations(homelet.getOperationNames());
         return restHomelet;
     }
 }

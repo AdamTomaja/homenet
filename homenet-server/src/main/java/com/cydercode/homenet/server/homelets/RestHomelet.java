@@ -1,12 +1,15 @@
 package com.cydercode.homenet.server.homelets;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class RestHomelet {
 
     private String name;
     private String type;
     private Map<String, Object> parameters;
+    private Set<String> operations;
 
     public String getName() {
         return name;
@@ -30,5 +33,13 @@ public class RestHomelet {
 
     public void setParameters(Map<String, Object> parameters) {
         this.parameters = parameters;
+    }
+
+    public Set<String> getOperations() {
+        return operations;
+    }
+
+    public void setOperations(Set<String> operations) {
+        this.operations = operations;
     }
 }
