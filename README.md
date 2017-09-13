@@ -78,16 +78,21 @@ This is description of MQTT topics used by HomeNet UCU and UMU.
 * External BLS 2x2 Ports for additional sensors and devices `(GND, 5V, 3.3V, GPIO)`
 * Fallback to direct power to light
 
-## Sensors and outputs:
-| Name                  | Type      | Pin   |
-|-----------------------|-----------|-------|
-| Movement Sensor       | External  | x     |
-| Temperature Sensor    | External  | AD0   |
-| Door Opened Sensor    | External  | x     |
-| Relay                 | Internal  | x     |
-| Internal Button A     | Internal  | x     |
-| Internal Button B     | Internal  | x     |
-| Notification Led      | Internal  | x     |
+### NodeMCU Pin Capabilities
+| IO Index  | Esp8266 pin   | OUTPUT    | INPUT             | Function          |
+|-----------|-------------  |-----------|-------------------|-------------------|
+| 0         | Gpio16        | X         | --- (USER Led)    | Notification LED  |
+| 1         | Gpio5         | X         | X                 | IO0               |
+| 2         | Gpio4         | X         | X                 | IO1               |
+| 3         | Gpio0         | X         | X (Flash Button)  | IO2               |   
+| 4         | Gpio2         | X         | X                 | IO3               |
+| 5         | Gpio14        | X         | X                 | IO4               | 
+| 6         | Gpio12        | X         | X                 | IO5               |
+| 7         | Gpio13        | X         | X                 | IO6               |
+| 8         | Gpio15        | X         | X/2 BOOT,NOPULLUP | Relay             |
+| 11 - SD2  | Gpio9         | X         | X                 | Button A          |
+| 12 - SD3  | Gpio10        | X         | X                 | Button B          |
+| A0        | ADC0          | ---       | ---               | IO8               |
 
 # UMU Configuration
 ```json
