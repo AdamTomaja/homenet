@@ -15,10 +15,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.script.ScriptException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static java.lang.String.format;
 
@@ -41,8 +38,9 @@ public class HomeletService {
     public void init() throws IOException, ScriptException {
         configurationService.getConfiguration().getHomelets().forEach(homeletConfiguration -> {
             try {
+                UUID uuid = UUID.randomUUID();
                 String source = loadHomeletSource(homeletConfiguration);
-                Homelet homelet = new Homelet(homeletConfiguration,
+                Homelet homelet = new Homelet(uuid.toString(), homeletConfiguration,
                         homeletConfiguration.getName(),
                         source,
                         homeletAPI,
@@ -89,18 +87,20 @@ public class HomeletService {
         homelets.forEach(Homelet::callLoop);
     }
 
-    public void configureHomelet(String homeletName, Map<String, Object> parameters) {
-        getHomelet(homeletName).getParameters().putAll(parameters);
+    public void configureHomelet(String homeletId, Map<String, Object> parameters) {
+        Homelet homelet = getHomelet(homeletId);
+        homelet.getParameters().putAll(parameters);
+        LOGGER.info("{} - {} reconfigured with parameters: {}", homelet.getName(), homelet.getId(), parameters);
     }
 
     public void callOperation(String homeletName, String operation, Map<String, Object> parameters) {
         getHomelet(homeletName).callOperation(operation, parameters);
     }
 
-    private Homelet getHomelet(String homeletName) {
-        Optional<Homelet> homelet = homelets.stream().filter(h -> h.getName().equals(homeletName)).findFirst();
+    private Homelet getHomelet(String homeletId) {
+        Optional<Homelet> homelet = homelets.stream().filter(h -> h.getId().equals(homeletId)).findFirst();
         if (!homelet.isPresent()) {
-            throw new RuntimeException("Homelet " + homeletName + " not found");
+            throw new RuntimeException("Homelet " + homeletId + " not found");
         }
 
         return homelet.get();

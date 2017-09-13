@@ -1,6 +1,5 @@
 package com.cydercode.homenet.server.homelets;
 
-import com.cydercode.homenet.server.converters.HomeletToRestHomeletConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +29,7 @@ public class HomeletController {
 
     @PostMapping("/api/homelet")
     public void configureHomelet(@RequestBody RestHomelet homelet) {
-        homeletService.configureHomelet(homelet.getName(), homelet.getParameters());
+        homeletService.configureHomelet(homelet.getId(), homelet.getParameters());
     }
 
     @PostMapping("/api/homelet/operation")

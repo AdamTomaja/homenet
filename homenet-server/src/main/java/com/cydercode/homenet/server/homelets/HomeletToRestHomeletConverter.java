@@ -1,4 +1,4 @@
-package com.cydercode.homenet.server.converters;
+package com.cydercode.homenet.server.homelets;
 
 import com.cydercode.homenet.server.homelets.Homelet;
 import com.cydercode.homenet.server.homelets.RestHomelet;
@@ -12,11 +12,12 @@ public class HomeletToRestHomeletConverter implements Converter<Homelet, RestHom
 
     @Override
     public RestHomelet convert(Homelet homelet) {
-        RestHomelet restHomelet = new RestHomelet();
-        restHomelet.setName(homelet.getName());
-        restHomelet.setType(homelet.getConfiguration().getType());
-        restHomelet.setParameters(new HashMap(homelet.getParameters()));
-        restHomelet.setOperations(homelet.getOperationNames());
-        return restHomelet;
+        return RestHomelet.builder()
+                .id(homelet.getId())
+                .name(homelet.getName())
+                .type(homelet.getConfiguration().getType())
+                .parameters(new HashMap<>(homelet.getParameters()))
+                .operations(homelet.getOperationNames())
+                .build();
     }
 }

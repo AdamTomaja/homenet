@@ -4,7 +4,6 @@ import com.cydercode.homenet.server.config.HomeletConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import lombok.Getter;
-import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +20,9 @@ public class Homelet {
     private final HomeletConfiguration configuration;
 
     @Getter
+    private String id;
+
+    @Getter
     private String name;
 
     @Getter
@@ -31,7 +33,8 @@ public class Homelet {
     private final String source;
     private final HomeletAPI api;
 
-    public Homelet(HomeletConfiguration homeletConfiguration, String name, String source, HomeletAPI api, Map<String, Object> parameters) {
+    public Homelet(String id, HomeletConfiguration homeletConfiguration, String name, String source, HomeletAPI api, Map<String, Object> parameters) {
+        this.id = id;
         this.name = name;
         this.parameters.putAll(parameters);
         scriptEngine = new ScriptEngineManager().getEngineByExtension("js");
