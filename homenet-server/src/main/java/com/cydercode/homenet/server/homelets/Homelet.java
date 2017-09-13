@@ -3,6 +3,8 @@ package com.cydercode.homenet.server.homelets;
 import com.cydercode.homenet.server.config.HomeletConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,8 +17,13 @@ public class Homelet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Homelet.class);
 
+    @Getter
     private final HomeletConfiguration configuration;
+
+    @Getter
     private String name;
+
+    @Getter
     private final Map<String, Object> parameters = new HashMap<>();
     private final Map<String, ScriptObjectMirror> operations = new HashMap<>();
 
@@ -93,24 +100,8 @@ public class Homelet {
         return String.format("%s-%s", instanceName, gpioName);
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void callLoop() {
         ((ScriptObjectMirror) scriptEngine.get("loop")).call(this);
-    }
-
-    public HomeletConfiguration getConfiguration() {
-        return configuration;
-    }
-
-    public Map<String, Object> getParameters() {
-        return parameters;
-    }
-
-    public void setParameters(Map<String, Object> parameters) {
-        this.parameters.putAll(parameters);
     }
 
     public Set<String> getOperationNames() {

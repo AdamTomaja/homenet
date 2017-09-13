@@ -90,7 +90,7 @@ public class HomeletService {
     }
 
     public void configureHomelet(String homeletName, Map<String, Object> parameters) {
-        getHomelet(homeletName).setParameters(parameters);
+        getHomelet(homeletName).getParameters().putAll(parameters);
     }
 
     public void callOperation(String homeletName, String operation, Map<String, Object> parameters) {

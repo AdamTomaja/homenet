@@ -2,6 +2,7 @@ package com.cydercode.homenet.server.config;
 
 import com.cydercode.homenet.cdm.GpioMode;
 import com.google.common.base.Objects;
+import lombok.Data;
 
 public class GpioConfiguration {
 

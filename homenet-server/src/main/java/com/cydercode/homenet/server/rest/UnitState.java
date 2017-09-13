@@ -1,5 +1,8 @@
 package com.cydercode.homenet.server.rest;
 
+import lombok.Data;
+
+@Data
 public class UnitState {
 
     public enum Health {
@@ -8,20 +11,4 @@ public class UnitState {
 
     private String unitId;
     private Health health;
-
-    public String getUnitId() {
-        return unitId;
-    }
-
-    public void setUnitId(String unitId) {
-        this.unitId = unitId;
-    }
-
-    public Health getHealth() {
-        return health;
-    }
-
-    public void setHealth(Health health) {
-        this.health = health;
-    }
 }
