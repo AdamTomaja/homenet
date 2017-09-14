@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 import javax.script.ScriptException;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static java.lang.String.format;
 
@@ -32,7 +33,7 @@ public class HomeletService {
     @Autowired
     private HomeletAPI homeletAPI;
 
-    private List<Homelet> homelets = new ArrayList<>();
+    private List<Homelet> homelets = new CopyOnWriteArrayList<>();
 
     @PostConstruct
     public void init() throws IOException, ScriptException {
@@ -93,6 +94,10 @@ public class HomeletService {
 
     public void callOperation(String homeletId, String operation, Map<String, Object> parameters) {
         getHomelet(homeletId).callOperation(operation, parameters);
+    }
+
+    public void removeHomelet(String id) {
+        homelets.remove(getHomelet(id));
     }
 
     private Homelet getHomelet(String homeletId) {

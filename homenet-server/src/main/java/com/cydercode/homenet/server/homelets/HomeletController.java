@@ -1,10 +1,7 @@
 package com.cydercode.homenet.server.homelets;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +22,11 @@ public class HomeletController {
                 .stream()
                 .map(converter::convert)
                 .collect(toList());
+    }
+
+    @DeleteMapping("/api/homelet/{id}")
+    public void configureHomelet(@PathVariable String id) {
+        homeletService.removeHomelet(id);
     }
 
     @PostMapping("/api/homelet")

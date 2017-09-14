@@ -47,19 +47,6 @@
 <div class="container" ng-controller="settingsController">
     <!-- Example row of columns -->
     <div class="row">
-        <div class="col-md-12">
-            <div class="jumbotron">
-                <h1 class="display-3">Settings</h1>
-                <p class="lead">Welcome in Home-Net Settings Editor</p>
-                <hr class="my-4"/>
-                <div id="jsoneditor"></div>
-            </div>
-        </div>
-    </div>
-
-    <hr/>
-
-    <div class="row">
         <div class="col-md-5" ng-repeat="homelet in homelets">
             <div class="jumbotron">
                 <h1 class="display-3">{{ homelet.type }}</h1>
@@ -67,7 +54,7 @@
                 <hr class="my-4"/>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title"> Configuration </h4>
+                        <h4 class="card-title"> Homelet </h4>
                         <h6 class="card-subtitle mb-2 text-muted">{{ device.description }}</h6>
 
                         <div class="collapse multi-collapse" id="{{homelet.id}}-configuration">
