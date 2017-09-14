@@ -210,6 +210,13 @@
     },
     {
       "source": "classpath",
+      "type": "journalist",
+      "name": "Motion Journalist",
+      "description": "Save motion events to database",
+      "parameters": []
+    },
+    {
+      "source": "classpath",
       "type": "alarmclock",
       "name": "Alarm clock in Adams Room",
       "description": "Turn lights on when given hour occurs",

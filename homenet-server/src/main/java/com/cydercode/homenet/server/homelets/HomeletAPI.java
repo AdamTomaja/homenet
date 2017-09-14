@@ -4,6 +4,7 @@ import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.ConfigurationService;
 import com.cydercode.homenet.server.config.GpioConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
+import com.cydercode.homenet.server.journal.JournalService;
 import com.cydercode.homenet.server.messaging.MessageBus;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.slf4j.Logger;
@@ -22,6 +23,8 @@ public class HomeletAPI {
     @Autowired
     private MessageBus messageBus;
 
+    @Autowired
+    private JournalService journalService;
 
     public Optional<UcuInstance> getInstance(String instanceName) {
         return configurationService.getConfigurationByName(instanceName);
@@ -58,5 +61,14 @@ public class HomeletAPI {
         setGpioValueMessage.setValue(value);
 
         messageBus.sendMessage(setGpioValueMessage);
+    }
+
+    public Object getService(String name) {
+        switch (name) {
+            case "journal":
+                return journalService;
+            default:
+                throw new IllegalArgumentException();
+        }
     }
 }

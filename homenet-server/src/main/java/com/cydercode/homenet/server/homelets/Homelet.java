@@ -73,6 +73,10 @@ public class Homelet {
         operations.get(operation).call(this, parameters);
     }
 
+    public Object getService(String serviceName) {
+        return api.getService(serviceName);
+    }
+
     public Object getParameter(String name) {
         Optional<Parameter> optionalParameter = configuration.getParameters()
                 .stream()
