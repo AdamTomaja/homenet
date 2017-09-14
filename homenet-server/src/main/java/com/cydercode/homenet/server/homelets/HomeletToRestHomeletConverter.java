@@ -1,11 +1,9 @@
 package com.cydercode.homenet.server.homelets;
 
-import com.cydercode.homenet.server.homelets.Homelet;
-import com.cydercode.homenet.server.homelets.RestHomelet;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 @Component
 public class HomeletToRestHomeletConverter implements Converter<Homelet, RestHomelet> {
@@ -14,9 +12,9 @@ public class HomeletToRestHomeletConverter implements Converter<Homelet, RestHom
     public RestHomelet convert(Homelet homelet) {
         return RestHomelet.builder()
                 .id(homelet.getId())
-                .name(homelet.getName())
+                .name(homelet.getConfiguration().getName())
                 .type(homelet.getConfiguration().getType())
-                .parameters(new HashMap<>(homelet.getParameters()))
+                .parameters(new ArrayList<>(homelet.getConfiguration().getParameters()))
                 .operations(homelet.getOperationNames())
                 .build();
     }

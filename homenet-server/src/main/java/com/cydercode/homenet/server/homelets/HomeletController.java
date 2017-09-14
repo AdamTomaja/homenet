@@ -34,6 +34,6 @@ public class HomeletController {
 
     @PostMapping("/api/homelet/operation")
     public void callOperation(@RequestBody HomeletOperationCall operationCall) {
-        homeletService.callOperation(operationCall.getHomeletName(), operationCall.getOperation(), operationCall.getParameters());
+        homeletService.callOperation(operationCall.getHomeletId(), operationCall.getOperation(), operationCall.getParameters());
     }
 }

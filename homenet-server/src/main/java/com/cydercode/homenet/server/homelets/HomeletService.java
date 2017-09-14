@@ -1,9 +1,9 @@
 package com.cydercode.homenet.server.homelets;
 
+import com.cydercode.homenet.cdm.Parameter;
 import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.ConfigurationService;
 import com.cydercode.homenet.server.config.GpioConfiguration;
-import com.cydercode.homenet.server.config.HomeletConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -41,13 +41,11 @@ public class HomeletService {
                 UUID uuid = UUID.randomUUID();
                 String source = loadHomeletSource(homeletConfiguration);
                 Homelet homelet = new Homelet(uuid.toString(), homeletConfiguration,
-                        homeletConfiguration.getName(),
                         source,
-                        homeletAPI,
-                        homeletConfiguration.getParameters());
+                        homeletAPI);
                 homelet.setup();
                 homelets.add(homelet);
-                LOGGER.info("Homelet {} with name {} loaded", homeletConfiguration.getType(), homelet.getName());
+                LOGGER.info("Homelet {} with name {} loaded", homeletConfiguration.getType(), homelet.getConfiguration().getName());
             } catch (IOException | ScriptException e) {
                 throw new RuntimeException(e);
             }
@@ -87,14 +85,14 @@ public class HomeletService {
         homelets.forEach(Homelet::callLoop);
     }
 
-    public void configureHomelet(String homeletId, Map<String, Object> parameters) {
+    public void configureHomelet(String homeletId, List<Parameter> parameters) {
         Homelet homelet = getHomelet(homeletId);
-        homelet.getParameters().putAll(parameters);
-        LOGGER.info("{} - {} reconfigured with parameters: {}", homelet.getName(), homelet.getId(), parameters);
+        homelet.configure(parameters);
+        LOGGER.info("{} - {} reconfigured with parameters: {}", homelet.getConfiguration().getName(), homelet.getId(), parameters);
     }
 
-    public void callOperation(String homeletName, String operation, Map<String, Object> parameters) {
-        getHomelet(homeletName).callOperation(operation, parameters);
+    public void callOperation(String homeletId, String operation, Map<String, Object> parameters) {
+        getHomelet(homeletId).callOperation(operation, parameters);
     }
 
     private Homelet getHomelet(String homeletId) {

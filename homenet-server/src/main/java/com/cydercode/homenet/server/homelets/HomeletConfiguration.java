@@ -1,8 +1,9 @@
-package com.cydercode.homenet.server.config;
+package com.cydercode.homenet.server.homelets;
 
+import com.cydercode.homenet.cdm.Parameter;
 import lombok.Data;
 
-import java.util.Map;
+import java.util.List;
 
 @Data
 public class HomeletConfiguration {
@@ -10,5 +11,5 @@ public class HomeletConfiguration {
     private String description;
     private String source;
     private String type;
-    private Map<String, Object> parameters;
+    private List<Parameter> parameters;
 }

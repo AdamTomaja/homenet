@@ -36,7 +36,7 @@ app.controller('settingsController', function($scope, $http, $websocket){
     }
 
     $scope.callOperation = function(homelet, operation) {
-        $http.post("/api/homelet/operation", {id: homelet.id, operation: operation, parameters: {a: "b"}}).then(function(response){
+        $http.post("/api/homelet/operation", {homeletId: homelet.id, operation: operation, parameters: {a: "b"}}).then(function(response){
             console.log("State set successfully")
         });
     }

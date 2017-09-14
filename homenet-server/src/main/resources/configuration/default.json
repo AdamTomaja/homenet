@@ -155,35 +155,90 @@
       "type": "light-switch",
       "name": "Adams Room Light Switch",
       "description": "Switch lights on and off using buttons",
-      "parameters": {
-        "instanceName": "Adam Room",
-        "gpioName": "Light Relay"
-      }
+      "parameters": [
+        {
+          "name": "instanceName",
+          "description": "Target instance name",
+          "value": "Adam Room",
+          "type": "STRING"
+        },
+        {
+          "name": "gpioName",
+          "description": "Target gpio name",
+          "value": "Light Relay",
+          "type": "STRING"
+        }
+      ]
     },
     {
       "source": "classpath",
       "type": "motion",
       "name": "Adams Room Motion Sensor",
       "description": "Switch lights based on motion sensor in Adams room",
-      "parameters": {
-        "instanceName": "Adam Room",
-        "gpioName": "Light Relay",
-        "startHour": "18",
-        "endHour": "22",
-        "lightsOffTimeout": "900"
-      }
+      "parameters": [
+        {
+          "name": "instanceName",
+          "description": "Target instance name",
+          "value": "Adam Room",
+          "type": "STRING"
+        },
+        {
+          "name": "gpioName",
+          "description": "Target gpio name",
+          "value": "Light Relay",
+          "type": "STRING"
+        },
+        {
+          "name": "startHour",
+          "description": "Start hour motion lights on",
+          "value": 18,
+          "type": "INTEGER"
+        },
+        {
+          "name": "endHour",
+          "description": "End hour motion lights on",
+          "value": 22,
+          "type": "INTEGER"
+        },
+        {
+          "name": "lightsOffTimeout",
+          "description": "Turn lights off timeout in seconds",
+          "value": 900,
+          "type": "INTEGER"
+        }
+      ]
     },
     {
       "source": "classpath",
       "type": "alarmclock",
       "name": "Alarm clock in Adams Room",
       "description": "Turn lights on when given hour occurs",
-      "parameters": {
-        "instanceName": "Adam Room",
-        "gpioName": "Light Relay",
-        "alarmTime": "06:00",
-        "blinkPeriod": "20"
-      }
+      "parameters": [
+        {
+          "name": "instanceName",
+          "description": "Target instance name",
+          "value": "Adam Room",
+          "type": "STRING"
+        },
+        {
+          "name": "gpioName",
+          "description": "Target gpio name",
+          "value": "Light Relay",
+          "type": "STRING"
+        },
+        {
+          "name": "alarmTime",
+          "description": "Alarm start time",
+          "value": "06:00",
+          "type": "STRING"
+        },
+        {
+          "name": "blinkPeriod",
+          "description": "Alarm blink period",
+          "value": 20,
+          "type": "INTEGER"
+        }
+      ]
     }
   ]
 }

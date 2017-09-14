@@ -1,6 +1,6 @@
 package com.cydercode.homenet.server.homelets;
 
-import com.cydercode.homenet.server.config.HomeletConfiguration;
+import com.cydercode.homenet.cdm.Parameter;
 import com.cydercode.homenet.server.config.UcuInstance;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import lombok.Getter;
@@ -23,20 +23,16 @@ public class Homelet {
     private String id;
 
     @Getter
-    private String name;
-
-    @Getter
-    private final Map<String, Object> parameters = new HashMap<>();
     private final Map<String, ScriptObjectMirror> operations = new HashMap<>();
+
+    public Map<String, Object> parameters = new HashMap<>();
 
     private final ScriptEngine scriptEngine;
     private final String source;
     private final HomeletAPI api;
 
-    public Homelet(String id, HomeletConfiguration homeletConfiguration, String name, String source, HomeletAPI api, Map<String, Object> parameters) {
+    public Homelet(String id, HomeletConfiguration homeletConfiguration, String source, HomeletAPI api) {
         this.id = id;
-        this.name = name;
-        this.parameters.putAll(parameters);
         scriptEngine = new ScriptEngineManager().getEngineByExtension("js");
         this.source = source;
         this.api = api;
@@ -44,6 +40,7 @@ public class Homelet {
     }
 
     public void setup() throws ScriptException {
+        extractParameters(configuration.getParameters());
         scriptEngine.eval(source);
         ScriptObjectMirror scriptObjectMirror = (ScriptObjectMirror) scriptEngine.get("setup");
         scriptObjectMirror.call(this);
@@ -77,7 +74,16 @@ public class Homelet {
     }
 
     public Object getParameter(String name) {
-        return parameters.get(name);
+        Optional<Parameter> optionalParameter = configuration.getParameters()
+                .stream()
+                .filter(p -> name.equals(p.getName()))
+                .findFirst();
+
+        if (!optionalParameter.isPresent()) {
+            throw new IllegalArgumentException(name + " parameter not found!");
+        }
+
+        return optionalParameter.get().getValue();
     }
 
     public Optional<UcuInstance> getInstance(String instanceName) {
@@ -109,5 +115,14 @@ public class Homelet {
 
     public Set<String> getOperationNames() {
         return operations.keySet();
+    }
+
+    public void configure(List<Parameter> parameters) {
+        configuration.setParameters(parameters);
+        extractParameters(parameters);
+    }
+
+    private void extractParameters(List<Parameter> parameters) {
+        parameters.forEach(p -> this.parameters.put(p.getName(), p.getValue()));
     }
 }

@@ -60,27 +60,43 @@
     <hr/>
 
     <div class="row">
-        <div class="col-md-4" ng-repeat="homelet in homelets">
+        <div class="col-md-5" ng-repeat="homelet in homelets">
             <div class="jumbotron">
-                <h1 class="display-3">{{ homelet.name }} Homelet</h1>
-                <p class="lead">{{ homelet.type }}</p>
+                <h1 class="display-3">{{ homelet.type }}</h1>
+                <p class="lead">{{ homelet.name }}</p>
                 <hr class="my-4"/>
-                <div class="card" >
+                <div class="card">
                     <div class="card-body">
                         <h4 class="card-title"> Configuration </h4>
                         <h6 class="card-subtitle mb-2 text-muted">{{ device.description }}</h6>
-                        <form>
-                            <div class="form-group" ng-repeat="(key, value) in homelet.parameters">
-                                <label>{{key}}</label>
-                                <input type="text" class="form-control" ng-model="homelet.parameters[key]"/>
+
+                        <div class="collapse multi-collapse" id="{{homelet.id}}-configuration">
+                            <div class="card card-body">
+                                <form>
+                                    <div class="form-group" ng-repeat="parameter in homelet.parameters">
+                                        <label>{{parameter.description}}</label>
+                                        <input type="text" class="form-control" ng-model="parameter.value"/>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-default" ng-click="saveHomelet(homelet)">Save
+                                    </button>
+                                </form>
                             </div>
+                        </div>
 
-                            <button type="submit" class="btn btn-default" ng-click="saveHomelet(homelet)">Save</button>
-                            <button type="submit" class="btn btn-danger" ng-click="removeHomelet(homelet)">Remove</button>
+                        <button ng-repeat="operation in homelet.operations" type="submit"
+                                class="btn btn-info" ng-click="callOperation(homelet, operation)">
+                            {{operation}}
+                        </button>
 
-                            <button ng-repeat="operation in homelet.operations" type="submit" class="btn btn-info" ng-click="callOperation(homelet, operation)">{{operation}}</button>
-                        </form>
+                        <a class="btn btn-primary" data-toggle="collapse" href="#{{homelet.id}}-configuration"
+                           aria-expanded="false" aria-controls="multiCollapseExample1">Configuration</a>
+
+                        <button type="submit" class="btn btn-danger" ng-click="removeHomelet(homelet)">
+                            Remove
+                        </button>
                     </div>
+
                 </div>
             </div>
         </div>

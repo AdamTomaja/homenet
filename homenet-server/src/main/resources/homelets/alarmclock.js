@@ -25,6 +25,7 @@ function invert(value) {
 
 setup = function() {
     var hour = this.parameters.alarmTime;
+    this.loginfo(this.parameters+"");
     this.loginfo("Alarm will occur at " + hour);
 }
 
