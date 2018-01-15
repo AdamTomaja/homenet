@@ -5,50 +5,9 @@
   },
   "instances": [
     {
-      "id": "ucu-389469",
-      "name": "Daily Room",
-      "description": "Room I live in",
-      "gpios": [
-        {
-          "name": "Button",
-          "mode": "INPUT",
-          "isPullup": true,
-          "pin": 3,
-          "invert": true
-        },
-        {
-          "name": "Temperature Sensor",
-          "mode": "ANALOG_INPUT",
-          "pin": 0,
-          "displayAs": "temperature"
-        },
-        {
-          "name": "Led",
-          "mode": "OUTPUT",
-          "isPullup": false,
-          "pin": 4,
-          "invert": true
-        },
-        {
-          "name": "Red LED",
-          "mode": "OUTPUT",
-          "isPullup": false,
-          "initialValue": 1,
-          "pin": 1
-        },
-        {
-          "name": "Yellow LED",
-          "mode": "OUTPUT",
-          "isPullup": false,
-          "pin": 2,
-          "initialValue": 0
-        }
-      ]
-    },
-    {
       "id": "ucu-74466",
-      "name": "Kitchen",
-      "description": "Cooking place",
+      "name": "AmbientLight",
+      "description": "Ambient Light Controller",
       "gpios": [
         {
           "name": "Button",
@@ -58,39 +17,10 @@
           "pin": 3
         },
         {
-          "name": "ADC",
-          "mode": "ANALOG_INPUT",
-          "displayAs": "voltage",
-          "pin": 0
-        },
-        {
-          "name": "Led PWM",
-          "mode": "ANALOG_OUTPUT",
-          "initialValue": 500,
-          "pin": 5
-        },
-        {
-          "name": "Relay",
-          "mode": "OUTPUT",
-          "isPullup": false,
-          "invert": true,
-          "pin": 1
-        },
-        {
-          "name": "Relay2",
-          "mode": "OUTPUT",
-          "isPullup": false,
-          "invert": true,
-          "pin": 2,
-          "initialValue": 1
-        },
-        {
-          "name": "Led",
-          "mode": "OUTPUT",
-          "isPullup": false,
-          "invert": true,
-          "initialValue": 1,
-          "pin": 4
+          "name": "RGBStrip",
+          "mode": "RGB_STRIP",
+          "initialValue": {"r": 255, "g": 0, "b": 0},
+          "pin": 1000
         }
       ]
     },
@@ -172,80 +102,10 @@
     },
     {
       "source": "classpath",
-      "type": "motion",
-      "name": "Adams Room Motion Sensor",
-      "description": "Switch lights based on motion sensor in Adams room",
-      "parameters": [
-        {
-          "name": "instanceName",
-          "description": "Target instance name",
-          "value": "Adam Room",
-          "type": "STRING"
-        },
-        {
-          "name": "gpioName",
-          "description": "Target gpio name",
-          "value": "Light Relay",
-          "type": "STRING"
-        },
-        {
-          "name": "startHour",
-          "description": "Start hour motion lights on",
-          "value": 18,
-          "type": "INTEGER"
-        },
-        {
-          "name": "endHour",
-          "description": "End hour motion lights on",
-          "value": 22,
-          "type": "INTEGER"
-        },
-        {
-          "name": "lightsOffTimeout",
-          "description": "Turn lights off timeout in seconds",
-          "value": 900,
-          "type": "INTEGER"
-        }
-      ]
-    },
-    {
-      "source": "classpath",
       "type": "journalist",
       "name": "Motion Journalist",
       "description": "Save motion events to database",
       "parameters": []
-    },
-    {
-      "source": "classpath",
-      "type": "alarmclock",
-      "name": "Alarm clock in Adams Room",
-      "description": "Turn lights on when given hour occurs",
-      "parameters": [
-        {
-          "name": "instanceName",
-          "description": "Target instance name",
-          "value": "Adam Room",
-          "type": "STRING"
-        },
-        {
-          "name": "gpioName",
-          "description": "Target gpio name",
-          "value": "Light Relay",
-          "type": "STRING"
-        },
-        {
-          "name": "alarmTime",
-          "description": "Alarm start time",
-          "value": "06:00",
-          "type": "STRING"
-        },
-        {
-          "name": "blinkPeriod",
-          "description": "Alarm blink period",
-          "value": 20,
-          "type": "INTEGER"
-        }
-      ]
     }
   ]
 }

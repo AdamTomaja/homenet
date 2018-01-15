@@ -12,7 +12,7 @@ public class GpioConfiguration {
     private String description;
     private Integer pin;
     private boolean invert;
-    private Integer initialValue;
+    private Object initialValue;
     private String displayAs;
     private boolean favorite;
 
@@ -67,11 +67,11 @@ public class GpioConfiguration {
         this.invert = invert;
     }
 
-    public Integer getInitialValue() {
+    public Object getInitialValue() {
         return initialValue;
     }
 
-    public void setInitialValue(Integer initialValue) {
+    public void setInitialValue(Object initialValue) {
         this.initialValue = initialValue;
     }
 

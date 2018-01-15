@@ -17,6 +17,10 @@ messageHandlers = {
     if monitoredGpios[pin] == "ANALOG_OUTPUT" then
         -- Analog output
         pwm.setduty(pin, message.value)
+    elseif monitoredGpios[pin] == "RGB_STRIP" then
+        -- RGB Strip
+        setRgbStripColor(value.r, value.g, value.b)
+        sendMessage("/umu/gpio/set", {pin = pin, value = value})
     else
         -- Digital output
         if value == 1 then
@@ -49,6 +53,10 @@ end,
     
     if mode == "INPUT" then
         gpio.mode(pin, gpio.INPUT, pullup)
+    end
+
+    if mode == "RGB_STRIP" then
+        initializeRgbStrip() 
     end
 
     monitoredGpios[pin] = mode;

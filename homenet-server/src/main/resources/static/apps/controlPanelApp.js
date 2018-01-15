@@ -1,4 +1,4 @@
-var app = angular.module('controlPanelApp', ['ngWebSocket']);
+var app = angular.module('controlPanelApp', ['ngWebSocket', 'colorpicker.module']);
 
 app.controller('ucusController', function($scope, $http, $websocket){
     var ws = $websocket(window.location.href.replace('http', 'ws') + '/ws');

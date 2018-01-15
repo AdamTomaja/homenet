@@ -1,6 +1,7 @@
 package com.cydercode.homenet.server.messaging.messagehandlers;
 
 import com.cydercode.homenet.cdm.ConfigureGpioMessage;
+import com.cydercode.homenet.cdm.GpioMode;
 import com.cydercode.homenet.cdm.HelloMessage;
 import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.*;

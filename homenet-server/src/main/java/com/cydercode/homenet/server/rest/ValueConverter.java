@@ -2,7 +2,10 @@ package com.cydercode.homenet.server.rest;
 
 import com.cydercode.homenet.cdm.GpioMode;
 import com.cydercode.homenet.server.config.GpioConfiguration;
+import com.google.common.collect.ImmutableMap;
 
+import java.awt.*;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -23,6 +26,12 @@ public class ValueConverter {
 
         if (gpio.getMode() == GpioMode.ANALOG_OUTPUT) {
             return systemValue;
+        }
+
+        if (gpio.getMode() == GpioMode.RGB_STRIP) {
+            Map<String, Double> map = (Map) systemValue;
+            Color color = new Color(map.get("g").intValue(), map.get("r").intValue(), map.get("b").intValue());
+            return "#" + Integer.toHexString(color.getRGB());
         }
 
         if (gpio.getMode() == GpioMode.ANALOG_INPUT) {
@@ -76,6 +85,15 @@ public class ValueConverter {
     public static Object convertToSystemValue(GpioConfiguration gpioConfiguration, Object uiValue) {
         if (gpioConfiguration.getMode() == GpioMode.ANALOG_OUTPUT) {
             return uiValue;
+        }
+
+        if (gpioConfiguration.getMode() == GpioMode.RGB_STRIP) {
+            Color color = Color.decode((String) uiValue);
+            return ImmutableMap.builder()
+                    .put("r", color.getRed())
+                    .put("g", color.getGreen())
+                    .put("b", color.getBlue())
+                    .build();
         }
 
         return Objects.equals(ON, uiValue) ? 1 : 0;

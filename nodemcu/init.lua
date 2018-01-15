@@ -1,6 +1,7 @@
 dofile("configuration-server.lua")
 dofile("settings.lua")
 dofile("gpio.lua")
+dofile("rgbStrip.lua")
 
 monitoredGpios = {}
 gpioStates = { }
@@ -20,8 +21,6 @@ wifi.sta.connect()
 
 startConfigurationServer()
 tmr.create():alarm(60 * 1000, tmr.ALARM_SINGLE, shutdownConfigurationServer)
-
-
 
 connectionChecker = tmr.create()
 gpioMonitor = tmr.create()
