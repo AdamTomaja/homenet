@@ -30,8 +30,8 @@ public class ValueConverter {
 
         if (gpio.getMode() == GpioMode.RGB_STRIP) {
             Map<String, Double> map = (Map) systemValue;
-            Color color = new Color(map.get("g").intValue(), map.get("r").intValue(), map.get("b").intValue());
-            return "#" + Integer.toHexString(color.getRGB());
+            Color color = new Color(map.get("r").intValue(), map.get("g").intValue(), map.get("b").intValue());
+            return toHex(color.getRed(), color.getGreen(), color.getBlue());
         }
 
         if (gpio.getMode() == GpioMode.ANALOG_INPUT) {
@@ -55,6 +55,18 @@ public class ValueConverter {
         }
 
         return value;
+    }
+
+    public static String toHex(int r, int g, int b) {
+        return "#" + toBrowserHexValue(r) + toBrowserHexValue(g) + toBrowserHexValue(b);
+    }
+
+    private static String toBrowserHexValue(int number) {
+        StringBuilder builder = new StringBuilder(Integer.toHexString(number & 0xff));
+        while (builder.length() < 2) {
+            builder.append("0");
+        }
+        return builder.toString().toUpperCase();
     }
 
     private static double convertRawADCToVoltage(double rawADC) {

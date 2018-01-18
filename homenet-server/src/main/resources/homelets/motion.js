@@ -1,6 +1,6 @@
 /** Consts **/
 var motionSensor = "Motion Sensor";
-var adamsRoom = "Adam Room";
+var adamsRoom = "Door";
 
 /* Global Variables */
 var lastMovementTime = 0;

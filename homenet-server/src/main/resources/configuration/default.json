@@ -5,8 +5,8 @@
   },
   "instances": [
     {
-      "id": "ucu-74466",
-      "name": "AmbientLight",
+      "id": "ucu-389469",
+      "name": "Shelf",
       "description": "Ambient Light Controller",
       "gpios": [
         {
@@ -25,18 +25,58 @@
       ]
     },
     {
-      "id": "ucu-742627",
-      "name": "Adam Room",
-      "description": "My living room",
+      "id": "ucu-761919",
+      "name": "UnderDesk",
+      "description": "Ambient Light Controller",
       "gpios": [
         {
-          "name": "Motion Sensor",
+          "name": "Button",
           "mode": "INPUT",
-          "isPullup": false,
-          "invert": false,
-          "pin": 1,
-          "description": "Main Motion Sensor"
+          "isPullup": true,
+          "invert": true,
+          "pin": 3
         },
+        {
+          "name": "RGBStrip",
+          "mode": "RGB_STRIP",
+          "initialValue": {"r": 255, "g": 0, "b": 0},
+          "pin": 1000
+        }
+      ]
+    },
+    {
+      "id": "ucu-74466",
+      "name": "OnDesk",
+      "description": "Ambient Light Controller",
+      "gpios": [
+        {
+          "name": "Button",
+          "mode": "INPUT",
+          "isPullup": true,
+          "invert": true,
+          "pin": 3
+        },
+        {
+          "name": "RGBStrip",
+          "mode": "RGB_STRIP",
+          "initialValue": {"r": 255, "g": 0, "b": 0},
+          "pin": 1000
+        },
+        {
+        "name": "Motion Sensor",
+        "mode": "INPUT",
+        "isPullup": false,
+        "invert": false,
+        "pin": 2,
+        "description": "Main Motion Sensor"
+        }
+      ]
+    },
+    {
+      "id": "ucu-742627",
+      "name": "Door",
+      "description": "My living room",
+      "gpios": [
         {
           "name": "Button A",
           "mode": "INPUT",
@@ -52,12 +92,6 @@
           "invert": true,
           "pin": 3,
           "description": "Switch light ON button"
-        },
-        {
-          "name": "ADC",
-          "mode": "ANALOG_INPUT",
-          "displayAs": "voltage",
-          "pin": 0
         },
         {
           "name": "Led",
@@ -89,7 +123,7 @@
         {
           "name": "instanceName",
           "description": "Target instance name",
-          "value": "Adam Room",
+          "value": "Door",
           "type": "STRING"
         },
         {
@@ -105,6 +139,13 @@
       "type": "journalist",
       "name": "Motion Journalist",
       "description": "Save motion events to database",
+      "parameters": []
+    },
+    {
+      "source": "classpath",
+      "type": "rgb",
+      "name": "RGB Controller",
+      "description": "Control Your Ambient Lights",
       "parameters": []
     }
   ]

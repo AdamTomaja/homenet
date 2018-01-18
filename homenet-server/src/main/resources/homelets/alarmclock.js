@@ -1,5 +1,5 @@
 /** Consts **/
-var adamsRoom = "Adam Room";
+var adamsRoom = "Door";
 var lightRelay = "Light Relay";
 
 function appendZero(number) {
