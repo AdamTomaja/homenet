@@ -1,5 +1,4 @@
 /** Consts **/
-var SHELF = "Shelf";
 var UNDERDESK = "UnderDesk";
 var ONDESK = "OnDesk";
 
@@ -23,14 +22,16 @@ function hexToRgb(hex) {
 
 
 
-function setColor(api, r, g, b) {
-    var color = {"r": r, "g": g, "b": b};
-    api.setValue(SHELF, RGBSTRIP, color);
-    api.setValue(UNDERDESK, RGBSTRIP, color);
-    api.setValue(ONDESK, RGBSTRIP, color);
-}
 
 setup = function() {
+    function setColor(api, r, g, b) {
+        var color = {"r": r, "g": g, "b": b};
+        api.setValue(UNDERDESK, RGBSTRIP, color);
+        api.setValue(ONDESK, RGBSTRIP, color);
+    }
+
+    var api = this;
+
     this.addOperation("LightsOff", function(parameters){
            setColor(this, 0, 0, 0);
         });
@@ -42,6 +43,14 @@ setup = function() {
         this.addOperation("Sleep", function(parameters){
              setColor(this, 0, 2, 15);
         });
+
+        this.addOperation("Animate", function(parameters){
+            for(var i = 0; i < 255; i+=1) {
+                 setColor(this, api.toInteger(i), api.toInteger(i), api.toInteger(i));
+                 api.sleep(200);
+            }
+        }, {"asynchronous": true});
+
 }
 
 loop = function() {

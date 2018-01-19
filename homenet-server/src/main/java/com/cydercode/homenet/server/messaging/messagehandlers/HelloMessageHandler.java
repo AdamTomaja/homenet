@@ -1,11 +1,12 @@
 package com.cydercode.homenet.server.messaging.messagehandlers;
 
 import com.cydercode.homenet.cdm.ConfigureGpioMessage;
-import com.cydercode.homenet.cdm.GpioMode;
 import com.cydercode.homenet.cdm.HelloMessage;
 import com.cydercode.homenet.cdm.SetGpioValueMessage;
-import com.cydercode.homenet.server.*;
+import com.cydercode.homenet.server.ConfigurationService;
+import com.cydercode.homenet.server.StateCache;
 import com.cydercode.homenet.server.config.UcuInstance;
+import com.cydercode.homenet.server.converters.Inverter;
 import com.cydercode.homenet.server.messaging.MessageBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,9 @@ public class HelloMessageHandler implements TypedMessageHandler<HelloMessage> {
     @Autowired
     private MessageBus messageBus;
 
+    @Autowired
+    private Inverter inverter;
+
     @Override
     public void handleMessage(HelloMessage message) {
         String instanceId = message.getInstanceId();
@@ -51,7 +55,7 @@ public class HelloMessageHandler implements TypedMessageHandler<HelloMessage> {
                     messageBus.sendMessage(configureGpioMessage);
                     if (gpio.getInitialValue() != null) {
                         SetGpioValueMessage setGpioValueMessage = new SetGpioValueMessage();
-                        setGpioValueMessage.setValue(gpio.getInitialValue());
+                        setGpioValueMessage.setValue(inverter.invertIfRequired(gpio, gpio.getInitialValue()));
                         setGpioValueMessage.setInstanceId(instanceId);
                         setGpioValueMessage.setPin(gpio.getPin());
                         messageBus.sendMessage(setGpioValueMessage);

@@ -6,8 +6,8 @@
   "instances": [
     {
       "id": "ucu-389469",
-      "name": "Shelf",
-      "description": "Ambient Light Controller",
+      "name": "Blind",
+      "description": "Blind Controller",
       "gpios": [
         {
           "name": "Button",
@@ -17,10 +17,20 @@
           "pin": 3
         },
         {
-          "name": "RGBStrip",
-          "mode": "RGB_STRIP",
-          "initialValue": {"r": 255, "g": 0, "b": 0},
-          "pin": 1000
+          "name": "BlindPower",
+          "mode": "OUTPUT",
+          "isPullup": false,
+          "initialValue": 0,
+          "invert": true,
+          "pin": 1
+        },
+        {
+          "name": "BlindDirection",
+          "mode": "OUTPUT",
+          "isPullup": false,
+          "initialValue": 0,
+          "invert": true,
+          "pin": 2
         }
       ]
     },
@@ -106,7 +116,6 @@
           "mode": "OUTPUT",
           "isPullup": false,
           "invert": true,
-          "initialValue": 1,
           "pin": 5,
           "favorite": true
         }
@@ -114,6 +123,44 @@
     }
   ],
   "homelets": [
+    {
+      "source": "classpath",
+      "type": "blind",
+      "name": "blindController",
+      "description": "Control Your Window Binds",
+      "parameters": [
+        {
+          "name": "instanceName",
+          "description": "Blind controller instance name",
+          "value": "Blind",
+          "type": "STRING"
+        },
+        {
+          "name": "powerGpioName",
+          "description": "Name of Blind Power gpio",
+          "value": "BlindPower",
+          "type": "STRING"
+        },
+        {
+          "name": "directionGpioName",
+          "description": "Name of Blind Direction gpio",
+          "value": "BlindDirection",
+          "type": "STRING"
+        },
+        {
+          "name": "relayTime",
+          "description": "Time of relay response",
+          "value": "1000",
+          "type": "STRING"
+        },
+        {
+          "name": "fullBlindMovementTime",
+          "description": "Time to fully open/close blind",
+          "value": "5000",
+          "type": "STRING"
+        }
+      ]
+    },
     {
       "source": "classpath",
       "type": "light-switch",

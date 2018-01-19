@@ -4,15 +4,13 @@ import com.cydercode.homenet.cdm.SetGpioValueMessage;
 import com.cydercode.homenet.server.ConfigurationService;
 import com.cydercode.homenet.server.config.GpioConfiguration;
 import com.cydercode.homenet.server.config.UcuInstance;
+import com.cydercode.homenet.server.converters.Inverter;
 import com.cydercode.homenet.server.journal.JournalService;
 import com.cydercode.homenet.server.messaging.MessageBus;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Optional;
 
 @Component
 public class HomeletAPI {
@@ -25,6 +23,9 @@ public class HomeletAPI {
 
     @Autowired
     private JournalService journalService;
+
+    @Autowired
+    private Inverter inverter;
 
     public Optional<UcuInstance> getInstance(String instanceName) {
         return configurationService.getConfigurationByName(instanceName);
@@ -44,6 +45,7 @@ public class HomeletAPI {
         return gpioConfiguration.get().getLastKnownValue();
     }
 
+
     public void setValue(String instanceName, String gpioName, Object value) throws Exception {
         Optional<UcuInstance> instance = configurationService.getConfigurationByName(instanceName);
         if (!instance.isPresent()) {
@@ -58,7 +60,7 @@ public class HomeletAPI {
         SetGpioValueMessage setGpioValueMessage = new SetGpioValueMessage();
         setGpioValueMessage.setInstanceId(instance.get().getId());
         setGpioValueMessage.setPin(gpioConfiguration.get().getPin());
-        setGpioValueMessage.setValue(value);
+        setGpioValueMessage.setValue(inverter.invertIfRequired(gpioConfiguration.get(), value));
 
         messageBus.sendMessage(setGpioValueMessage);
     }

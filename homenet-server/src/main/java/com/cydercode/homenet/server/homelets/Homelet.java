@@ -23,7 +23,7 @@ public class Homelet {
     private String id;
 
     @Getter
-    private final Map<String, ScriptObjectMirror> operations = new HashMap<>();
+    private final Map<String, Operation> operations = new HashMap<>();
 
     public Map<String, Object> parameters = new HashMap<>();
 
@@ -52,6 +52,10 @@ public class Homelet {
 
     private Map<String, List<ScriptObjectMirror>> listeners = new HashMap<>();
 
+    public void sleep(long miliseconds) throws InterruptedException {
+        Thread.sleep(miliseconds);
+    }
+
     public void addListener(String instanceName, String gpioName, ScriptObjectMirror callback) {
         String callbackIndex = createCallbackIndex(instanceName, gpioName);
         List<ScriptObjectMirror> list = listeners.get(callbackIndex);
@@ -66,11 +70,26 @@ public class Homelet {
     }
 
     public void addOperation(String operation, ScriptObjectMirror function) {
-        operations.put(operation, function);
+        addOperation(operation, function, new HashMap());
+    }
+
+    public void addOperation(String operation, ScriptObjectMirror function, Map attributes) {
+        operations.put(operation, new Operation(function, attributes));
     }
 
     public void callOperation(String operation, Map<String, Object> parameters) {
-        operations.get(operation).call(this, parameters);
+        Operation operationObject = operations.get(operation);
+        if (operationObject.isAsynchronous()) {
+            Thread thread = new Thread(() -> executeOperation(operationObject, parameters));
+            thread.start();
+        } else {
+            executeOperation(operationObject, parameters);
+        }
+
+    }
+
+    private void executeOperation(Operation operation, Map<String, Object> parameters) {
+        operation.getFunction().call(this, parameters);
     }
 
     public Object getService(String serviceName) {
@@ -100,6 +119,10 @@ public class Homelet {
 
     public void setValue(String instanceName, String gpioName, Object value) throws Exception {
         api.setValue(instanceName, gpioName, value);
+    }
+
+    public Integer toInteger(Double d) {
+        return d.intValue();
     }
 
     public void fireListeners(String instanceName, String gpioName, Object value) {
