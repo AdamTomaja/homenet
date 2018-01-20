@@ -1,0 +1,7 @@
+spring:
+  influxdb:
+    url: http://localhost:8086
+    username: user
+    password: ~
+    database: homenet
+    retention-policy: default

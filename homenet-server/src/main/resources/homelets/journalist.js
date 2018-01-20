@@ -1,12 +1,10 @@
-/** Consts **/
-var adamsRoom = "Door";
-var motionSensor = "Motion Sensor";
-
 setup = function() {
-    this.addListener(adamsRoom, motionSensor, function(value) {
-        if(value) {
-            this.getService("journal").write("Adams Room Motion", "Motion detected!");
-        }
+    this.addListener("OnDesk", "Motion Sensor", function(value) {
+        this.getService("journal").saveMeasurement("motion", "adamroom", {"value": value});
+    });
+
+    this.addListener("Door", "Light Relay", function(value) {
+        this.getService("journal").saveMeasurement("light", "adamroom", {"value": value});
     });
 }
 

@@ -40,6 +40,27 @@ You can run install it and run using following command:
 service mosquitto start
 ```
 
+## Install Grafana and Influx DB
+* Install InfluxDB
+```bash
+apt-get install influxdb
+```
+
+* Check the status of grafana service
+```bash
+service influxd status
+```
+You can also open web interface of influxdb: **http://host:8083**
+
+* Install and start the Grafana
+```bash
+apt-get install grafana
+service grafana-server start
+```
+
+* Check the status of Grafana **http://host:3000**
+
+
 ## Run UMU server
 Execute following command in **homenet-server** directory
 ```bash
