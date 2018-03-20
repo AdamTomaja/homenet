@@ -1,0 +1,1 @@
+This application is a simple mqtt listener which is able to execute commands on Your system. 
